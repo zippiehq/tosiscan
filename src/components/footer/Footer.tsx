@@ -1,11 +1,13 @@
 import LogoWhiteBg from "../../assets/LogoWhiteBg";
 import { Link } from "react-router-dom";
 import "./Footer.css";
-import TwitterIcon from "../../assets/TwitterIcon";
-import YoutubeIcon from "../../assets/YoutubeIcon";
-import LinkedInIcon from "../../assets/LinkedInIcon";
-import TelegramIcon from "../../assets/TelegramIcon";
-import GithubIcon from "../../assets/GithubIcon";
+import {
+  GithubIcon,
+  LinkedInIcon,
+  TelegramIcon,
+  TwitterIcon,
+  YoutubeIcon,
+} from "../../assets";
 
 export default function Footer() {
   return (
