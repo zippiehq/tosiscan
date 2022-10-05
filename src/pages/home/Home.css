@@ -48,6 +48,7 @@ thead tr {
 th,
 td {
   padding: 18px 0 18px 24px;
+  border-bottom: 1px solid #eaecf0;
 }
 
 tr td {
@@ -55,6 +56,7 @@ tr td {
   color: #667085;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  cursor: pointer;
 }
 
 .flex {
@@ -62,8 +64,15 @@ tr td {
   align-items: center;
 }
 
-.flex .image {
+td .flex img {
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+}
+
+.flex .avatar {
   width: 40px;
+  height: 40px;
 }
 
 .flex .dataset {

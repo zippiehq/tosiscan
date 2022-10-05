@@ -121,7 +121,7 @@ select:focus {
   align-self: center;
 }
 
-.search-box .search-icon {
+.search-box img {
   position: absolute;
   left: 16.5px;
   top: 18.5px;
