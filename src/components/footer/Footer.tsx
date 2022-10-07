@@ -1,11 +1,13 @@
 import LogoWhiteBg from "../../assets/LogoWhiteBg";
 import { Link } from "react-router-dom";
 import "./Footer.css";
-import TwitterIcon from "../../assets/TwitterIcon";
-import YoutubeIcon from "../../assets/YoutubeIcon";
-import LinkedInIcon from "../../assets/LinkedInIcon";
-import TelegramIcon from "../../assets/TelegramIcon";
-import GithubIcon from "../../assets/GithubIcon";
+import {
+  linkedInIcon,
+  twitterIcon,
+  telegramIcon,
+  githubIcon,
+  youtubeIcon,
+} from "../../assets";
 
 export default function Footer() {
   return (
@@ -41,11 +43,11 @@ export default function Footer() {
           <div className="social-icons">
             <p className="copyrights">Copyrighted by Zippie 2022</p>
             <div className="icons">
-              <TwitterIcon />
-              <YoutubeIcon />
-              <LinkedInIcon />
-              <TelegramIcon />
-              <GithubIcon />
+              <img src={twitterIcon} alt="Twitter Icon" />
+              <img src={youtubeIcon} alt="linkedin Icon" />
+              <img src={linkedInIcon} alt="linkedin Icon" />
+              <img src={telegramIcon} alt="telegran Icon" />
+              <img src={githubIcon} alt="Github Icon" />
             </div>
           </div>
         </div>
