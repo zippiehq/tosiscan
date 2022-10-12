@@ -5,6 +5,8 @@ import { SearchContext } from "../../context/SearchContext";
 import { useNavigate } from "react-router-dom";
 import { DatasetContext } from "../../context/DatasetContext";
 import image from "../../assets/Lohko.svg"
+import axios from "axios";
+
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(false);
@@ -16,10 +18,11 @@ export default function VerificationList() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await get("/verifications");
+        const response = await axios.get("db.json")
+        console.log({ response });
 
         if (response && response.data) {
-          setDataset(response.data)
+          setDataset(response.data.verifications)
           setLoading(false);
         }
       } catch (error) {
