@@ -1,14 +1,15 @@
-import Axios from "axios";
-const baseURL = process.env.BASE_URL || "http://localhost:5000" as string
+import Axios, { ResponseType } from "axios";
+const baseURL = process.env.REACT_APP_DATACHAIN_BASE_URL || "http://localhost:5000" as string
 
-function returnAxiosInstance() {
+function returnAxiosInstance(responseType: ResponseType = "json") {
     return Axios.create({
         baseURL,
+        responseType
     });
 }
 
-export function get(url: string) {
-    const axios = returnAxiosInstance();
+export function get(url: string, responseType: ResponseType) {
+    const axios = returnAxiosInstance(responseType);
     return axios.get(url);
 }
 
