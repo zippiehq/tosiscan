@@ -4,6 +4,7 @@ import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import OverviewTab from "./OverviewTab";
+import AssetTab from "./AssetTab";
 
 const Tab = styled(TabUnstyled)`
   font-family: "Inter", sans-serif;
@@ -52,14 +53,16 @@ export default function UnstyledTabsIntroduction() {
   return (
     <TabsUnstyled defaultValue={0}>
       <TabsList>
-        <Tab>Overivew</Tab>
+        <Tab>Overview</Tab>
         <Tab>Assets</Tab>
         <Tab>Contract</Tab>
       </TabsList>
       <TabPanel value={0}>
         <OverviewTab />
       </TabPanel>
-      <TabPanel value={1}>Assets page</TabPanel>
+      <TabPanel value={1}>
+        <AssetTab />
+      </TabPanel>
       <TabPanel value={2}>Contract page</TabPanel>
     </TabsUnstyled>
   );

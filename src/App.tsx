@@ -8,7 +8,7 @@ import AssetDetails from "./pages/asset/AssetDetails";
 import Home from "./pages/home/Home";
 
 function App() {
-  const [value, setValue] = useState<any>("");
+  const [value, setValue] = useState<any>({ term: "", filter: "all" });
   const [dataset, setDataset] = useState<any>([]);
   return (
     <div className="App">
