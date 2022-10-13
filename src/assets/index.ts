@@ -19,6 +19,7 @@ import leftVector from "./LeftVector.svg"
 import caretDownWhite from "./CaretDownWhite.svg"
 import helpIconWarning from "./HelpIconWarning.svg"
 import searchPlaceHolder from "./SearchPlaceholder.svg"
+import buttonGroup from "./ButtongroupPlaceholder.svg"
 
 export {
     caretDownWhite,
@@ -41,5 +42,6 @@ export {
     downloadIcon,
     helpIcon,
     helpIconWarning,
-    searchPlaceHolder
+    searchPlaceHolder,
+    buttonGroup
 }

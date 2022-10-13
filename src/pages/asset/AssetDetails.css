@@ -424,6 +424,39 @@ p span {
   border-radius: 10px;
 }
 
+.asset-tab-overiew {
+  display: flex;
+  justify-content: space-between;
+}
+
+.asset-tab-overiew .col-2 {
+  padding-top: 44px;
+  margin-left: 42px;
+}
+
+.asset-tab-overiew .col-2 .stats {
+  width: 346px;
+  padding: 20px 16px;
+  border: 1px solid #eaecf0;
+  margin-bottom: 24px;
+  border-radius: 8px;
+}
+
+.col-2 .stats h5 {
+  color: #475467;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+.col-2 .stats h4 {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+  color: #101828;
+  margin: 0;
+}
+
 .asset-tab .col-1 h3 {
   font-weight: 600;
   font-size: 1.25rem;
@@ -447,4 +480,8 @@ p span {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+.individual-assets .header .search img:first-child {
+  margin-right: 16px;
 }
