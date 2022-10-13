@@ -1,5 +1,5 @@
 import Axios, { ResponseType } from "axios";
-const baseURL = process.env.REACT_APP_DATACHAIN_BASE_URL || "http://localhost:5000" as string
+const baseURL = process.env.REACT_APP_DATACHAIN_BASE_URL || "https://tosiscan-testnet-one.zippie.com" as string
 
 function returnAxiosInstance(responseType: ResponseType = "json") {
     return Axios.create({

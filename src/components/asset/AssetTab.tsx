@@ -7,11 +7,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { get } from "../../adapters/axios";
 import unzip from "../../utils/unzip";
-import { searchPlaceHolder } from "../../assets";
+import { buttonGroup, searchPlaceHolder } from "../../assets";
+import image from "../../assets/Lohko.svg";
 
 export default function AssetTab() {
   const [assets, setAssets] = React.useState<any[]>([]);
   React.useEffect(() => {
+    // use query seal to get latest data
     async function fetchAssets() {
       const { data } = await get(
         "/tosi/api/v0/ipfs/get/bafyreifgphqad5w5xq75ugcudrxwewq2igqnpx2xyqln4u6qur57dnzj5m/output.zip",
@@ -38,6 +40,21 @@ export default function AssetTab() {
           <h3>Assets</h3>
           <AssetTable assets={items} items={uniqueItems} />
         </div>
+
+        <div className="col-2">
+          <div className="stats total-assets">
+            <h5>Total assets</h5>
+            <h4>28</h4>
+          </div>
+          <div className="stats total-assets">
+            <h5>Total change</h5>
+            <h4>0</h4>
+          </div>
+          <div className="stats total-assets">
+            <h5>Publisher staking</h5>
+            <h4>100,000 TOSI</h4>
+          </div>
+        </div>
       </div>
 
       <div className="individual-assets">
@@ -48,6 +65,7 @@ export default function AssetTab() {
           </div>
           <div className="search">
             <img src={searchPlaceHolder} alt="search placeholder" />
+            <img src={buttonGroup} alt="search placeholder" />
           </div>
         </div>
         <IndividualAssetTable assets={assets} />
@@ -108,7 +126,21 @@ function IndividualAssetTable({ assets }: { assets: any }) {
               return (
                 <TableRow key={index}>
                   <TableCell sx={{ color: "#07939C" }}>{row.serial}</TableCell>
-                  <TableCell>{row.product}</TableCell>
+                  <TableCell sx={{ display: "flex", alignItems: "center" }}>
+                    <span>
+                      <img
+                        style={{
+                          width: "32px",
+                          height: "32px",
+                          marginRight: "12px",
+                        }}
+                        className="avatar"
+                        src={image}
+                        alt="lohko"
+                      />
+                    </span>
+                    {row.product}
+                  </TableCell>
                   <TableCell>ZippieNet</TableCell>
                   <TableCell sx={{ color: "#07939C" }}>
                     0x4b6e915b821c28a1
