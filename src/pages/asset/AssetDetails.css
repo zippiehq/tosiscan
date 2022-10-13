@@ -47,9 +47,11 @@
 }
 
 .details .badge {
+  display: flex;
   margin-top: 10px;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  align-items: center;
 }
 
 .badge span:first-child {
@@ -59,6 +61,23 @@
   font-weight: 500;
   font-family: "Inter", sans-serif;
   border-radius: 16px;
+}
+
+.badge div {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  background: #fef1ef;
+  padding: 2px 10px;
+
+  border-radius: 16px;
+}
+
+.badge div p {
+  color: #b73731;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  margin: 0 0 0 8px;
 }
 
 .badge span:last-child {
@@ -403,4 +422,29 @@ p span {
   padding: 24px;
   border: 1px solid #eaecf0;
   border-radius: 10px;
+}
+
+.asset-tab .col-1 h3 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: #101828;
+}
+
+.individual-assets {
+  margin-top: 44px;
+}
+
+.individual-assets .header .text p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 4px 0 0 0;
+  color: #667085;
+}
+
+.individual-assets .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }

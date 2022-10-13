@@ -17,6 +17,8 @@ import helpIcon from "./HelpIcon.svg";
 import rightVector from "./RightVector.svg"
 import leftVector from "./LeftVector.svg"
 import caretDownWhite from "./CaretDownWhite.svg"
+import helpIconWarning from "./HelpIconWarning.svg"
+import searchPlaceHolder from "./SearchPlaceholder.svg"
 
 export {
     caretDownWhite,
@@ -37,5 +39,7 @@ export {
     verifiedTick,
     lohkoAvatar,
     downloadIcon,
-    helpIcon
+    helpIcon,
+    helpIconWarning,
+    searchPlaceHolder
 }

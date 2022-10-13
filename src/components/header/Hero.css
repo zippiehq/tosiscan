@@ -134,3 +134,19 @@ select:focus {
   top: 18.5px;
   border: none;
 }
+
+#basic-button {
+  position: absolute;
+  right: -32px;
+  top: -6px;
+  font-weight: 1rem;
+  line-height: 1.5rem;
+  color: #101828;
+  text-transform: capitalize;
+  min-width: 100px;
+}
+
+.MuiMenu-paper {
+  margin-top: 8px;
+  margin-left: -48px;
+}

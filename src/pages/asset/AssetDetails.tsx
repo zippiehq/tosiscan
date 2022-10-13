@@ -5,7 +5,8 @@ import "./AssetDetails.css";
 import { IDataset } from "../../interfaces/Dataset.interface";
 import BasicTabs from "../../components/asset/Tabs";
 import Footer from "../../components/footer/Footer";
-import { avatar, chevronRight, homeIcon } from "../../assets";
+import { avatar, chevronRight, helpIconWarning, homeIcon } from "../../assets";
+import Hero from "../../components/header/Hero";
 
 export default function AssetDetails() {
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
@@ -15,6 +16,7 @@ export default function AssetDetails() {
   return (
     <>
       {/* header */}
+      <Hero />
       <div className="asset-details">
         <div className="dataset-header">
           <div className="breadcrumbs">
@@ -32,6 +34,10 @@ export default function AssetDetails() {
               <h1>{asset?.dataset}</h1>
               <div className="badge">
                 <span>Asset backed</span>
+                <div>
+                  <img src={helpIconWarning} alt="Warning Icon" />
+                  <p>There is a problem with this dataset</p>
+                </div>
                 <span>Last verified {asset?.lastVerified}</span>
               </div>
             </div>

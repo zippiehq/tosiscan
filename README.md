@@ -14,6 +14,10 @@ In the project directory, you can run:
 
 `npx json-server -p 5000 -w data/db.json`
 
+### copy env variables
+
+`cp .env.example .env`
+
 ### `yarn start`
 
 Runs the app in the development mode.\

@@ -1,0 +1,37 @@
+{
+  "verifications": [
+    {
+      "id": "0x80bf3a23",
+      "dataset": "Lohko Gold",
+      "contract": "0x80bf3a23...89764372",
+      "type": "Digital Asset",
+      "assetClass": "Gold",
+      "lastVerified": "an hour ago",
+      "publisher": "Lohko Wallet Pte Ltd",
+      "issuers": "Lohko Wallet Pte Ltd",
+      "image": "src/assets/Lohko.svg"
+    },
+    {
+      "id": "0x80bf3a24",
+      "dataset": "Carbon Credit Futures ",
+      "contract": "0x80bf3a23...89764372",
+      "type": "Digital Asset",
+      "assetClass": "Carbon Credits",
+      "lastVerified": "an hour ago",
+      "publisher": "Lohko Wallet Pte Ltd",
+      "issuers": "Lohko Wallet Pte Ltd",
+      "image": "src/assets/Lohko.svg"
+    },
+    {
+      "id": "0x80bf3a25",
+      "dataset": "Nguru Project Satellite Images",
+      "contract": "0x80bf3a23...89764372",
+      "type": "File timestamp",
+      "assetClass": "Satellite image",
+      "lastVerified": "an hour ago",
+      "publisher": "AirImpact",
+      "issuers": "PAMS Foundation",
+      "image": "src/assets/Lohko.svg"
+    }
+  ]
+}

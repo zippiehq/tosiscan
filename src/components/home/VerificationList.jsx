@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { get } from "../../adapters/axios";
-import { LohkoImage, verifiedTick } from "../../assets";
+import { verifiedTick } from "../../assets";
 import { SearchContext } from "../../context/SearchContext";
 import { useNavigate } from "react-router-dom";
 import { DatasetContext } from "../../context/DatasetContext";
 import image from "../../assets/Lohko.svg"
+import axios from "axios";
+
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(false);
@@ -12,14 +13,15 @@ export default function VerificationList() {
   const { dataset, setDataset } = useContext(DatasetContext)
   const navigate = useNavigate();
 
+  const term = value.term
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await get("/verifications");
-
+        const response = await axios.get("db.json")
         if (response && response.data) {
-          setDataset(response.data)
+          setDataset(response.data.verifications)
           setLoading(false);
         }
       } catch (error) {
@@ -31,29 +33,29 @@ export default function VerificationList() {
     fetchData();
   }, [setDataset]);
 
-  // useEffect(() => {
-  //   const algoliasearch = require("algoliasearch");
+  useEffect(() => {
+    const algoliasearch = require("algoliasearch");
 
-  //   const client = algoliasearch(
-  //     "MQ99WPDDH2",
-  //     "55103168da08e82164a86c1c885b537f"
-  //   );
-  //   const index = client.initIndex("zippie");
+    const client = algoliasearch(
+      "MQ99WPDDH2",
+      "55103168da08e82164a86c1c885b537f"
+    );
+    const index = client.initIndex("zippie");
 
-  //   function filterData() {
-  //     index
-  //       .search(value)
-  //       .then(({ hits }) => {
-  //         setDataset(hits)
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
+    function filterData() {
+      index
+        .search(term)
+        .then(({ hits }) => {
+          setDataset(hits)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
 
-  //   setTimeout(filterData, 500);
+    setTimeout(filterData, 500);
 
-  // }, [value, setDataset]);
+  }, [term, setDataset]);
 
   return (
     <div className="verification-list">
