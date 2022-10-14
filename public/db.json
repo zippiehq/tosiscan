@@ -9,7 +9,9 @@
       "lastVerified": "an hour ago",
       "publisher": "Lohko Wallet Pte Ltd",
       "issuers": "Lohko Wallet Pte Ltd",
-      "image": "src/assets/Lohko.svg"
+      "image": "./assets/lohko-logo.png",
+      "status": "",
+      "available": true
     },
     {
       "id": "0x80bf3a24",
@@ -20,7 +22,9 @@
       "lastVerified": "an hour ago",
       "publisher": "Lohko Wallet Pte Ltd",
       "issuers": "Lohko Wallet Pte Ltd",
-      "image": "src/assets/Lohko.svg"
+      "image": "./assets/carbon-credit-logo.png",
+      "status": "Coming soon",
+      "available": false
     },
     {
       "id": "0x80bf3a25",
@@ -31,7 +35,9 @@
       "lastVerified": "an hour ago",
       "publisher": "AirImpact",
       "issuers": "PAMS Foundation",
-      "image": "src/assets/Lohko.svg"
+      "image": "./assets/nguru-logo.png",
+      "status": "Coming soon",
+      "available": false
     }
   ]
 }

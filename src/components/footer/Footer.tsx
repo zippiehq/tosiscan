@@ -23,12 +23,12 @@ export default function Footer() {
               generation of apps, games, and digital assets.
             </p>
             <div className="links">
-              <Link to="/zippie">Zippie</Link>
-              <Link to="/productsß">Products</Link>
-              <Link to="/pricing">Pricing</Link>
-              <Link to="/blog">Blog</Link>
-              <Link to="/help">Help</Link>
-              <Link to="/privacy">Privacy</Link>
+              <a style={{ cursor: "default" }}>Zippie</a>
+              <a style={{ cursor: "default" }}>Products</a>
+              <a style={{ cursor: "default" }}>Pricing</a>
+              <a style={{ cursor: "default" }}>Blog</a>
+              <a style={{ cursor: "default" }}>Help</a>
+              <a style={{ cursor: "default" }}>Privacy</a>
             </div>
           </div>
           <div className="app-store-actions">

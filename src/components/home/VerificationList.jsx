@@ -1,61 +1,36 @@
-import { useContext, useEffect, useState } from "react";
-import { verifiedTick } from "../../assets";
-import { SearchContext } from "../../context/SearchContext";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DatasetContext } from "../../context/DatasetContext";
-import image from "../../assets/Lohko.svg"
 import axios from "axios";
 
+import { verifiedTick } from "../../assets";
+import { DatasetContext } from "../../context/DatasetContext";
+
+import { LohkoImage } from "../../assets";
+import { NguruLogo } from "../../assets";
+import { CarbonCreditLogo } from "../../assets"
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(false);
-  const { value } = useContext(SearchContext);
   const { dataset, setDataset } = useContext(DatasetContext)
   const navigate = useNavigate();
 
-  const term = value.term
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("db.json")
-        if (response && response.data) {
-          setDataset(response.data.verifications)
-          setLoading(false);
-        }
-      } catch (error) {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("db.json")
+      if (response && response.data) {
+        setDataset(response.data.verifications)
         setLoading(false);
-        console.log(error);
       }
-    };
-
-    fetchData();
-  }, [setDataset]);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const algoliasearch = require("algoliasearch");
-
-    const client = algoliasearch(
-      "MQ99WPDDH2",
-      "55103168da08e82164a86c1c885b537f"
-    );
-    const index = client.initIndex("zippie");
-
-    function filterData() {
-      index
-        .search(term)
-        .then(({ hits }) => {
-          setDataset(hits)
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-
-    setTimeout(filterData, 500);
-
-  }, [term, setDataset]);
+    fetchData();
+  }, []);
 
   return (
     <div className="verification-list">
@@ -81,14 +56,15 @@ export default function VerificationList() {
           </tbody>
         ) : (
           <tbody>
-            {dataset.map((row, index) => (
-              <tr key={index} onClick={() => { navigate(`/asset/${row.id}`) }}>
+            {dataset.map((row) => (
+              <tr key={row.id} className={row.available ? '' : 'disabled'} onClick={ row.available ? () => {  navigate(`/asset/${row.id}`) } : () => void {} }>
                 <td>
                   <div className="flex">
-                    <img className="avatar" src={image} alt="lohko" />
+                    <img className="avatar" src={row.image} alt="." />
                     <div className="dataset">
                       <div className="name">{row.dataset}</div>
                       <div className="address">{row.contract}</div>
+                      <div className="status">{row.status}</div>
                     </div>
                   </div>
                 </td>
