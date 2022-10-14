@@ -7,5 +7,6 @@ export interface IDataset {
     lastVerified: string
     publisher: string
     issuers: string,
-    image: string
+    image: string,
+    available: string
 }
