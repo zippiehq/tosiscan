@@ -11,7 +11,8 @@
       "issuers": "Lohko Wallet Pte Ltd",
       "image": "./assets/lohko-logo.png",
       "status": "",
-      "available": true
+      "available": true,
+      "assetIssued": 28
     },
     {
       "id": "0x80bf3a24",
@@ -24,7 +25,8 @@
       "issuers": "Lohko Wallet Pte Ltd",
       "image": "./assets/carbon-credit-logo.png",
       "status": "Coming soon",
-      "available": false
+      "available": false,
+      "assetIssued": 12
     },
     {
       "id": "0x80bf3a25",
@@ -37,7 +39,8 @@
       "issuers": "PAMS Foundation",
       "image": "./assets/nguru-logo.png",
       "status": "Coming soon",
-      "available": false
+      "available": false,
+      "assetIssued": 25
     }
   ]
 }

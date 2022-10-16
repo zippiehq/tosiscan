@@ -22,6 +22,7 @@ import searchPlaceHolder from "./SearchPlaceholder.svg"
 import buttonGroup from "./ButtongroupPlaceholder.svg"
 import NguruLogo from "./nguru-logo.png"
 import CarbonCreditLogo from "./carbon-credit.png"
+import AddressIcon from "./AddressIcon.svg"
 
 export {
     caretDownWhite,
@@ -47,5 +48,6 @@ export {
     searchPlaceHolder,
     buttonGroup,
     NguruLogo,
-    CarbonCreditLogo
+    CarbonCreditLogo,
+    AddressIcon
 }
