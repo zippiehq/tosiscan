@@ -94,15 +94,16 @@ div > .link {
 }
 
 .search-box input {
-  padding: 14px 23.5px 14px 42px;
-  width: 600px;
-  height: 24px;
-  background: #ffffff;
-  border-radius: 100px;
+  box-sizing: border-box;
+  padding: 14px 122px 14px 42px;
+  width: 640px;
+  min-height: 52px;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   line-height: 1.25rem;
+  background: #ffffff;
   border: none;
+  border-radius: 100px;
 }
 
 input:focus,
@@ -110,40 +111,31 @@ select:focus {
   outline: none;
 }
 
-::placeholder {
-  color: #98a2b3;
+input::placeholder {
+  align-self: center;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   line-height: 1.25rem;
-  position: absolute;
-  left: 42px;
-  top: 18.5px;
-  align-self: center;
+  color: #98a2b3;
 }
 
 .search-box img {
   position: absolute;
-  left: 16.5px;
-  top: 18.5px;
-  margin-right: 10.5px;
-}
-
-.search-box .search-filter {
-  position: absolute;
-  right: 38px;
-  top: 18.5px;
-  border: none;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #basic-button {
   position: absolute;
-  right: -32px;
-  top: -6px;
-  font-weight: 1rem;
-  line-height: 1.5rem;
+  right: 0;
+  top: 50%;
+  width: 122px;
+  font-size: 16px;
+  line-height: 1.5;
   color: #101828;
-  text-transform: capitalize;
-  min-width: 100px;
+  text-transform: none;
+  transform: translateY(-50%);
 }
 
 .MuiMenu-paper {
