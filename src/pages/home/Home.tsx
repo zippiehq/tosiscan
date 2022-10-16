@@ -11,10 +11,6 @@ export default function Home() {
       <div className="home-content">
         <div className="home-title">
           <h2 className="content-title">Latest verifications</h2>
-          <p className="content-summary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor.
-          </p>
         </div>
         <VerificationList />
         <div className="home-cta">

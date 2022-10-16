@@ -20,6 +20,8 @@ import caretDownWhite from "./CaretDownWhite.svg"
 import helpIconWarning from "./HelpIconWarning.svg"
 import searchPlaceHolder from "./SearchPlaceholder.svg"
 import buttonGroup from "./ButtongroupPlaceholder.svg"
+import NguruLogo from "./nguru-logo.png"
+import CarbonCreditLogo from "./carbon-credit.png"
 
 export {
     caretDownWhite,
@@ -43,5 +45,7 @@ export {
     helpIcon,
     helpIconWarning,
     searchPlaceHolder,
-    buttonGroup
+    buttonGroup,
+    NguruLogo,
+    CarbonCreditLogo
 }

@@ -45,6 +45,24 @@ thead tr {
   border-bottom: 1px solid #eaecf0;
 }
 
+.disabled {
+  background-color: #fdfdfd;
+  opacity: 0.75;
+}
+
+.disabled td {
+  cursor: default !important;
+}
+
+.disabled .status {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  font-size: 11px;
+  border: 1px solid #667085;
+  border-radius: 100px;
+}
+
 th,
 td {
   padding: 18px 0 18px 24px;
