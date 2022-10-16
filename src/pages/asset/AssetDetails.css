@@ -194,6 +194,18 @@ h3 {
   border-radius: 10px;
 }
 
+.content .address {
+  display: flex;
+  align-items: center;
+}
+.address img {
+  margin-right: 6px;
+}
+
+.address p {
+  margin: 0;
+}
+
 .content h4 {
   margin: 0 0 2px 0;
   font-size: 0.875rem;

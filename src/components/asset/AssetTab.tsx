@@ -15,12 +15,15 @@ export default function AssetTab() {
   React.useEffect(() => {
     // use query seal to get latest data
     async function fetchAssets() {
-      const sealResponse = await get("/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa", "json");
+      const sealResponse = await get(
+        "/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
+        "json"
+      );
       const { data } = await get(
         "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
         "blob"
       );
-      let res: any = await unzip(data);
+      let res: any = await unzip(data, "assets.json");
       res = Array.from(res);
       setAssets(res);
     }
