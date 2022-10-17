@@ -23,6 +23,8 @@ import buttonGroup from "./ButtongroupPlaceholder.svg"
 import NguruLogo from "./nguru-logo.png"
 import CarbonCreditLogo from "./carbon-credit.png"
 import AddressIcon from "./AddressIcon.svg"
+import check from "./check.svg"
+import info from "./info.svg"
 
 export {
     caretDownWhite,
@@ -49,5 +51,7 @@ export {
     buttonGroup,
     NguruLogo,
     CarbonCreditLogo,
-    AddressIcon
+    AddressIcon,
+    check,
+    info
 }
