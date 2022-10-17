@@ -1,21 +1,64 @@
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { get } from "../../adapters/axios";
 import {
   facebookLogoGrey,
   verifiedTick,
   lohkoAvatar,
   downloadIcon,
   helpIcon,
+  AddressIcon,
 } from "../../assets";
-export default function OverviewTab() {
+
+import dayjs from "dayjs";
+import unzip from "../../utils/unzip";
+export default function OverviewTab({
+  latestTimeStamp,
+  creationTimeStamp,
+}: {
+  latestTimeStamp: number;
+  creationTimeStamp: number;
+}) {
+  const [metaData, setMetadata] = useState({
+    "asset-class": "Gold",
+    "asset-description": "Gold Bullion (g/oz/kg)",
+    contract: "bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
+    "main-location": "Lohko Gold Datachain",
+    name: "Lohko Gold",
+    "supported-locations": ["Ethereum", "Zippienet"],
+  });
+
+  useEffect(() => {
+    // use query seal to get latest data
+    async function fetchAssets() {
+      const sealResponse = await get(
+        "/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
+        "json"
+      );
+      const { data } = await get(
+        "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
+        "blob"
+      );
+      let res: any = await unzip(data, "metadata.json");
+
+      setMetadata(res);
+    }
+
+    fetchAssets();
+  }, []);
+
+  console.log(
+    dayjs(new Date(creationTimeStamp * 1000)).format("DD MMM YYYY hh:mm:ss")
+  );
+
   return (
     <div className="asset-overview">
       <div className="column-one">
         <div className="summary">
           <h3>Summary</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Lohko Gold bars are numbered and stored in a secure vault and owners
+            have a legal right to claim them anytime.
           </p>
         </div>
         <div className="general-info">
@@ -24,25 +67,25 @@ export default function OverviewTab() {
             <tbody>
               <tr>
                 <td>Data contract</td>
-                <td style={{ color: "#07939C" }}>
-                  0x80bf3a234b751494f6688522af20bb834b3680b689764372
-                </td>
+                <td>{metaData.contract}</td>
               </tr>
               <tr>
                 <td>Dataset name</td>
-                <td>Lohko Gold</td>
+                <td>{metaData.name}</td>
               </tr>
               <tr>
                 <td>Asset description</td>
-                <td>Gold Bullion (g/oz/kg)</td>
+                <td>{metaData["asset-description"]}</td>
               </tr>
               <tr>
                 <td>Asset class</td>
-                <td>Gold</td>
+                <td>{metaData["asset-class"]}</td>
               </tr>
               <tr>
                 <td>Main location</td>
-                <td style={{ color: "#07939C" }}>Lohko Gold Datachain</td>
+                <td style={{ color: "#07939C" }}>
+                  {metaData["main-location"]}
+                </td>
               </tr>
               <tr>
                 <td>Supported assets location</td>
@@ -53,15 +96,26 @@ export default function OverviewTab() {
                     color: "#07939C",
                   }}
                 >
-                  <span>Polygon</span>
-                  <span>Arbitrum</span>
-                  <span>Ethereum</span>
-                  <span>ZippieNet</span>
+                  {metaData["supported-locations"].map((item, index) => (
+                    <span key={index}>{item}</span>
+                  ))}
                 </td>
               </tr>
               <tr>
                 <td>Creation date</td>
-                <td>6 Mar 2022 10:12:45 UTC (1 day ago)</td>
+                <td>
+                  {" "}
+                  {moment
+                    .unix(creationTimeStamp)
+                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                  (
+                  {moment(
+                    moment
+                      .unix(creationTimeStamp)
+                      .format("DD MMM YYYY hh:mm:ss [UTC]")
+                  ).fromNow()}
+                  )
+                </td>
               </tr>
             </tbody>
           </table>
@@ -76,28 +130,26 @@ export default function OverviewTab() {
                 <td>Weekly</td>
               </tr>
               <tr>
-                <td>Last verification</td>
-                <td>6 Mar 2022 10:12:45 UTC (1 day ago)</td>
-              </tr>
-              <tr>
-                <td>Availability score</td>
+                <td>Last successful verification</td>
                 <td>
-                  <span
-                    style={{
-                      color: "#1B876A",
-                      backgroundColor: "#F5FCFA",
-                      padding: "4px 12px",
-                      borderRadius: "16px",
-                      fontSize: "0.875rem",
-                      fontWeight: 500,
-                    }}
-                  >
-                    99%
-                  </span>
+                  {moment
+                    .unix(latestTimeStamp)
+                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                  (
+                  {moment(
+                    moment
+                      .unix(latestTimeStamp)
+                      .format("DD MMM YYYY hh:mm:ss [UTC]")
+                  ).fromNow()}
+                  )
                 </td>
               </tr>
               <tr>
-                <td>History match score</td>
+                <td>Last failed verification</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Availability score</td>
                 <td>
                   <span
                     style={{
@@ -113,23 +165,6 @@ export default function OverviewTab() {
                   </span>
                 </td>
               </tr>
-              <tr>
-                <td>Signature match score</td>
-                <td>
-                  <span
-                    style={{
-                      color: "#1B876A",
-                      backgroundColor: "#F5FCFA",
-                      padding: "4px 12px",
-                      borderRadius: "16px",
-                      fontSize: "0.875rem",
-                      fontWeight: 500,
-                    }}
-                  >
-                    99%
-                  </span>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -142,11 +177,16 @@ export default function OverviewTab() {
 
           <div className="content">
             <h4>Physical Custody</h4>
+            <h2>BullionStar</h2>
+
             <h2>45 New Bridge Rd, Singapore 059398</h2>
+            <div className="address">
+              <img src={AddressIcon} alt="Address pin" />
+              <p>45 New Bridge Rd, Singapore 059398</p>
+            </div>
             <p>
               We have partnered with Singapore-based gold and silver trading
-              company...
-              <span>Read more</span>
+              company BullionStar to ensure a safe and secure investment process
             </p>
 
             <div className="download-document">
@@ -191,11 +231,11 @@ export default function OverviewTab() {
           <div className="description">
             <div className="stats">
               <div className="dataset-stat">
-                <span>78</span>
+                <span>1</span>
                 <p>Datasets</p>
               </div>
               <div className="asset-stat">
-                <span>1,208</span>
+                <span>86</span>
                 <p>Verified assets</p>
               </div>
             </div>
@@ -209,38 +249,30 @@ export default function OverviewTab() {
               <img src={facebookLogoGrey} alt="Facebook Logo" />
               <span>@LohkoWallet</span>
             </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@lohkonft</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@lohko-ltd</span>
-            </div>
           </div>
 
-          <div className="website">
-            <a href="www.lohkowallet.com" target="_blank">
-              www.lohkowallet.com
-            </a>
+          <div style={{ justifyContent: "space-between" }} className="flex">
+            <div className="website">
+              <a href="www.lohkowallet.com" target="_blank">
+                www.lohkowallet.com
+              </a>
+            </div>
+            <div className="website">
+              <span style={{ color: "#475467" }}>View in</span>{" "}
+              <a href="www.lohkowallet.com" target="_blank">
+                OpenSea
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="disputes">
-          <h3>Disputes</h3>
+          <h3>Dataset disputes</h3>
           <table>
             <tbody>
               <tr>
                 <td>All-time disputes</td>
-                <td>5</td>
+                <td>0</td>
               </tr>
               <tr>
                 <td>Publisher success rate</td>
@@ -261,10 +293,6 @@ export default function OverviewTab() {
               </tr>
               <tr>
                 <td>Open disputes</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>Disputes in the past 7 days</td>
                 <td>0</td>
               </tr>
             </tbody>

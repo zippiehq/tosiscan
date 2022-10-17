@@ -40,6 +40,7 @@ export default function VerificationList() {
             <th>Dataset</th>
             <th>Type</th>
             <th>Asset Class</th>
+            {/* <th>Asset Issued</th> */}
             <th>Last verified</th>
             <th>Publisher</th>
             <th>Issuer/s</th>
@@ -57,7 +58,7 @@ export default function VerificationList() {
         ) : (
           <tbody>
             {dataset.map((row) => (
-              <tr key={row.id} className={row.available ? '' : 'disabled'} onClick={ row.available ? () => {  navigate(`/asset/${row.id}`) } : () => void {} }>
+              <tr key={row.id} className={row.available ? '' : 'disabled'} onClick={row.available ? () => { navigate(`/asset/${row.id}`) } : () => void {}}>
                 <td>
                   <div className="flex">
                     <img className="avatar" src={row.image} alt="." />
@@ -70,6 +71,7 @@ export default function VerificationList() {
                 </td>
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
+                {/* <td>{row.assetIssued}</td> */}
                 <td>{row.lastVerified}</td>
                 <td>
                   <div className="flex">
