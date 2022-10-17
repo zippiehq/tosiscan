@@ -15,47 +15,24 @@ import './AssetSearchResult.css'
 import Hero from '../../components/header/Hero'
 import Footer from '../../components/footer/Footer'
 
-import { avatar } from '../../assets'
-
-import { IDataset } from '../../interfaces/Dataset.interface'
-import { DatasetContext } from '../../context/DatasetContext'
-import { get } from "../../adapters/axios";
-import unzip from "../../utils/unzip";
-
+import { useDatachainOutput } from '../../hooks/useDatachainOutput';
 
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams();
 
-  const [assets, setAssets] = React.useState<any[]>([]);
+  const { assets, isLoading } = useDatachainOutput()
 
-  React.useEffect(() => {
-    // use query seal to get latest data
-    async function fetchAssets() {
-      const sealResponse = await get("/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa", "json");
-      const { data } = await get(
-        "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
-        "blob"
-      );
-      let res: any = await unzip(data, "assets.json");
-      res = Array.from(res)
-      setAssets(res);
-    }
-    fetchAssets();
-  }, []);
-
-  const filteredAsset = assets.find(({location}) => {
+  const filtered = assets.filter(({location}) => {
     if (location?.contract === assetContract && location?.tokenId === assetTokenId) {
       return true
     }
   })
 
-/*  if (!filteredAsset) {
-    return 'no data'
-  }*/
+  if (isLoading) {
+    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+  }
 
-  console.log(filteredAsset)
-
-  return !filteredAsset ? <div style={{ margin: '100px 50px', fontSize: '20px' }}>No data</div> : (
+  return filtered.length === 0 ? <div style={{ margin: '100px 50px', fontSize: '20px1' }}>No data</div> : (
     <>
       <div className="asset-details">
         <div className="dataset-header">
@@ -81,33 +58,35 @@ const AssetDetails = () => {
                 </TableHead>
 
                 <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      {filteredAsset?.serial}
-                    </TableCell>
+                  {filtered.map((asset, i) =>
+                    <TableRow>
+                      <TableCell>
+                        {asset.serial}
+                      </TableCell>
 
-                    <TableCell sx={{ display: "flex", alignItems: "center" }}>
-                      <span>
-                        <img src={filteredAsset?.imageUrl} className="avatar" width='40px' height='40px' style={{ marginRight: "12px",}} alt='.' />
-                      </span>
+                      <TableCell sx={{ display: "flex", alignItems: "center" }}>
+                        <span>
+                          <img src={asset.imageUrl} className="avatar" width='40px' height='40px' style={{ marginRight: "12px",}} alt='.' />
+                        </span>
 
-                      {filteredAsset?.product}
-                    </TableCell>
+                        {asset.product}
+                      </TableCell>
 
-                    <TableCell>
-                      {filteredAsset?.location.name}
-                    </TableCell>
+                      <TableCell>
+                        {asset.location.name}
+                      </TableCell>
 
-                    <TableCell>
-                      <a href={`https://opensea.io/assets/ethereum/${assetContract}/${assetTokenId}`} style={{ color: "#07939C", textDecoration: 'none'}}>
-                        {filteredAsset?.location.contract}
-                      </a>
-                    </TableCell>
+                      <TableCell>
+                        <a href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`} style={{ color: "#07939C", textDecoration: 'none'}}>
+                          {asset.location.contract}
+                        </a>
+                      </TableCell>
 
-                    <TableCell >
-                      {filteredAsset?.location.tokenId}
-                    </TableCell>
-                  </TableRow>
+                      <TableCell >
+                        {asset?.location.tokenId}
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
