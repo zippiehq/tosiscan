@@ -10,6 +10,7 @@ import unzip from "../../utils/unzip";
 import { buttonGroup, check, info, searchIcon } from "../../assets";
 import image from "../../assets/Lohko.svg";
 import { TablePagination } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function AssetTab() {
   const [assets, setAssets] = React.useState<any[]>([]);
@@ -160,6 +161,8 @@ function IndividualAssetTable({
     setPage(0);
   };
 
+  console.log({ assets });
+
   return (
     <div style={{ marginTop: "16px" }}>
       <TableContainer>
@@ -203,27 +206,25 @@ function IndividualAssetTable({
                       {row.product}
                     </TableCell>
                     <TableCell>
-                      <span
-                        style={{
-                          // width: "20px",
-                          // height: "20px",
-                          backgroundColor:
-                            row.status === "ok" ? "#eff9f3" : "#fef1ef",
-                          borderRadius: "16px",
-                          padding: "8px",
-                        }}
+                      <Tooltip
+                        title={
+                          row.status === "ok"
+                            ? "Signature match"
+                            : "Signature does not match"
+                        }
+                        placement="top"
                       >
                         <img
-                          style={{
-                            width: "12px",
-                            height: "12px",
-                          }}
                           src={row.status === "ok" ? check : info}
                           alt="check icon"
                         />
-                      </span>
+                      </Tooltip>
                     </TableCell>
-                    <TableCell>ZippieNet</TableCell>
+                    <TableCell>
+                      {row.location
+                        ? row.location.name.toUpperCase()
+                        : "Zippienet"}
+                    </TableCell>
                     <TableCell>{row.tokenId.substring(0, 20)}</TableCell>
                     <TableCell>{row.ownerAccount}</TableCell>
                   </TableRow>

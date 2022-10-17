@@ -9,11 +9,15 @@ import {
   helpIcon,
   AddressIcon,
 } from "../../assets";
+
+import dayjs from "dayjs";
 import unzip from "../../utils/unzip";
 export default function OverviewTab({
   latestTimeStamp,
+  creationTimeStamp,
 }: {
   latestTimeStamp: number;
+  creationTimeStamp: number;
 }) {
   const [metaData, setMetadata] = useState({
     "asset-class": "Gold",
@@ -43,16 +47,18 @@ export default function OverviewTab({
     fetchAssets();
   }, []);
 
+  console.log(
+    dayjs(new Date(creationTimeStamp * 1000)).format("DD MMM YYYY hh:mm:ss")
+  );
+
   return (
     <div className="asset-overview">
       <div className="column-one">
         <div className="summary">
           <h3>Summary</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Lohko Gold bars are numbered and stored in a secure vault and owners
+            have a legal right to claim them anytime.
           </p>
         </div>
         <div className="general-info">
@@ -97,7 +103,19 @@ export default function OverviewTab({
               </tr>
               <tr>
                 <td>Creation date</td>
-                <td>6 Mar 2022 10:12:45 UTC (1 day ago)</td>
+                <td>
+                  {" "}
+                  {moment
+                    .unix(creationTimeStamp)
+                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                  (
+                  {moment(
+                    moment
+                      .unix(creationTimeStamp)
+                      .format("DD MMM YYYY hh:mm:ss [UTC]")
+                  ).fromNow()}
+                  )
+                </td>
               </tr>
             </tbody>
           </table>
@@ -116,12 +134,12 @@ export default function OverviewTab({
                 <td>
                   {moment
                     .unix(latestTimeStamp)
-                    .format("d MMM YYYY hh:mm:ss [UTC]")}{" "}
+                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
                   (
                   {moment(
                     moment
                       .unix(latestTimeStamp)
-                      .format("d MMM YYYY hh:mm:ss [UTC]")
+                      .format("DD MMM YYYY hh:mm:ss [UTC]")
                   ).fromNow()}
                   )
                 </td>
@@ -161,14 +179,14 @@ export default function OverviewTab({
             <h4>Physical Custody</h4>
             <h2>BullionStar</h2>
 
+            <h2>45 New Bridge Rd, Singapore 059398</h2>
             <div className="address">
               <img src={AddressIcon} alt="Address pin" />
               <p>45 New Bridge Rd, Singapore 059398</p>
             </div>
             <p>
               We have partnered with Singapore-based gold and silver trading
-              company...
-              <span>Read more</span>
+              company BullionStar to ensure a safe and secure investment process
             </p>
 
             <div className="download-document">
@@ -231,22 +249,6 @@ export default function OverviewTab({
               <img src={facebookLogoGrey} alt="Facebook Logo" />
               <span>@LohkoWallet</span>
             </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@lohkonft</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
-            </div>
-            <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@lohko-ltd</span>
-            </div>
           </div>
 
           <div style={{ justifyContent: "space-between" }} className="flex">
@@ -270,7 +272,7 @@ export default function OverviewTab({
             <tbody>
               <tr>
                 <td>All-time disputes</td>
-                <td>5</td>
+                <td>0</td>
               </tr>
               <tr>
                 <td>Publisher success rate</td>
