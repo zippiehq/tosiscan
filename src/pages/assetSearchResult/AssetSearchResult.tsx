@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -17,6 +17,9 @@ import Footer from '../../components/footer/Footer'
 
 import { useDatachainOutput } from '../../hooks/useDatachainOutput';
 
+import { check } from '../../assets'
+import { info } from '../../assets'
+
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams();
 
@@ -32,7 +35,7 @@ const AssetDetails = () => {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
 
-  return filtered.length === 0 ? <div style={{ margin: '100px 50px', fontSize: '20px1' }}>No data</div> : (
+  return filtered.length === 0 ? <div style={{ margin: '100px 50px', fontSize: '20px' }}>No data</div> : (
     <>
       <div className="asset-details">
         <div className="dataset-header">
@@ -51,6 +54,7 @@ const AssetDetails = () => {
                   <TableRow>
                     <TableCell>Serial No.</TableCell>
                     <TableCell>Asset</TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell>Blockchain</TableCell>
                     <TableCell>Contract</TableCell>
                     <TableCell>Token ID</TableCell>
@@ -70,6 +74,10 @@ const AssetDetails = () => {
                         </span>
 
                         {asset.product}
+                      </TableCell>
+
+                      <TableCell>
+                        { asset.status ? <img src={check} alt='.' /> : <img src={info} alt='.' /> }
                       </TableCell>
 
                       <TableCell>
