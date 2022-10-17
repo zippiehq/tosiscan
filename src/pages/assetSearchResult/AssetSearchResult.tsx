@@ -36,7 +36,7 @@ const AssetDetails = () => {
         "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
         "blob"
       );
-      let res: any = await unzip(data);
+      let res: any = await unzip(data, "assets.json");
       res = Array.from(res)
       setAssets(res);
     }
