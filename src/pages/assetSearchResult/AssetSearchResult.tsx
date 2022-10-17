@@ -35,6 +35,10 @@ const AssetDetails = () => {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
 
+  const truncate = () => {
+
+  }
+
   return filtered.length === 0 ? <div style={{ margin: '100px 50px', fontSize: '20px' }}>No data</div> : (
     <>
       <div className="asset-details">
@@ -88,7 +92,7 @@ const AssetDetails = () => {
 
                       <TableCell>
                         <a href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`} style={{ color: "#07939C", textDecoration: 'none'}}>
-                          {asset.location.contract.substring(0, 10)}
+                          {asset.location.contract.slice(0, 4) + '...' + asset.location.contract.slice(asset.location.contract.length-4)}
                         </a>
                       </TableCell>
 
@@ -97,7 +101,7 @@ const AssetDetails = () => {
                       </TableCell>
 
                       <TableCell>
-                        {asset.ownerAccount.substring(0, 10)}
+                        {asset.ownerAccount.slice(0, 4) + '...' + asset.ownerAccount.slice(asset.ownerAccount.length-4)}
                       </TableCell>
 
                       <TableCell>
