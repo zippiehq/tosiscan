@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import {
   Table,
@@ -21,9 +21,9 @@ import { check } from '../../assets'
 import { info } from '../../assets'
 
 const AssetDetails = () => {
-  const { assetContract, assetTokenId } = useParams();
-
+  const { assetContract, assetTokenId } = useParams()
   const { assets, isLoading } = useDatachainOutput()
+  const navigate = useNavigate()
 
   const filtered = assets.filter(({location}) => {
     if (location?.contract === assetContract && location?.tokenId === assetTokenId) {
@@ -40,14 +40,14 @@ const AssetDetails = () => {
       <div className="asset-details">
         <div className="dataset-header">
           <div className="title">
-            <h2 style={{ margin: 0 }}>Asset details</h2>
+            <h2 style={{ margin: 0 }}>Search Results</h2>
           </div>
         </div>
       </div>
 
       <div className="asset-tab">
         <div className="asset-tab-overiew" style={{ borderLeft: '1px solid #eeeef0', borderRight: '1px solid #eeeef0' }}>
-          <div style={{ width: '75%', margin:'0 auto 60px 80px' }}>
+          <div style={{ width: '100%', margin:'0 80px 60px 80px' }}>
             <TableContainer>
               <Table>
                 <TableHead>
@@ -58,6 +58,8 @@ const AssetDetails = () => {
                     <TableCell>Blockchain</TableCell>
                     <TableCell>Contract</TableCell>
                     <TableCell>Token ID</TableCell>
+                    <TableCell>Owner Address</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -86,12 +88,22 @@ const AssetDetails = () => {
 
                       <TableCell>
                         <a href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`} style={{ color: "#07939C", textDecoration: 'none'}}>
-                          {asset.location.contract}
+                          {asset.location.contract.substring(0, 10)}
                         </a>
                       </TableCell>
 
-                      <TableCell >
+                      <TableCell>
                         {asset?.location.tokenId}
+                      </TableCell>
+
+                      <TableCell>
+                        {asset.ownerAccount.substring(0, 10)}
+                      </TableCell>
+
+                      <TableCell>
+                        <a onClick={ () => {navigate(`/asset/0x80bf3a23`)} } style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}>
+                          View Dataset
+                        </a>
                       </TableCell>
                     </TableRow>
                   )}
