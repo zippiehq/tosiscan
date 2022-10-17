@@ -63,7 +63,7 @@ export default function AssetDetails() {
                   {moment(
                     moment
                       .unix(latestTimeStamp)
-                      .format("d MMM YYYY hh:mm:ss [UTC]")
+                      .format("DD MMM YYYY hh:mm:ss [UTC]")
                   ).fromNow()}
                 </span>
               </div>

@@ -220,10 +220,8 @@ function IndividualAssetTable({
                         />
                       </Tooltip>
                     </TableCell>
-                    <TableCell>
-                      {row.location
-                        ? row.location.name.toUpperCase()
-                        : "Zippienet"}
+                    <TableCell sx={{ textTransform: "capitalize" }}>
+                      {row.location ? row.location.name : "Zippienet"}
                     </TableCell>
                     <TableCell>{row.tokenId.substring(0, 20)}</TableCell>
                     <TableCell>{row.ownerAccount}</TableCell>

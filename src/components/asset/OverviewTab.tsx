@@ -246,20 +246,42 @@ export default function OverviewTab({
           </div>
           <div className="socials">
             <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
+              <a
+                href="https://twitter.com/lohkowallet"
+                target="_blank"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "none",
+                }}
+                rel="noreferrer"
+              >
+                <img src={facebookLogoGrey} alt="Twitter Logo" />
+                <span>@LohkoWallet</span>
+              </a>
             </div>
           </div>
 
-          <div style={{ justifyContent: "space-between" }} className="flex">
+          <div
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+            className="flex"
+          >
             <div className="website">
-              <a href="www.lohkowallet.com" target="_blank">
+              <a
+                href="https://lohkowallet.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 www.lohkowallet.com
               </a>
             </div>
             <div className="website">
               <span style={{ color: "#475467" }}>View in</span>{" "}
-              <a href="www.lohkowallet.com" target="_blank">
+              <a
+                href="https://opensea.io/collection/lohkonft"
+                target="_blank"
+                rel="noreferrer"
+              >
                 OpenSea
               </a>
             </div>
