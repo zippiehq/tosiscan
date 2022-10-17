@@ -40,7 +40,7 @@ export default function VerificationList() {
             <th>Dataset</th>
             <th>Type</th>
             <th>Asset Class</th>
-            <th>Asset Issued</th>
+            {/* <th>Asset Issued</th> */}
             <th>Last verified</th>
             <th>Publisher</th>
             <th>Issuer/s</th>
@@ -71,7 +71,7 @@ export default function VerificationList() {
                 </td>
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
-                <td>{row.assetIssued}</td>
+                {/* <td>{row.assetIssued}</td> */}
                 <td>{row.lastVerified}</td>
                 <td>
                   <div className="flex">

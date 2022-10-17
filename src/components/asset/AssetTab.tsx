@@ -7,11 +7,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { get } from "../../adapters/axios";
 import unzip from "../../utils/unzip";
-import { buttonGroup, searchPlaceHolder } from "../../assets";
+import { buttonGroup, check, info, searchIcon } from "../../assets";
 import image from "../../assets/Lohko.svg";
+import { TablePagination } from "@mui/material";
 
 export default function AssetTab() {
   const [assets, setAssets] = React.useState<any[]>([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
   React.useEffect(() => {
     // use query seal to get latest data
     async function fetchAssets() {
@@ -48,7 +52,7 @@ export default function AssetTab() {
         <div className="col-2">
           <div className="stats total-assets">
             <h5>Total assets</h5>
-            <h4>28</h4>
+            <h4>{assets.length}</h4>
           </div>
           <div className="stats total-assets">
             <h5>Total change</h5>
@@ -56,7 +60,18 @@ export default function AssetTab() {
           </div>
           <div className="stats total-assets">
             <h5>Publisher staking</h5>
-            <h4>100,000 TOSI</h4>
+            <h4>
+              100,000
+              <span
+                style={{
+                  marginLeft: "6px",
+                  fontSize: "20px",
+                  lineHeight: "30px",
+                }}
+              >
+                TOSI
+              </span>
+            </h4>
           </div>
         </div>
       </div>
@@ -65,14 +80,26 @@ export default function AssetTab() {
         <div className="header">
           <div className="text">
             <h3>Individual Assets</h3>
-            <p>Showing 1-10 out of 28 individual assets</p>
+            <p>
+              Showing {rowsPerPage * page + 1} - {rowsPerPage * (page + 1)} out
+              of {assets.length} individual assets
+            </p>
           </div>
           <div className="search">
-            <img src={searchPlaceHolder} alt="search placeholder" />
+            <div className="search-box">
+              <img className="search-icon" src={searchIcon} alt="Search Icon" />
+              <input placeholder="Search assets..." />
+            </div>
             <img src={buttonGroup} alt="search placeholder" />
           </div>
         </div>
-        <IndividualAssetTable assets={assets} />
+        <IndividualAssetTable
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          setPage={setPage}
+          page={page}
+          assets={assets}
+        />
       </div>
     </div>
   );
@@ -109,7 +136,30 @@ function AssetTable({ items, assets }: { items: any; assets: any }) {
   );
 }
 
-function IndividualAssetTable({ assets }: { assets: any }) {
+function IndividualAssetTable({
+  assets,
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+}: {
+  assets: any;
+  page: number;
+  setPage: any;
+  rowsPerPage: any;
+  setRowsPerPage: any;
+}) {
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <div style={{ marginTop: "16px" }}>
       <TableContainer>
@@ -118,48 +168,79 @@ function IndividualAssetTable({ assets }: { assets: any }) {
             <TableRow>
               <TableCell>Serial No.</TableCell>
               <TableCell>Asset</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Blockchain</TableCell>
-              <TableCell>Blockchain ID</TableCell>
+              <TableCell>Token ID</TableCell>
               <TableCell>Owner Address</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {assets.map((row: any, index: number) => {
-              return (
-                <TableRow key={index}>
-                  <TableCell sx={{ color: "#07939C" }}>{row.serial}</TableCell>
-                  <TableCell sx={{ display: "flex", alignItems: "center" }}>
-                    <span>
-                      <img
+            {assets
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row: any, index: number) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell sx={{ color: "#07939C" }}>
+                      {row.serial}
+                    </TableCell>
+                    <TableCell sx={{ display: "flex", alignItems: "center" }}>
+                      <span>
+                        <img
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            marginRight: "12px",
+                          }}
+                          className="avatar"
+                          src={
+                            row.product.indexOf("TEST") > -1
+                              ? image
+                              : row.imageUrl
+                          }
+                          alt="lohko"
+                        />
+                      </span>
+                      {row.product}
+                    </TableCell>
+                    <TableCell>
+                      <span
                         style={{
-                          width: "32px",
-                          height: "32px",
-                          marginRight: "12px",
+                          // width: "20px",
+                          // height: "20px",
+                          backgroundColor:
+                            row.status === "ok" ? "#eff9f3" : "#fef1ef",
+                          borderRadius: "16px",
+                          padding: "8px",
                         }}
-                        className="avatar"
-                        src={image}
-                        alt="lohko"
-                      />
-                    </span>
-                    {row.product}
-                  </TableCell>
-                  <TableCell>ZippieNet</TableCell>
-                  <TableCell sx={{ color: "#07939C" }}>
-                    0x4b6e915b821c28a1
-                  </TableCell>
-                  <TableCell sx={{ color: "#07939C" }}>
-                    0xf919ee77447b7497
-                  </TableCell>
-                  <TableCell>Asset Passport</TableCell>
-                  <TableCell sx={{ color: "#07939C" }}>Details</TableCell>
-                </TableRow>
-              );
-            })}
+                      >
+                        <img
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                          }}
+                          src={row.status === "ok" ? check : info}
+                          alt="check icon"
+                        />
+                      </span>
+                    </TableCell>
+                    <TableCell>ZippieNet</TableCell>
+                    <TableCell>{row.tokenId.substring(0, 20)}</TableCell>
+                    <TableCell>{row.ownerAccount}</TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={assets.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 }
