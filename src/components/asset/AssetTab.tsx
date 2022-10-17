@@ -11,36 +11,23 @@ import { buttonGroup, check, info, searchIcon } from "../../assets";
 import image from "../../assets/Lohko.svg";
 import { TablePagination } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
+import { useDatachainOutput } from "../../hooks/useDatachainOutput";
 
 export default function AssetTab() {
-  const [assets, setAssets] = React.useState<any[]>([]);
+  const { assets, isLoading } = useDatachainOutput()
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  React.useEffect(() => {
-    // use query seal to get latest data
-    async function fetchAssets() {
-      const sealResponse = await get(
-        "/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
-        "json"
-      );
-      const { data } = await get(
-        "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
-        "blob"
-      );
-      let res: any = await unzip(data, "assets.json");
-      res = Array.from(res);
-      setAssets(res);
-    }
-
-    fetchAssets();
-  }, []);
 
   const items = assets?.map((asset) => asset.product);
 
   let uniqueItems: any = new Set(items);
 
   uniqueItems = Array.from(uniqueItems);
+
+  if (isLoading) {
+    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+  }
 
   return (
     <div className="asset-tab">
