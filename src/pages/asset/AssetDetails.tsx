@@ -11,7 +11,8 @@ import Hero from "../../components/header/Hero";
 import { get } from "../../adapters/axios";
 
 export default function AssetDetails() {
-  const [latestTimeStamp, setLatestTimeStamp] = useState(1665581704);
+  const [latestTimeStamp, setLatestTimeStamp] = useState(0);
+  const [creationTimeStamp, setCreationTimeStamp] = useState(0);
 
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
   const { id } = useParams();
@@ -20,12 +21,14 @@ export default function AssetDetails() {
   useEffect(() => {
     async function getLastVerificationTime() {
       const { data } = await get(
-        "/tosi/api/v1/query-claims/bafyreihttpbl3c2wimyblpc3e6hflg43pa4ytvw3l5unq2mz6tfb2rgcga",
+        "/tosi/api/v1/query-claims/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
         "json"
       );
       const timeStamp = data.map((item: any) => item.timestamp);
       const latestTimeStamp = Math.max(...timeStamp);
+      const creationTimeStamp = Math.min(...timeStamp);
       setLatestTimeStamp(latestTimeStamp);
+      setCreationTimeStamp(creationTimeStamp);
     }
     getLastVerificationTime();
   }, []);
@@ -67,7 +70,10 @@ export default function AssetDetails() {
             </div>
           </div>
           <div className="tabs-button">
-            <BasicTabs latestTimeStamp={latestTimeStamp} />
+            <BasicTabs
+              creationTimeStamp={creationTimeStamp}
+              latestTimeStamp={latestTimeStamp}
+            />
           </div>
         </div>
       </div>
