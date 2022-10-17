@@ -66,8 +66,8 @@ const AssetDetails = () => {
       </div>
 
       <div className="asset-tab">
-        <div className="asset-tab-overiew">
-          <div style={{ margin:'0 auto 60px 80px' }}>
+        <div className="asset-tab-overiew" style={{ borderLeft: '1px solid #eeeef0', borderRight: '1px solid #eeeef0' }}>
+          <div style={{ width: '75%', margin:'0 auto 60px 80px' }}>
             <TableContainer>
               <Table>
                 <TableHead>
