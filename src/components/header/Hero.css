@@ -99,8 +99,8 @@ div > .link {
   width: 640px;
   min-height: 52px;
   font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  line-height: 1.25rem;
+  font-size: 16px;
+  line-height: 1.5;
   background: #ffffff;
   border: none;
   border-radius: 100px;
@@ -111,11 +111,11 @@ select:focus {
   outline: none;
 }
 
-input::placeholder {
-  align-self: center;
+.search-box input::placeholder {
+  position: static;
   font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  line-height: 1.25rem;
+  font-size: 16px;
+  line-height: 1.5;
   color: #98a2b3;
 }
 
