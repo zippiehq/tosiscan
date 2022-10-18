@@ -49,13 +49,7 @@ const TabsList = styled(TabsListUnstyled)(
   `
 );
 
-export default function UnstyledTabsIntroduction({
-  latestTimeStamp,
-  creationTimeStamp,
-}: {
-  latestTimeStamp: number;
-  creationTimeStamp: number;
-}) {
+export default function UnstyledTabsIntroduction() {
   return (
     <TabsUnstyled defaultValue={0}>
       <TabsList>
@@ -63,10 +57,7 @@ export default function UnstyledTabsIntroduction({
         <Tab>Assets</Tab>
       </TabsList>
       <TabPanel value={0}>
-        <OverviewTab
-          creationTimeStamp={creationTimeStamp}
-          latestTimeStamp={latestTimeStamp}
-        />
+        <OverviewTab />
       </TabPanel>
       <TabPanel value={1}>
         <AssetTab />
