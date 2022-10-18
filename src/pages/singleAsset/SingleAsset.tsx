@@ -109,7 +109,7 @@ const AssetDetails = () => {
   )
 }
 
-export default () =>  {
+export default function() {
   return (
     <>
       <Hero />
