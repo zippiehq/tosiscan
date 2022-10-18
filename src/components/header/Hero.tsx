@@ -21,29 +21,31 @@ function Hero() {
           </li>
           <li>
             <div>
-              <a className="link" style={{ cursor: "default" }}>
+              <Link className="link" to="/coming-soon">
                 Digital Assets
-              </a>
+              </Link>
+
               <img src={caretDownWhite} alt="Caret down" />
             </div>
           </li>
           <li>
-            <a className="link" style={{ cursor: "default" }}>
+            <Link className="link" to="/coming-soon">
               File Verifications
-            </a>
+            </Link>
           </li>
           <li>
             <div>
-              <a className="link" style={{ cursor: "default" }}>
+              <Link className="link" to="/coming-soon">
                 Publishers
-              </a>
+              </Link>
+
               <img src={caretDownWhite} alt="Caret down" />
             </div>
           </li>
           <li>
-            <a className="link" style={{ cursor: "default" }}>
+            <Link className="link" to="/coming-soon">
               Become a publisher
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
