@@ -81,8 +81,7 @@ export default function VerificationList() {
                   moment(
                     moment
                       .unix(lastVerified)
-                      .utc()
-                      .format("DD MMM YYYY hh:mm:ss [UTC]")
+                      .format("DD MMM YYYY HH:mm:ss")
                   ).fromNow() : "loading..."}</td>
                 <td>
                   <div className="flex">

@@ -10,7 +10,6 @@ import {
   AddressIcon,
 } from "../../assets";
 
-import dayjs from "dayjs";
 import unzip from "../../utils/unzip";
 import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
 import { useDatachainOutput } from "../../hooks/useDatachainOutput";
@@ -107,15 +106,11 @@ export default function OverviewTab() {
                     ? "loading..."
                     : moment
                         .unix(creationDate)
-                        .utc()
-                        .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                        .format("DD MMM YYYY HH:mm:ss")}{" "}
                   {!isLoading
                     ? "(" +
                       moment(
-                        moment
-                          .unix(creationDate)
-                          .utc()
-                          .format("DD MMM YYYY hh:mm:ss [UTC]")
+                        moment.unix(creationDate).format("DD MMM YYYY HH:mm:ss")
                       ).fromNow() +
                       ")"
                     : null}
@@ -140,15 +135,11 @@ export default function OverviewTab() {
                     ? "loading..."
                     : moment
                         .unix(lastVerified)
-                        .utc()
-                        .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                        .format("DD MMM YYYY HH:mm:ss")}{" "}
                   {!isLoading
                     ? "(" +
                       moment(
-                        moment
-                          .unix(lastVerified)
-                          .utc()
-                          .format("DD MMM YYYY hh:mm:ss [UTC]")
+                        moment.unix(lastVerified).format("DD MMM YYYY HH:mm:ss")
                       ).fromNow() +
                       ")"
                     : null}
