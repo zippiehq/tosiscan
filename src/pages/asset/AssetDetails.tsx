@@ -51,7 +51,7 @@ export default function AssetDetails() {
                     : moment(
                         moment
                           .unix(lastVerified)
-                          .format("DD MMM YYYY HH:mm:ss")
+                          .format("DD MMM YYYY HH:mm:ss [UTC]")
                       ).fromNow()}
                 </span>
               </div>
