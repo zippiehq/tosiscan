@@ -3,17 +3,21 @@ import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles'
 
 import "./App.css";
+
 // import AssetDetails from "./components/asset/AssetDetails";
 import { DatasetContext } from "./context/DatasetContext";
 import { SearchContext } from "./context/SearchContext";
+
 import AssetDetails from "./pages/asset/AssetDetails";
 import Home from "./pages/home/Home";
 import ComingSoon from "./pages/ComingSoon";
-
+import SingleAsset from './pages/singleAsset/SingleAsset'
 import AssetSearchResult from "./pages/assetSearchResult/AssetSearchResult";
+
 import { DatachainOutputProvider } from "./hooks/useDatachainOutput";
 import { VerificationTimestampsProvider } from "./hooks/useTimeStamps";
-import {theme} from './theme'
+import { theme } from './theme'
+
 function App() {
   const [value, setValue] = useState<any>({ term: "", filter: "all" });
   const [dataset, setDataset] = useState<any>([]);
@@ -27,11 +31,13 @@ function App() {
             <DatasetContext.Provider value={{ dataset, setDataset }}>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/coming-soon" element={<ComingSoon />} />
                 <Route path="/asset/:id" element={<AssetDetails />} />
                 <Route
                   path="/search-asset/:assetContract/:assetTokenId"
                   element={<AssetSearchResult />}
                 />
+                <Route path="/single-asset/0x80bf3a23" element={<SingleAsset />} />
               </Routes>
             </DatasetContext.Provider>
           </SearchContext.Provider>
