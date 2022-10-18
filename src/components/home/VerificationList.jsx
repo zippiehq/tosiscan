@@ -77,7 +77,7 @@ export default function VerificationList() {
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
                 {/* <td>{row.assetIssued}</td> */}
-                <td>{!isLoading ?
+                <td>{row.assetClass !== "Gold" ? "N/A" : !isLoading ?
                   moment(
                     moment
                       .unix(lastVerified)
