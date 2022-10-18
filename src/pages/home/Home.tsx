@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { HomeImage } from "../../assets";
 import Footer from "../../components/footer/Footer";
 import Hero from "../../components/header/Hero";
@@ -5,6 +6,7 @@ import VerificationList from "../../components/home/VerificationList";
 import "./Home.css";
 
 export default function Home() {
+  const navigate = useNavigate()
   return (
     <>
       <Hero />
@@ -21,8 +23,8 @@ export default function Home() {
               planet's forests and biodiversity grow.
             </p>
             <div className="flex">
-              <button>Learn more</button>
-              <button>Become a publisher</button>
+              <button onClick={() =>navigate('')}>Learn more</button>
+              <button onClick={() =>navigate('')}>Become a publisher</button>
             </div>
           </div>
           <img src={HomeImage} alt="Home" />
