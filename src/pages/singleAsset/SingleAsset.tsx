@@ -92,7 +92,7 @@ const AssetDetails = () => {
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Owner Address</td>
                   <td style={{ cursor: 'default' }}>
-                    0x918e6D8BA45a9A597bEB99F206A2a5372782b72B
+                    0xc0A2f3b3990De10a22a00377df0F3e7503c3a14d
                   </td>
                 </tr>
                 <tr>
