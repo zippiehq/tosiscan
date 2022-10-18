@@ -1,6 +1,6 @@
-import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Typography, Box } from "@mui/material/";
 import {
   Table,
   TableContainer,
@@ -10,124 +10,154 @@ import {
   TableBody,
 } from "@mui/material/";
 
-import './AssetSearchResult.css'
+import "./AssetSearchResult.css";
 
-import Hero from '../../components/header/Hero'
-import Footer from '../../components/footer/Footer'
+import Hero from "../../components/header/Hero";
+import Footer from "../../components/footer/Footer";
 
-import { useDatachainOutput } from '../../hooks/useDatachainOutput';
+import { useDatachainOutput } from "../../hooks/useDatachainOutput";
 
-import { check } from '../../assets'
-import { info } from '../../assets'
+import { check } from "../../assets";
+import { info } from "../../assets";
 
 const AssetDetails = () => {
-  const { assetContract, assetTokenId } = useParams()
-  const { assets, isLoading } = useDatachainOutput()
-  const navigate = useNavigate()
+  const { assetContract, assetTokenId } = useParams();
+  const { assets, isLoading } = useDatachainOutput();
+  const navigate = useNavigate();
 
-  const filtered = assets.filter(({location}) => {
-    if (location?.contract === assetContract && location?.tokenId === assetTokenId) {
-      return true
+  const filtered = assets.filter(({ location }) => {
+    if (
+      location?.contract === assetContract &&
+      location?.tokenId === assetTokenId
+    ) {
+      return true;
     }
-  })
+  });
 
   if (isLoading) {
-    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+    return (
+      <div style={{ margin: "100px 50px", fontSize: "20px1" }}>Loading...</div>
+    );
   }
 
-  const truncate = () => {
+  const truncate = () => {};
 
-  }
+  return filtered.length === 0 ? (
+    <div style={{ margin: "100px 50px", fontSize: "20px" }}>No data</div>
+  ) : (
+    <Box className="asset-tab-overiew" sx={{
+      display:'flex',
+      flexDirection:'column',
+      maxWidth: '1300px',
+      margin: '0 auto',
+      marginBottom: '32px',
+      width: '100%',
+    }}>
+      <Typography
+        color="textPrimary"
+        fontSize="24px"
+        mt={"32px"}
+        fontWeight={500}
+        mb={3.5}
+      >
+        Search Results
+      </Typography>
 
-  return filtered.length === 0 ? <div style={{ margin: '100px 50px', fontSize: '20px' }}>No data</div> : (
-    <>
-      <div className="asset-details">
-        <div className="dataset-header">
-          <div className="title">
-            <h2 style={{ margin: 0 }}>Search Results</h2>
-          </div>
-        </div>
-      </div>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Serial No.</TableCell>
+              <TableCell>Asset</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Blockchain</TableCell>
+              <TableCell>Contract</TableCell>
+              <TableCell>Token ID</TableCell>
+              <TableCell>Owner Address</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
 
-      <div className="asset-tab">
-        <div className="asset-tab-overiew" style={{ borderLeft: '1px solid #eeeef0', borderRight: '1px solid #eeeef0' }}>
-          <div style={{ width: '100%', margin:'0 80px 60px 80px' }}>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Serial No.</TableCell>
-                    <TableCell>Asset</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Blockchain</TableCell>
-                    <TableCell>Contract</TableCell>
-                    <TableCell>Token ID</TableCell>
-                    <TableCell>Owner Address</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
+          <TableBody>
+            {filtered.map((asset, i) => (
+              <TableRow>
+                <TableCell>{asset.serial}</TableCell>
 
-                <TableBody>
-                  {filtered.map((asset, i) =>
-                    <TableRow>
-                      <TableCell>
-                        {asset.serial}
-                      </TableCell>
+                <TableCell sx={{ display: "flex", alignItems: "center" }}>
+                  <span>
+                    <img
+                      src={asset.imageUrl}
+                      className="avatar"
+                      width="40px"
+                      height="40px"
+                      style={{ marginRight: "12px" }}
+                      alt="."
+                    />
+                  </span>
 
-                      <TableCell sx={{ display: "flex", alignItems: "center" }}>
-                        <span>
-                          <img src={asset.imageUrl} className="avatar" width='40px' height='40px' style={{ marginRight: "12px",}} alt='.' />
-                        </span>
+                  {asset.product}
+                </TableCell>
 
-                        {asset.product}
-                      </TableCell>
-
-                      <TableCell>
-                        { asset.status ? <img src={check} alt='.' /> : <img src={info} alt='.' /> }
-                      </TableCell>
-
-                      <TableCell>
-                        {asset.location.name}
-                      </TableCell>
-
-                      <TableCell>
-                        <a href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`} style={{ color: "#07939C", textDecoration: 'none'}}>
-                          {asset.location.contract.slice(0, 4) + '...' + asset.location.contract.slice(asset.location.contract.length-4)}
-                        </a>
-                      </TableCell>
-
-                      <TableCell>
-                        {asset?.location.tokenId}
-                      </TableCell>
-
-                      <TableCell>
-                        {asset.ownerAccount.slice(0, 4) + '...' + asset.ownerAccount.slice(asset.ownerAccount.length-4)}
-                      </TableCell>
-
-                      <TableCell>
-                        <a onClick={ () => {navigate(`/asset/0x80bf3a23`)} } style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}>
-                          View Dataset
-                        </a>
-                      </TableCell>
-                    </TableRow>
+                <TableCell>
+                  {asset.status ? (
+                    <img src={check} alt="." />
+                  ) : (
+                    <img src={info} alt="." />
                   )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
+                </TableCell>
 
+                <TableCell>{asset.location.name}</TableCell>
 
-export default () =>  {
+                <TableCell>
+                  <a
+                    href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`}
+                    style={{ color: "#07939C", textDecoration: "none" }}
+                  >
+                    {asset.location.contract.slice(0, 4) +
+                      "..." +
+                      asset.location.contract.slice(
+                        asset.location.contract.length - 4
+                      )}
+                  </a>
+                </TableCell>
+
+                <TableCell>{asset?.location.tokenId}</TableCell>
+
+                <TableCell>
+                  {asset.ownerAccount.slice(0, 4) +
+                    "..." +
+                    asset.ownerAccount.slice(asset.ownerAccount.length - 4)}
+                </TableCell>
+
+                <TableCell>
+                  <a
+                    onClick={() => {
+                      navigate(`/asset/0x80bf3a23`);
+                    }}
+                    style={{
+                      color: "#07939C",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    View Dataset
+                  </a>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+};
+
+export default () => {
   return (
     <>
       <Hero />
       <AssetDetails />
       <Footer />
     </>
-  )
-}
+  );
+};

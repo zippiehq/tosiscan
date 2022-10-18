@@ -1,11 +1,17 @@
 footer {
   height: 377px;
   background-color: #101828;
-  padding: 64px 112px 48px 112px;
   font-family: "Inter", sans-serif;
   box-sizing: border-box;
+  padding-top: 64px;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1300px;
+  margin: 0 auto;
 
+}
 .top-content {
   display: flex;
   align-items: flex-end;

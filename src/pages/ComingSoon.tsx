@@ -17,11 +17,14 @@ export default function ComingSoon() {
     <>
       <Box
         p={"32px 112px 100px 112px"}
+        maxWidth={'1300px'}
+        margin={'0 auto'}
         display="flex"
         flexDirection={"column"}
         height="100%"
         flexGrow={2}
         justifyContent="center"
+        width={'100%'}
       >
         <TosiScanLogo />
 
