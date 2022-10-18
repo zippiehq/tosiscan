@@ -12,13 +12,9 @@ import {
 
 import dayjs from "dayjs";
 import unzip from "../../utils/unzip";
-export default function OverviewTab({
-  latestTimeStamp,
-  creationTimeStamp,
-}: {
-  latestTimeStamp: number;
-  creationTimeStamp: number;
-}) {
+import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
+import { useDatachainOutput } from "../../hooks/useDatachainOutput";
+export default function OverviewTab() {
   const [metaData, setMetadata] = useState({
     "asset-class": "Gold",
     "asset-description": "Gold Bullion (g/oz/kg)",
@@ -27,6 +23,13 @@ export default function OverviewTab({
     name: "Lohko Gold",
     "supported-locations": ["Ethereum", "Zippienet"],
   });
+
+  const { timestamps, isLoading } = useVerificationTimestamps();
+
+  const { assets, isLoading: fetchingAsset } = useDatachainOutput();
+
+  const creationDate = Math.min(...timestamps);
+  const lastVerified = Math.max(...timestamps);
 
   useEffect(() => {
     // use query seal to get latest data
@@ -46,10 +49,6 @@ export default function OverviewTab({
 
     fetchAssets();
   }, []);
-
-  console.log(
-    dayjs(new Date(creationTimeStamp * 1000)).format("DD MMM YYYY hh:mm:ss")
-  );
 
   return (
     <div className="asset-overview">
@@ -104,17 +103,20 @@ export default function OverviewTab({
               <tr>
                 <td>Creation date</td>
                 <td>
-                  {" "}
-                  {moment
-                    .unix(creationTimeStamp)
-                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
-                  (
-                  {moment(
-                    moment
-                      .unix(creationTimeStamp)
-                      .format("DD MMM YYYY hh:mm:ss [UTC]")
-                  ).fromNow()}
-                  )
+                  {isLoading
+                    ? "loading..."
+                    : moment
+                        .unix(creationDate)
+                        .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                  {!isLoading
+                    ? "(" +
+                      moment(
+                        moment
+                          .unix(creationDate)
+                          .format("DD MMM YYYY hh:mm:ss [UTC]")
+                      ).fromNow() +
+                      ")"
+                    : null}
                 </td>
               </tr>
             </tbody>
@@ -132,16 +134,20 @@ export default function OverviewTab({
               <tr>
                 <td>Last successful verification</td>
                 <td>
-                  {moment
-                    .unix(latestTimeStamp)
-                    .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
-                  (
-                  {moment(
-                    moment
-                      .unix(latestTimeStamp)
-                      .format("DD MMM YYYY hh:mm:ss [UTC]")
-                  ).fromNow()}
-                  )
+                  {isLoading
+                    ? "loading..."
+                    : moment
+                        .unix(lastVerified)
+                        .format("DD MMM YYYY hh:mm:ss [UTC]")}{" "}
+                  {!isLoading
+                    ? "(" +
+                      moment(
+                        moment
+                          .unix(lastVerified)
+                          .format("DD MMM YYYY hh:mm:ss [UTC]")
+                      ).fromNow() +
+                      ")"
+                    : null}
                 </td>
               </tr>
               <tr>
@@ -235,7 +241,7 @@ export default function OverviewTab({
                 <p>Datasets</p>
               </div>
               <div className="asset-stat">
-                <span>86</span>
+                <span>{!fetchingAsset ? assets.length : null}</span>
                 <p>Verified assets</p>
               </div>
             </div>
@@ -246,20 +252,39 @@ export default function OverviewTab({
           </div>
           <div className="socials">
             <div className="social-icon">
-              <img src={facebookLogoGrey} alt="Facebook Logo" />
-              <span>@LohkoWallet</span>
+              <a
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "none",
+                }}
+                target="_blank"
+                href="https://twitter.com/lohkowallet"
+                rel="noreferrer"
+              >
+                <img src={facebookLogoGrey} alt="Facebook Logo" />
+                <span>@LohkoWallet</span>
+              </a>
             </div>
           </div>
 
           <div style={{ justifyContent: "space-between" }} className="flex">
             <div className="website">
-              <a href="www.lohkowallet.com" target="_blank">
+              <a
+                href="https://lohkowallet.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 www.lohkowallet.com
               </a>
             </div>
             <div className="website">
               <span style={{ color: "#475467" }}>View in</span>{" "}
-              <a href="www.lohkowallet.com" target="_blank">
+              <a
+                href="https://opensea.io/collection/lohkonft"
+                target="_blank"
+                rel="noreferrer"
+              >
                 OpenSea
               </a>
             </div>
