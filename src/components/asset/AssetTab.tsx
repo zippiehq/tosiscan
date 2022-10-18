@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate, useParams } from 'react-router-dom'
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -139,6 +141,9 @@ function IndividualAssetTable({
   rowsPerPage: any;
   setRowsPerPage: any;
 }) {
+  const navigate = useNavigate();
+  const { assetContract, assetTokenId } = useParams()
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -149,8 +154,6 @@ function IndividualAssetTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  console.log({ assets });
 
   return (
     <div style={{ marginTop: "16px" }}>
@@ -170,9 +173,28 @@ function IndividualAssetTable({
             {assets
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row: any, index: number) => {
+                const assetContract = row.location?.contract
+                const assetTokenId = row.location?.tokenId
+                const onAssetClick = () => {
+                  if (assetContract && assetTokenId) {
+                    navigate(`/single-asset/${assetContract}/${assetTokenId}`)
+                  }
+                }
+
                 return (
                   <TableRow sx={{ cursor: "none" }} key={index}>
-                    <TableCell sx={{ cursor: "text" }}>{row.serial}</TableCell>
+                    <TableCell sx={{ cursor: "text" }}>
+                      <a
+                        onClick={onAssetClick}
+                        style={{
+                          color: assetContract && assetTokenId ? "#07939C" : '',
+                          textDecoration: "none",
+                          cursor: assetContract && assetTokenId ? "pointer" : 'default',
+                        }}
+                      >
+                        {row.serial}
+                      </a>
+                    </TableCell>
                     <TableCell
                       sx={{
                         cursor: "text",

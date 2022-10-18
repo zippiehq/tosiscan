@@ -40,8 +40,6 @@ const AssetDetails = () => {
     );
   }
 
-  const truncate = () => {};
-
   return filtered.length === 0 ? (
     <div style={{ margin: "100px 50px", fontSize: "20px" }}>No data</div>
   ) : (
@@ -74,15 +72,20 @@ const AssetDetails = () => {
               <TableCell>Contract</TableCell>
               <TableCell>Token ID</TableCell>
               <TableCell>Owner Address</TableCell>
-              <TableCell></TableCell>
+              <TableCell> </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {filtered.map((asset, i) => (
-              <TableRow>
+            {filtered.map((asset) => (
+              <TableRow key={asset.serial}>
                 <TableCell>
-                  <a onClick={ () => {navigate(`/single-asset/0x80bf3a23`)} } style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}>
+                  <a
+                    onClick={
+                      () => {navigate(`/single-asset/${assetContract}/${assetTokenId}`)}
+                    }
+                     style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}
+                  >
                     {asset.serial}
                   </a>
                 </TableCell>
@@ -115,6 +118,7 @@ const AssetDetails = () => {
                   <a
                     href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`}
                     style={{ color: "#07939C", textDecoration: "none" }}
+                    target="_blank"
                   >
                     {asset.location.contract.slice(0, 4) +
                       "..." +
@@ -134,9 +138,9 @@ const AssetDetails = () => {
 
                 <TableCell>
                   <a
-                    onClick={() => {
-                      navigate(`/asset/0x80bf3a23`);
-                    }}
+                    onClick={
+                      () => {navigate(`/asset/0x80bf3a23`)}
+                    }
                     style={{
                       color: "#07939C",
                       textDecoration: "none",
