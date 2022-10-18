@@ -9,10 +9,14 @@ import {
   githubIcon,
   youtubeIcon,
 } from "../../assets";
-
+import { useNavigate } from "react-router-dom";
 export default function Footer() {
+  const navigate = useNavigate();
   const onExternalLinkClick = (url: string) => {
     window.open(url, "_blank");
+  };
+  const goToComingSoon = () => {
+    navigate("/coming-soon");
   };
   return (
     <footer>
@@ -24,10 +28,10 @@ export default function Footer() {
             </div>
             <p className="text">Explore the world’s greenest blockchain.</p>
             <div className="links">
-              <a style={{ cursor: "default" }}>About TOSI</a>
-              <a style={{ cursor: "default" }}>Publishers</a>
-              <a style={{ cursor: "default" }}>Cookies</a>
-              <a style={{ cursor: "default" }}>Privacy</a>
+              <a style={{cursor: 'pointer'}} onClick={goToComingSoon}>About TOSI</a>
+              <a style={{cursor: 'pointer'}}  onClick={goToComingSoon}>Publishers</a>
+              <a style={{cursor: 'pointer'}}  onClick={goToComingSoon}>Cookies</a>
+              <a style={{cursor: 'pointer'}}  onClick={goToComingSoon}>Privacy</a>
             </div>
           </div>
         </div>
