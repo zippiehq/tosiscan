@@ -178,7 +178,7 @@ export default function OverviewTab() {
         <div className="supporting-verifications">
           <div className="flex">
             <h3>Supporting verification</h3>
-            <img style={{ marginLeft: "8px" }} src={helpIcon} alt="help icon" />
+            {/*<img style={{ marginLeft: "8px" }} src={helpIcon} alt="help icon" />*/}
           </div>
 
           <div className="content">
@@ -203,7 +203,7 @@ export default function OverviewTab() {
             <div className="verifier">
               <p>
                 Verified by
-                <span>BullionStar</span>
+                <a href="https://www.bullionstar.com/" target="_blank" style={{ fontWeight: 500, color: '#07939c', textDecoration: 'none' }}> BullionStar</a>
               </p>
             </div>
           </div>
@@ -213,7 +213,7 @@ export default function OverviewTab() {
         <div className="metric-item">
           <div className="heading">
             <h5>Publisher staking</h5>
-            <img src={helpIcon} alt="Help Icon" />
+            {/*<img src={helpIcon} alt="Help Icon" />*/}
           </div>
 
           <div className="amount">
@@ -227,7 +227,7 @@ export default function OverviewTab() {
             <img src={lohkoAvatar} alt="Lohko Avatar" />
             <div className="details">
               <div className="name">
-                <h4>Lohko Wallet Pte Ltd</h4>
+                <h4>Lohko Pte Ltd</h4>
                 <img src={verifiedTick} alt="verified tick" />
               </div>
               <p>Publisher since May 2022</p>
