@@ -221,7 +221,10 @@ function IndividualAssetTable({
                     <TableCell sx={{ cursor: "text" }}>
                       {row.location
                         ? `${row.location.contract}/${row.location.tokenId}`
-                        : row.tokenId.substring(0, 20)}
+                        : `${row.tokenId.substring(
+                            0,
+                            4
+                          )}...${row.tokenId.substring(10, 30)}`}
                     </TableCell>
                     <TableCell sx={{ cursor: "text" }}>
                       {row.ownerAccount}
