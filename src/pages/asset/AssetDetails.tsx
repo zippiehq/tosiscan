@@ -51,6 +51,7 @@ export default function AssetDetails() {
                     : moment(
                         moment
                           .unix(lastVerified)
+                          .utc()
                           .format("DD MMM YYYY HH:mm:ss [UTC]")
                       ).fromNow()}
                 </span>
