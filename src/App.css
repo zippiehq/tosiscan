@@ -1,5 +1,8 @@
 .App {
-  margin: 0 auto;
-  width: 1440px;
+  margin: 0;
+  width: 100%;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

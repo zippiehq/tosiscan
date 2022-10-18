@@ -25,6 +25,7 @@ import CarbonCreditLogo from "./carbon-credit.png"
 import AddressIcon from "./AddressIcon.svg"
 import check from "./check.svg"
 import info from "./info.svg"
+import TosiScanLogo from "./tosi-scan-logo.svg"
 
 export {
     caretDownWhite,
@@ -53,5 +54,6 @@ export {
     CarbonCreditLogo,
     AddressIcon,
     check,
-    info
+    info,
+    TosiScanLogo
 }
