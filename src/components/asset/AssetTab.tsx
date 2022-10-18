@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { useDatachainOutput } from "../../hooks/useDatachainOutput";
 
 export default function AssetTab() {
-  const { assets, isLoading } = useDatachainOutput()
+  const { assets, isLoading } = useDatachainOutput();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -26,7 +26,9 @@ export default function AssetTab() {
   uniqueItems = Array.from(uniqueItems);
 
   if (isLoading) {
-    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+    return (
+      <div style={{ margin: "100px 50px", fontSize: "20px1" }}>Loading...</div>
+    );
   }
 
   return (
@@ -169,11 +171,15 @@ function IndividualAssetTable({
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row: any, index: number) => {
                 return (
-                  <TableRow key={index}>
-                    <TableCell sx={{ color: "#07939C" }}>
-                      {row.serial}
-                    </TableCell>
-                    <TableCell sx={{ display: "flex", alignItems: "center" }}>
+                  <TableRow sx={{ cursor: "none" }} key={index}>
+                    <TableCell sx={{ cursor: "text" }}>{row.serial}</TableCell>
+                    <TableCell
+                      sx={{
+                        cursor: "text",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       <span>
                         <img
                           style={{
@@ -207,13 +213,22 @@ function IndividualAssetTable({
                         />
                       </Tooltip>
                     </TableCell>
-                    <TableCell>
-                      {row.location
-                        ? row.location.name.toUpperCase()
-                        : "Zippienet"}
+                    <TableCell
+                      sx={{ cursor: "text", textTransform: "capitalize" }}
+                    >
+                      {row.location ? row.location.name : "Zippienet"}
                     </TableCell>
-                    <TableCell>{row.tokenId.substring(0, 20)}</TableCell>
-                    <TableCell>{row.ownerAccount}</TableCell>
+                    <TableCell sx={{ cursor: "text" }}>
+                      {row.location
+                        ? `${row.location.contract}/${row.location.tokenId}`
+                        : `${row.tokenId.substring(
+                            0,
+                            4
+                          )}...${row.tokenId.substring(10, 30)}`}
+                    </TableCell>
+                    <TableCell sx={{ cursor: "text" }}>
+                      {row.ownerAccount}
+                    </TableCell>
                   </TableRow>
                 );
               })}

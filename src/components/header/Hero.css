@@ -22,10 +22,12 @@
 .navbar {
   position: relative;
   display: flex;
-  padding: 10px 100px;
   justify-content: space-between;
   align-items: center;
   z-index: 999;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-top: 16px
 }
 
 .navlinks {

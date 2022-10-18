@@ -1,5 +1,7 @@
 .home-content {
-  padding: 32px 80px 100px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
+  margin-bottom: 32px;
 }
 
 .home-content .home-title {
@@ -115,8 +117,7 @@ td .flex img {
 }
 
 .home-content {
-  border-left: 1px solid #eeeef0;
-  border-right: 1px solid #eeeef0;
+
 }
 
 .home-content .home-cta {

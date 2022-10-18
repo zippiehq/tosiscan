@@ -8,11 +8,16 @@ import { DatasetContext } from "../../context/DatasetContext";
 import { LohkoImage } from "../../assets";
 import { NguruLogo } from "../../assets";
 import { CarbonCreditLogo } from "../../assets"
+import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
+import moment from "moment";
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(false);
   const { dataset, setDataset } = useContext(DatasetContext)
+  const { timestamps, isLoading } = useVerificationTimestamps()
   const navigate = useNavigate();
+
+  const lastVerified = Math.max(...timestamps)
 
   const fetchData = async () => {
     try {
@@ -72,7 +77,12 @@ export default function VerificationList() {
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
                 {/* <td>{row.assetIssued}</td> */}
-                <td>{row.lastVerified}</td>
+                <td>{row.assetClass !== "Gold" ? "N/A" : !isLoading ?
+                  moment(
+                    moment
+                      .unix(lastVerified).utc()
+                      .format("DD MMM YYYY HH:mm:ss [UTC]")
+                  ).fromNow() : "loading..."}</td>
                 <td>
                   <div className="flex">
                     <div>{row.publisher}</div>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { DatasetContext } from "../../context/DatasetContext";
@@ -8,30 +8,16 @@ import BasicTabs from "../../components/asset/Tabs";
 import Footer from "../../components/footer/Footer";
 import { avatar, chevronRight, helpIconWarning, homeIcon } from "../../assets";
 import Hero from "../../components/header/Hero";
-import { get } from "../../adapters/axios";
+import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
 
 export default function AssetDetails() {
-  const [latestTimeStamp, setLatestTimeStamp] = useState(0);
-  const [creationTimeStamp, setCreationTimeStamp] = useState(0);
+  const { timestamps, isLoading } = useVerificationTimestamps();
+
+  const lastVerified = Math.max(...timestamps);
 
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
   const { id } = useParams();
   const asset = dataset?.find((item) => item.id === id);
-
-  useEffect(() => {
-    async function getLastVerificationTime() {
-      const { data } = await get(
-        "/tosi/api/v1/query-claims/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
-        "json"
-      );
-      const timeStamp = data.map((item: any) => item.timestamp);
-      const latestTimeStamp = Math.max(...timeStamp);
-      const creationTimeStamp = Math.min(...timeStamp);
-      setLatestTimeStamp(latestTimeStamp);
-      setCreationTimeStamp(creationTimeStamp);
-    }
-    getLastVerificationTime();
-  }, []);
 
   return (
     <>
@@ -60,20 +46,20 @@ export default function AssetDetails() {
                 </div>
                 <span>
                   Last verified{" "}
-                  {moment(
-                    moment
-                      .unix(latestTimeStamp)
-                      .format("d MMM YYYY hh:mm:ss [UTC]")
-                  ).fromNow()}
+                  {isLoading
+                    ? "loading..."
+                    : moment(
+                        moment
+                          .unix(lastVerified)
+                          .utc()
+                          .format("DD MMM YYYY HH:mm:ss [UTC]")
+                      ).fromNow()}
                 </span>
               </div>
             </div>
           </div>
           <div className="tabs-button">
-            <BasicTabs
-              creationTimeStamp={creationTimeStamp}
-              latestTimeStamp={latestTimeStamp}
-            />
+            <BasicTabs />
           </div>
         </div>
       </div>

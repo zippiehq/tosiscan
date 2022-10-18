@@ -13,6 +13,7 @@ export interface Asset {
     name: string
     contract: string
     tokenId: string
+    ownerAccount: string
   }
   status: string
 }
