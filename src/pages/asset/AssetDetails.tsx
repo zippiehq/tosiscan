@@ -41,7 +41,7 @@ export default function AssetDetails() {
               <div className="badge">
                 <span>Asset backed</span>
                 <div>
-                  <img src={helpIconWarning} alt="Warning Icon" />
+                  {/*<img src={helpIconWarning} alt="Warning Icon" />*/}
                   <p>There is a problem with this dataset</p>
                 </div>
                 <span>
