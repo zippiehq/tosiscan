@@ -81,7 +81,11 @@ const AssetDetails = () => {
           <TableBody>
             {filtered.map((asset, i) => (
               <TableRow>
-                <TableCell>{asset.serial}</TableCell>
+                <TableCell>
+                  <a onClick={ () => {navigate(`/single-asset/0x80bf3a23`)} } style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}>
+                    {asset.serial}
+                  </a>
+                </TableCell>
 
                 <TableCell sx={{ display: "flex", alignItems: "center" }}>
                   <span>
@@ -94,7 +98,6 @@ const AssetDetails = () => {
                       alt="."
                     />
                   </span>
-
                   {asset.product}
                 </TableCell>
 
