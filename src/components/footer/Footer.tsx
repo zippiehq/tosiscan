@@ -24,11 +24,9 @@ export default function Footer() {
             </div>
             <p className="text">Explore the world’s greenest blockchain.</p>
             <div className="links">
-              <a style={{ cursor: "default" }}>Zippie</a>
-              <a style={{ cursor: "default" }}>Products</a>
-              <a style={{ cursor: "default" }}>Pricing</a>
-              <a style={{ cursor: "default" }}>Blog</a>
-              <a style={{ cursor: "default" }}>Help</a>
+              <a style={{ cursor: "default" }}>About TOSI</a>
+              <a style={{ cursor: "default" }}>Publishers</a>
+              <a style={{ cursor: "default" }}>Cookies</a>
               <a style={{ cursor: "default" }}>Privacy</a>
             </div>
           </div>
