@@ -1,14 +1,15 @@
 footer {
-  height: 401px;
+  height: 377px;
   background-color: #101828;
-  padding: 64px 80px 48px 80px;
+  padding: 64px 112px 48px 112px;
   font-family: "Inter", sans-serif;
+  box-sizing: border-box;
 }
 
 .top-content {
   display: flex;
   align-items: flex-end;
-  padding: 0 32px;
+
 }
 
 .logo-and-links {
@@ -90,7 +91,6 @@ footer {
 
 .content .bottom-content {
   margin-top: 64px;
-  padding: 0 32px;
 }
 
 .bottom-content .social-icons {
@@ -114,7 +114,7 @@ footer {
 }
 
 .icons img {
-  margin-right: 24px;
+  margin-right: 16px;
 }
 
 .icons svg:last-child {
