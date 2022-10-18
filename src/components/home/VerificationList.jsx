@@ -5,9 +5,6 @@ import axios from "axios";
 import { verifiedTick } from "../../assets";
 import { DatasetContext } from "../../context/DatasetContext";
 
-import { LohkoImage } from "../../assets";
-import { NguruLogo } from "../../assets";
-import { CarbonCreditLogo } from "../../assets"
 import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
 import moment from "moment";
 
