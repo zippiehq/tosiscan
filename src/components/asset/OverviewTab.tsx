@@ -106,12 +106,14 @@ export default function OverviewTab() {
                     ? "loading..."
                     : moment
                         .unix(creationDate)
+                        .utc()
                         .format("DD MMM YYYY HH:mm:ss [UTC]")}{" "}
                   {!isLoading
                     ? "(" +
                       moment(
                         moment
                           .unix(creationDate)
+                          .utc()
                           .format("DD MMM YYYY HH:mm:ss [UTC]")
                       ).fromNow() +
                       ")"
@@ -137,12 +139,14 @@ export default function OverviewTab() {
                     ? "loading..."
                     : moment
                         .unix(lastVerified)
+                        .utc()
                         .format("DD MMM YYYY HH:mm:ss [UTC]")}{" "}
                   {!isLoading
                     ? "(" +
                       moment(
                         moment
                           .unix(lastVerified)
+                          .utc()
                           .format("DD MMM YYYY HH:mm:ss [UTC]")
                       ).fromNow() +
                       ")"

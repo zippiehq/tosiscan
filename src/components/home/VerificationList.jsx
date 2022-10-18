@@ -80,7 +80,7 @@ export default function VerificationList() {
                 <td>{row.assetClass !== "Gold" ? "N/A" : !isLoading ?
                   moment(
                     moment
-                      .unix(lastVerified)
+                      .unix(lastVerified).utc()
                       .format("DD MMM YYYY HH:mm:ss [UTC]")
                   ).fromNow() : "loading..."}</td>
                 <td>
