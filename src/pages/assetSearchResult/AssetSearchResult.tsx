@@ -127,9 +127,9 @@ const AssetDetails = () => {
                 <TableCell>{asset?.location.tokenId}</TableCell>
 
                 <TableCell>
-                  {asset?.location.ownerAccount.slice(0, 4) +
+                  {asset.location.ownerAccount.slice(0, 4) +
                     "..." +
-                    asset?.location.ownerAccount.slice(asset.location.ownerAccount.length - 4)}
+                    asset.location.ownerAccount.slice(asset.location.ownerAccount.length - 4)}
                 </TableCell>
 
                 <TableCell>
