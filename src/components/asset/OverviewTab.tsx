@@ -81,9 +81,7 @@ export default function OverviewTab() {
               </tr>
               <tr>
                 <td>Main location</td>
-                <td style={{ color: "#07939C" }}>
-                  {metaData["main-location"]}
-                </td>
+                <td>{metaData["main-location"]}</td>
               </tr>
               <tr>
                 <td>Supported assets location</td>
@@ -91,7 +89,6 @@ export default function OverviewTab() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    color: "#07939C",
                   }}
                 >
                   {metaData["supported-locations"].map((item, index) => (
