@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
@@ -14,11 +14,9 @@ import Footer from '../../components/footer/Footer'
 
 import { useDatachainOutput } from "../../hooks/useDatachainOutput"
 import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
-import {get} from "../../adapters/axios";
-import unzip from "../../utils/unzip";
 
 const AssetDetails = () => {
-  const { assetContract, assetTokenId } = useParams()
+  const { assetContract, assetTokenId, assetSerial } = useParams()
   const { assets, isLoading: fetchingAsset } = useDatachainOutput()
   const { timestamps, isLoading } = useVerificationTimestamps()
 
@@ -30,33 +28,16 @@ const AssetDetails = () => {
 
   const navigate = useNavigate()
 
-  const asset = assets.find(({ location }) => {
-    if (
-      location?.contract === assetContract &&
-      location?.tokenId === assetTokenId
-    ) {
+   const asset = assetSerial ? assets.find(( asset) => {
+    if (asset.serial === assetSerial) {
       return true;
     }
-  });
-
-  useEffect(() => {
-    // use query seal to get latest data
-    async function fetchAssets() {
-      const sealResponse = await get(
-        "/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
-        "json"
-      );
-      const { data } = await get(
-        "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
-        "blob"
-      );
-      let res: any = await unzip(data, "metadata.json");
-
-      setMetadata(res);
-    }
-
-    fetchAssets();
-  }, []);
+  }) : assets.find(( asset) => {
+     if (asset.location?.contract === assetContract &&
+       asset.location?.tokenId === assetTokenId) {
+       return true;
+     }
+   });
 
   const datasetName = 'Lohko Gold'
 
@@ -124,7 +105,7 @@ const AssetDetails = () => {
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Status</td>
                   <td style={{ cursor: 'default' }}>
-                    {asset?.status ? (
+                    {asset?.status === 'ok' ? (
                       <img src={check} alt="." />
                     ) : (
                       <img src={info} alt="." />
@@ -134,25 +115,30 @@ const AssetDetails = () => {
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Blockchain</td>
                   <td style={{ cursor: 'default' }}>
-                    {asset?.location.name}
+                    { asset?.location ? asset?.location.name : 'Zippienet' }
                   </td>
                 </tr>
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Contract</td>
-                  <td style={{ cursor: 'pointer' }}>
-                    <a
-                      href={`https://opensea.io/assets/ethereum/${asset?.location.contract}/${asset?.location.tokenId}`}
-                      style={{ color: "#07939C", textDecoration: "none" }}
-                      target="_blank"
-                    >
-                      {asset?.location.contract}
-                    </a>
+                  <td style={{ cursor: asset?.location ? 'pointer' : 'default', }}>
+                    {asset?.location ?
+                      <a
+                        href={`https://opensea.io/assets/ethereum/${asset?.location.contract}/${asset?.location.tokenId}`}
+                        style={{ color: "#07939C", textDecoration: "none", }}
+                        target="_blank"
+                      >
+                        {asset?.location.contract}
+                      </a> :
+                      <a style={{ color: '#101828', textDecoration: "none", }}>
+                        0xa40e46adC47781094892c4d6538D7d6f34e4187f
+                      </a>
+                    }
                   </td>
                 </tr>
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Owner Address</td>
                   <td style={{ cursor: 'default' }}>
-                    {asset?.location.ownerAccount}
+                    { asset?.location ? asset?.location.ownerAccount : asset?.ownerAccount }
                   </td>
                 </tr>
                 <tr>
