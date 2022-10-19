@@ -139,8 +139,14 @@ const AssetDetails = () => {
                 </tr>
                 <tr>
                   <td style={{ width: '240px', cursor: 'default' }}>Contract</td>
-                  <td style={{ cursor: 'default' }}>
-                    {asset?.location.contract}
+                  <td style={{ cursor: 'pointer' }}>
+                    <a
+                      href={`https://opensea.io/assets/ethereum/${asset?.location.contract}/${asset?.location.tokenId}`}
+                      style={{ color: "#07939C", textDecoration: "none" }}
+                      target="_blank"
+                    >
+                      {asset?.location.contract}
+                    </a>
                   </td>
                 </tr>
                 <tr>
