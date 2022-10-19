@@ -227,7 +227,9 @@ function IndividualAssetTable({
                           )}...${row.tokenId.substring(10, 30)}`}
                     </TableCell>
                     <TableCell sx={{ cursor: "text" }}>
-                      {row.ownerAccount}
+                      {row.location
+                        ? row.location.ownerAccount
+                        : row.ownerAccount}
                     </TableCell>
                   </TableRow>
                 );
