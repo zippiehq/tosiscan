@@ -142,7 +142,6 @@ function IndividualAssetTable({
   setRowsPerPage: any;
 }) {
   const navigate = useNavigate();
-  const { assetContract, assetTokenId } = useParams()
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -175,9 +174,13 @@ function IndividualAssetTable({
               .map((row: any, index: number) => {
                 const assetContract = row.location?.contract
                 const assetTokenId = row.location?.tokenId
+                const assetSerial = row.serial
+                console.log(assetSerial)
                 const onAssetClick = () => {
                   if (assetContract && assetTokenId) {
                     navigate(`/single-asset/${assetContract}/${assetTokenId}`)
+                  } else {
+                    navigate(`/single-asset/${assetSerial}`)
                   }
                 }
 
@@ -187,9 +190,9 @@ function IndividualAssetTable({
                       <a
                         onClick={onAssetClick}
                         style={{
-                          color: assetContract && assetTokenId ? "#07939C" : '',
+                          color: "#07939C",
                           textDecoration: "none",
-                          cursor: assetContract && assetTokenId ? "pointer" : 'default',
+                          cursor: "pointer",
                         }}
                       >
                         {row.serial}

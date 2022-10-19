@@ -37,7 +37,10 @@ function App() {
                   path="/search-asset/:assetContract/:assetTokenId"
                   element={<AssetSearchResult />}
                 />
-                <Route path="/single-asset/:assetContract/:assetTokenId" element={<SingleAsset />} />
+                <Route path="/single-asset/">
+                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
+                  <Route path=":assetSerial" element={<SingleAsset />} />
+                </Route>
               </Routes>
             </DatasetContext.Provider>
           </SearchContext.Provider>
