@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import { DatasetContext } from "../../context/DatasetContext";
 import "./AssetDetails.css";
@@ -18,20 +18,23 @@ export default function AssetDetails() {
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
   const { id } = useParams();
   const asset = dataset?.find((item) => item.id === id);
-
+  const navigate = useNavigate()
   return (
     <>
       {/* header */}
       <Hero />
       <div className="asset-details">
         <div className="dataset-header">
+          {/* use breadcrumbs from material ui */}
           <div className="breadcrumbs">
-            <img src={homeIcon} alt="breadcrumb home icon" />
-            <img src={chevronRight} alt="Chevron Right" />
-            <span>{asset ? asset.type : "Digital Asset"}</span>
-            <img src={chevronRight} alt="Chevron Right" />
-            <span>{asset ? asset.assetClass : "Gold"}</span>
-            <img src={chevronRight} alt="Chevron Right" />
+            <img src={homeIcon} alt="breadcrumb home icon" onClick={() => navigate('/')}style={{
+              cursor: 'pointer'
+            }}/>
+            {/* <img src={chevronRight} alt="Chevron Right" />
+            <span>{asset ? asset.type : "Digital Asset"}</span> */}
+            {/* <img src={chevronRight} alt="Chevron Right" />
+            <span>{asset ? asset.assetClass : "Gold"}</span>*/}
+            <img src={chevronRight} alt="Chevron Right" /> 
             <span>{asset ? asset.dataset : "Lohko Gold"}</span>
           </div>
           <div className="title">
