@@ -16,7 +16,7 @@
     },
     {
       "id": "0x80bf3a24",
-      "dataset": "Carbon Credit Futures ",
+      "dataset": "Carbon Credit Futures",
       "contract": "0x80bf3a23...89764372",
       "type": "Digital Asset",
       "assetClass": "Carbon Credits",
@@ -24,8 +24,8 @@
       "publisher": "Lohko Pte Ltd",
       "issuers": "Lohko Pte Ltd",
       "image": "./assets/carbon-credit-logo.png",
-      "status": "Coming soon",
-      "available": false,
+      "status": "",
+      "available": true,
       "assetIssued": 12
     },
     {

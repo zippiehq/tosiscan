@@ -32,7 +32,15 @@ export const DatachainOutputProvider: React.FC<PropsWithChildren> = ({ children 
 
   const update = async () => {
     setLoading(true)
-    const sealResponse = await get("/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa", "json");
+    const sealResponse = await get(
+      '/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa',
+      'json'
+    )
+      /*await get(
+        '/tosi/api/v1/query-seal/bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe',
+        'json'
+      ) */
+
     const { data } = await get(
       "/tosi/api/v0/ipfs/get/" + sealResponse.data.status + "/output.zip",
       "blob"

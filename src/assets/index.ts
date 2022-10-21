@@ -8,7 +8,7 @@ import HomeImage from "./Image.png"
 import LohkoImage from "./Lohko.svg"
 import chevronRight from "./ChevronRight.svg"
 import avatar from "./Avatar.svg"
-import homeIcon from "./HomeIcon.svg";
+import homeIcon from "./icon-home.svg";
 import facebookLogoGrey from "./FacebookLogoGrey.svg";
 import verifiedTick from "./VerifiedTick.svg";
 import lohkoAvatar from "./LohkoAvatar.svg";
