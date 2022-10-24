@@ -80,7 +80,7 @@ export default function OverviewTab() {
   }
 
   useEffect(() => {
-    if (!asset) return;
+    if (!asset) return
     fetchAssets(asset.id)
   }, [asset])
 
@@ -302,136 +302,142 @@ export default function OverviewTab() {
               Verified files
             </Typography>
 
-            <Box>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={{ paddingY: 2.25, paddingX: 3, fontSize: '14px', fontWeight: 500, lineHeight: 1.43, color: '#667085' }}>Dataset</TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Last verified</TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Publisher</TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Issuer/s</TableCell>
-                    </TableRow>
-                  </TableHead>
+            {true ?
+              '' :
+              <Box>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ paddingY: 2.25, paddingX: 3, fontSize: '14px', fontWeight: 500, lineHeight: 1.43, color: '#667085' }}>Dataset</TableCell>
+                        <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Last verified</TableCell>
+                        <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Publisher</TableCell>
+                        <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>Issuer/s</TableCell>
+                      </TableRow>
+                    </TableHead>
 
-                  <TableBody>
-                    <TableRow sx={{ cursor: 'none' }}>
-                      <TableCell sx={{ display: 'flex', alignItems: 'center', paddingY: 2.5, paddingX: 3, borderBottom: 'none' }}>
-                        <img src={asset.image} width='40px' height='40px' alt='.'/>
+                    <TableBody>
+                      <TableRow sx={{ borderBottom: '1px solid #eaecf0', cursor: 'none' }}>
+                        <TableCell sx={{ display: 'flex', alignItems: 'center', paddingY: 2.5, paddingX: 3, borderBottom: 'none' }}>
+                          <img src={asset?.image} width='40px' height='40px' alt='.'/>
 
-                        <Stack ml={2}>
-                          <Typography variant='h4' sx={{ fontSize: '16px', fontWeight: 500, lineHeight: 1.5, color: '#101828' }}>
-                            Nguru Project Satellite Images
-                          </Typography>
+                          <Stack ml={2}>
+                            <Typography variant='h4' sx={{ fontSize: '16px', fontWeight: 500, lineHeight: 1.5, color: '#101828' }}>
+                              Nguru Project Satellite Images
+                            </Typography>
 
-                          <Typography variant='body2' sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}>
-                            0x80bf3a23...89764372
-                          </Typography>
-                        </Stack>
-                      </TableCell>
+                            <Typography variant='body2' sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}>
+                              0x80bf3a23...89764372
+                            </Typography>
+                          </Stack>
+                        </TableCell>
 
-                      <TableCell sx={{ fontSize: '14px', lineHeight: 1.43, color: '#667085' }}>
-                        an hour ago
-                      </TableCell>
+                        <TableCell sx={{ fontSize: '14px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
+                          an hour ago
+                        </TableCell>
 
-                      <TableCell>
-                        <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', fontSize: '14px', lineHeight: 1.43, color: '101828' }}>
-                          Airimpact
-                          <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }}  />
-                        </Stack>
-                      </TableCell>
-                      
-                      <TableCell>
-                        <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', fontSize: '14px', lineHeight: 1.43, color: '101828' }}>
-                          Airimpact
-                          <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }}  />
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                        <TableCell sx={{ borderBottom: 'none' }}>
+                          <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', fontSize: '14px', lineHeight: 1.43, color: '101828' }}>
+                            Airimpact
+                            <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }}  />
+                          </Stack>
+                        </TableCell>
 
-              <TablePagination
-                rowsPerPageOptions={[]}
-                component='div'
-                count={1}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                backIconButtonProps={{
+                        <TableCell sx={{ borderBottom: 'none' }}>
+                          <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', fontSize: '14px', lineHeight: 1.43, color: '101828' }}>
+                            Airimpact
+                            <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }}  />
+                          </Stack>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
 
-                }}
-                nextIconButtonProps={{
+                {page > 1 ?
+                  <TablePagination
+                    rowsPerPageOptions={[]}
+                    component='div'
+                    count={1}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    backIconButtonProps={{}}
+                    nextIconButtonProps={{}}
+                    sx={{
+                      position: 'relative',
+                      margin: 0,
+                      padding: 0,
+                      border: '1px solid #eaecf0',
+                      borderTop: 'none',
 
-                }}
-                sx={{
-                  position: 'relative',
-                  padding: 0,
-                  border: '1px solid #eaecf0',
-                  borderTop: 'none',
-
-                  '& .MuiToolbar-root': {
-                    padding: 0,
-                  },
-                  '& .MuiTablePagination-displayedRows': {
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    margin: 0,
-                    transform: 'translate(-50%, -50%)',
-                  },
-                  '& .MuiTablePagination-actions': {
-                    position: 'absolute',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    margin: 0,
-                  },
-                  '& .MuiTablePagination-actions button': {
-                    position: 'relative',
-                    height: '36px',
-                    padding: '8px 14px',
-                    color: '#344054',
-                    border: '1px solid rgba(16, 24, 40, 0.05)',
-                    borderRadius: '100px'
-                  },
-                  '& .MuiTablePagination-actions button:first-child': {
-                    left: '24px',
-                    justifyContent: 'flex-start',
-                    width: '114px',
-                  },
-                  '& .MuiTablePagination-actions button:last-child': {
-                    right: '24px',
-                    justifyContent: 'flex-end',
-                    width: '88px',
-                  },
-                  '& .MuiTablePagination-actions button:first-child::before': {
-                    position: 'absolute',
-                    top: '50%',
-                    left: '42px',
-                    content: '"Previous"',
-                    fontFamily: 'Inter',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    lineHeight: 1.43,
-                    transform: 'translateY(-50%)',
-                  },
-                  '& .MuiTablePagination-actions button:last-child::after': {
-                    position: 'absolute',
-                    top: '50%',
-                    right: '42px',
-                    content: '"Next"',
-                    fontFamily: 'Inter',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    lineHeight: 1.43,
-                    transform: 'translateY(-50%)',
-                  },
-                }}
-              />
-            </Box>
+                      '& .MuiToolbar-root': {
+                        margin: 0,
+                        padding: 0
+                      },
+                      '& .MuiTablePagination-displayedRows': {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        margin: 0,
+                        padding: 0,
+                        transform: 'translate(-50%, -50%)',
+                      },
+                      '& .MuiTablePagination-actions': {
+                        position: 'absolute',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        margin: 0,
+                        marginLeft: '0 !important',
+                        padding: 0,
+                      },
+                      '& .MuiTablePagination-actions button': {
+                        position: 'relative',
+                        height: '36px',
+                        padding: '8px 14px',
+                        color: '#344054',
+                        border: '1px solid rgba(16, 24, 40, 0.05)',
+                        borderRadius: '100px'
+                      },
+                      '& .MuiTablePagination-actions button:first-of-type': {
+                        left: '24px',
+                        justifyContent: 'flex-start',
+                        width: '114px',
+                      },
+                      '& .MuiTablePagination-actions button:last-child': {
+                        right: '24px',
+                        justifyContent: 'flex-end',
+                        width: '88px',
+                      },
+                      '& .MuiTablePagination-actions button:first-of-type::before': {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '42px',
+                        content: '"Previous"',
+                        fontFamily: 'Inter',
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        lineHeight: 1.43,
+                        transform: 'translateY(-50%)',
+                      },
+                      '& .MuiTablePagination-actions button:last-child::after': {
+                        position: 'absolute',
+                        top: '50%',
+                        right: '42px',
+                        content: '"Next"',
+                        fontFamily: 'Inter',
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        lineHeight: 1.43,
+                        transform: 'translateY(-50%)',
+                      },
+                    }}
+                  /> : ''
+                }
+              </Box>
+            }
           </Box> :
           ''
         }
