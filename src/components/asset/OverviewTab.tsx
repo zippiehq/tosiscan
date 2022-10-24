@@ -61,8 +61,8 @@ export default function OverviewTab() {
   const asset = dataset?.find((item) => item.id === id)
 
   // use query seal to get latest data
-  async function fetchAssets() {
-    const sealResponse = asset?.id === '0x80bf3a24' ? await get(
+  async function fetchAssets(assetId: string) {
+    const sealResponse = assetId === '0x80bf3a24' ? await get(
       '/tosi/api/v1/query-seal/bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe',
       'json'
     ) : await get(
@@ -80,8 +80,9 @@ export default function OverviewTab() {
   }
 
   useEffect(() => {
-    fetchAssets()
-  }, [])
+    if (!asset) return;
+    fetchAssets(asset.id)
+  }, [asset])
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
