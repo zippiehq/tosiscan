@@ -148,7 +148,7 @@ const AssetDetails = () => {
   const location = getLocation(asset);
   //@ts-ignore
   const Issuer = Issuers[datasetName] || null
-  return isLoading ? (
+  return !asset ? (
     <Box
       sx={{
         display: "flex",
