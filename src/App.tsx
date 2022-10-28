@@ -58,7 +58,7 @@ function App() {
                 <Route path="/coming-soon" element={<ComingSoon />} />
                 <Route path="/asset/:id" element={<AssetDetails />} />
                 <Route
-                  path="/search-asset/:assetContract/:assetTokenId"
+                  path="/search-asset/:id/:assetContract/:assetTokenId"
                   element={<AssetSearchResult />}
                 />
                 <Route path="/single-asset/:id">

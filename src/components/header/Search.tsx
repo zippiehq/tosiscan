@@ -22,8 +22,9 @@ export default function SearchBar() {
 
   }, [searchValue])
 
+  // remove hardcoded id
   const handleSubmit = () => {
-    navigate(`/search-asset/${assetContract}/${assetTokenId}`)
+    navigate(`/search-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)
   }
 
   return (
