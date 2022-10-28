@@ -7,7 +7,9 @@ import React, {
 } from "react";
 
 import { get } from "../adapters/axios";
-
+import {useParams} from 'react-router-dom'
+import { DatasetContext } from '../context/DatasetContext'
+import { IDataset } from '../interfaces/Dataset.interface'
 export interface VerificationTimestampContextT {
   timestamps: number[];
   isLoading: boolean;
@@ -27,12 +29,15 @@ export const VerificationTimestampsProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [timestamps, setTimeStamps] = useState<number[]>([]);
-
+  const { id } = useParams()
+  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
+  const asset = dataset?.find((item) => item.id === id)
   useEffect(() => {
+    if(!asset?.id) {return}
     const getTimeStamp = async () => {
       setLoading(true);
       const { data } = await get(
-        "/tosi/api/v1/query-claims/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa",
+        `/tosi/api/v1/query-claims/${asset?.sealId}`,
         "json"
       );
 
@@ -43,7 +48,7 @@ export const VerificationTimestampsProvider: React.FC<PropsWithChildren> = ({
     };
 
     getTimeStamp();
-  }, []);
+  }, [asset]);
 
   return (
     <VerificationTimestampContext.Provider value={{ timestamps, isLoading }}>

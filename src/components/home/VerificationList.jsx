@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import { verifiedTick } from "../../assets";
 import { DatasetContext } from "../../context/DatasetContext";
@@ -9,30 +8,18 @@ import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
 import moment from "moment";
 
 export default function VerificationList() {
-  const [loading, setLoading] = useState(false);
-  const { dataset, setDataset } = useContext(DatasetContext)
+  const [loading, setLoading] = useState(true);
+  const { dataset } = useContext(DatasetContext)
   const { timestamps, isLoading } = useVerificationTimestamps()
   const navigate = useNavigate();
 
   const lastVerified = Math.max(...timestamps)
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("db.json")
-      if (response && response.data) {
-        setDataset(response.data.verifications)
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    if(dataset.length) {
+      setLoading(false)
+    } 
+  }, [dataset]);
 
   return (
     <div className="verification-list">

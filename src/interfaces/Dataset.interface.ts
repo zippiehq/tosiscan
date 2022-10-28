@@ -8,5 +8,7 @@ export interface IDataset {
     publisher: string
     issuers: string,
     image: string,
-    available: string
+    available: string,
+    assetIssued: number,
+    sealId: string;
 }

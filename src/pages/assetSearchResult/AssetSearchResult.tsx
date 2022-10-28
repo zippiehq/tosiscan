@@ -119,6 +119,7 @@ const AssetDetails = () => {
                     href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`}
                     style={{ color: "#07939C", textDecoration: "none" }}
                     target="_blank"
+                    rel='noreferrer nofollow'
                   >
                     {asset.location.contract.slice(0, 4) +
                       "..." +
