@@ -307,7 +307,7 @@ function IndividualAssetTable({
                           </Box>
                         </TableCell>
 
-                        <TableCell>
+                        <TableCell sx={{ cursor: 'default' }}>
                           <img
                             src={row.status === "ok" ? check : info}
                             alt="."
@@ -327,22 +327,16 @@ function IndividualAssetTable({
                         </TableCell>
 
                         <TableCell>
-                          {page > 1 ? (
-                            <a
-                              onClick={() => {
-                                navigate(`/asset/0x80bf3a23`);
-                              }}
-                              style={{
-                                color: "#07939C",
-                                textDecoration: "none",
-                                cursor: "pointer",
-                              }}
-                            >
-                              Details
-                            </a>
-                          ) : (
-                            ""
-                          )}
+                          <a
+                            onClick={onAssetClick}
+                            style={{
+                              color: "#07939C",
+                              textDecoration: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Details
+                          </a>
                         </TableCell>
                       </TableRow>
                     );
@@ -372,6 +366,7 @@ function IndividualAssetTable({
                   <TableCell>Blockchain</TableCell>
                   <TableCell>Token ID</TableCell>
                   <TableCell>Owner Address</TableCell>
+                  <TableCell> </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -463,6 +458,19 @@ function IndividualAssetTable({
                           {row.location
                             ? row.location.ownerAccount
                             : row.ownerAccount}
+                        </TableCell>
+
+                        <TableCell>
+                          <a
+                            onClick={onAssetClick}
+                            style={{
+                              color: "#07939C",
+                              textDecoration: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Details
+                          </a>
                         </TableCell>
                       </TableRow>
                     );
