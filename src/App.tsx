@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
 import "./App.css";
@@ -19,11 +19,13 @@ import { VerificationTimestampsProvider } from "./hooks/useTimeStamps";
 import { theme } from "./theme";
 import axios from "axios";
 
-const DataSetWrapper = ({ children }: any) => {
+const Layout = () => {
   return (
-    <VerificationTimestampsProvider>
-      <DatachainOutputProvider>{children}</DatachainOutputProvider>{" "}
-    </VerificationTimestampsProvider>
+    <DatachainOutputProvider>
+      <VerificationTimestampsProvider>
+        <Outlet />
+      </VerificationTimestampsProvider>
+    </DatachainOutputProvider>
   );
 };
 
@@ -51,41 +53,21 @@ function App() {
         <SearchContext.Provider value={{ value, setValue }}>
           <DatasetContext.Provider value={{ dataset, setDataset }}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/coming-soon" element={<ComingSoon />} />
-              <Route
-                path="/asset/:id"
-                element={
-                  <DataSetWrapper>
-                    <AssetDetails />
-                  </DataSetWrapper>
-                }
-              />
-              <Route
-                path="/search-asset/:assetContract/:assetTokenId"
-                element={
-                  <DataSetWrapper>
-                    <AssetSearchResult />
-                  </DataSetWrapper>
-                }
-              />
-              <Route path="/single-asset/:id">
+              <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/coming-soon" element={<ComingSoon />} />
+                <Route path="/asset/:id" element={<AssetDetails />} />
                 <Route
-                  path=":assetContract/:assetTokenId"
-                  element={
-                    <DataSetWrapper>
-                      <SingleAsset />
-                    </DataSetWrapper>
-                  }
+                  path="/search-asset/:assetContract/:assetTokenId"
+                  element={<AssetSearchResult />}
                 />
-                <Route
-                  path=":assetSerial"
-                  element={
-                    <DataSetWrapper>
-                      <SingleAsset />
-                    </DataSetWrapper>
-                  }
-                />
+                <Route path="/single-asset/:id">
+                  <Route
+                    path=":assetContract/:assetTokenId"
+                    element={<SingleAsset />}
+                  />
+                  <Route path=":assetSerial" element={<SingleAsset />} />
+                </Route>
               </Route>
             </Routes>
           </DatasetContext.Provider>

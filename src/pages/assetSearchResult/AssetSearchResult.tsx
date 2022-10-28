@@ -82,7 +82,7 @@ const AssetDetails = () => {
                 <TableCell>
                   <a
                     onClick={
-                      () => {navigate(`/single-asset/${assetContract}/${assetTokenId}`)}
+                      () => {navigate(`/single-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)}
                     }
                      style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}
                   >
