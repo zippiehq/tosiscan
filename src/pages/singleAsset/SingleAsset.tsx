@@ -24,6 +24,12 @@ import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
 import { IDataset } from "../../interfaces/Dataset.interface";
 import { DatasetContext } from "../../context/DatasetContext";
 
+const EthLocation = {
+  'Ethereum': 'https://opensea.io/assets/ethereum',
+  'ethereum': 'https://opensea.io/assets/ethereum',
+  'Ethereum Goerli':  'https://testnets.opensea.io/assets/goerli'
+}
+
 const IssuerLohko = () => {
   return (
     <div className="content">
@@ -146,6 +152,10 @@ const AssetDetails = () => {
   const datasetDetails = dataset?.find((item) => item.id === id);
   const datasetName = datasetDetails?.dataset || "Lohko Gold";
   const location = getLocation(asset);
+  const tokenId = location?.tokenId || location?.tokenID
+
+  //@ts-ignore
+  const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
   //@ts-ignore
   const Issuer = Issuers[datasetName] || null
   return !asset ? (
@@ -315,11 +325,13 @@ const AssetDetails = () => {
                         cursor: location ? "pointer" : "default",
                       }}
                     >
-                      {location && location.contract && !asset?.locations ? (
+                      {/* @ts-ignore */}
+                      {location && location.contract && EthLocation[location.name] ? (
                         <a
-                          href={`https://opensea.io/assets/ethereum/${location.contract}/${location.tokenId}`}
+                          /* @ts-ignore */
+                          href={openSearUrl}
                           style={{ color: "#07939C", textDecoration: "none" }}
-                          target="_blank"
+                          target="_blank" rel="noreferrer"
                         >
                           {location.contract}
                         </a>

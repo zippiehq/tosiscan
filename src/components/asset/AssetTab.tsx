@@ -258,6 +258,8 @@ function IndividualAssetTable({
                   .map((row: any, index: number) => {
                     const location = row.locations[0]
                     const assetContract = location.contract;
+                    const ownerAccount = location.ownerAccount;
+
                     const assetTokenId = location.tokenId || location.tokenID;
                     const assetSerial = row.assetNumber;
 
@@ -321,7 +323,7 @@ function IndividualAssetTable({
                           {assetTokenId}
                         </TableCell>
                         <TableCell sx={{ cursor: "text" }}>
-                          {assetContract}
+                          {ownerAccount}
                         </TableCell>
 
                         <TableCell>
