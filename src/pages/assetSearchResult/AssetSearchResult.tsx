@@ -4,16 +4,13 @@ import { Typography, Box, Table, TableContainer, TableHead, TableRow, TableCell,
 
 import './AssetSearchResult.css'
 
-import Hero from '../../components/header/Hero'
-import Footer from '../../components/footer/Footer'
-
-import { useDatachainOutput } from '../../hooks/useDatachainOutput'
+import { useDataChainOutputContext } from '../../hooks/useDatachainOutput'
 
 import { check, info } from '../../assets'
 
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams()
-  const { assets, isLoading } = useDatachainOutput()
+  const { assets, isLoading } = useDataChainOutputContext()
   const navigate = useNavigate()
 
   const filtered = assets.filter(
@@ -134,10 +131,4 @@ const AssetDetails = () => {
   )
 }
 
-export default () => (
-  <>
-    <Hero />
-    <AssetDetails />
-    <Footer />
-  </>
-)
+export default () => <AssetDetails />

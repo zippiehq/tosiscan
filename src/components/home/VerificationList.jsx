@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { verifiedTick } from "../../assets";
-import { DatasetContext } from "../../context/DatasetContext";
+import { verifiedTick } from '../../assets'
+import { DatasetContext } from '../../context/DatasetContext'
 
-import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
-import moment from "moment";
+import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(true);
   const { dataset } = useContext(DatasetContext)
   const { timestamps, isLoading } = useVerificationTimestamps()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const lastVerified = Math.max(...timestamps)
 
@@ -39,15 +38,23 @@ export default function VerificationList() {
         {loading ? (
           <tbody>
             <tr>
-              <td>
-                loading....
-              </td>
+              <td>loading....</td>
             </tr>
           </tbody>
         ) : (
           <tbody>
             {dataset.map((row) => (
-              <tr key={row.id} className={row.available ? '' : 'disabled'} onClick={row.available ? () => { navigate(`/asset/${row.id}`) } : () => void {}}>
+              <tr
+                key={row.id}
+                className={row.available ? '' : 'disabled'}
+                onClick={
+                  row.available
+                    ? () => {
+                        navigate(`/asset/${row.id}`)
+                      }
+                    : null
+                }
+              >
                 <td>
                   <div className="flex">
                     <img className="avatar" src={row.image} alt="." />
@@ -85,5 +92,5 @@ export default function VerificationList() {
         )}
       </table>
     </div>
-  );
+  )
 }

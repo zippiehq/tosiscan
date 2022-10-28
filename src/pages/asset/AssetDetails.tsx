@@ -127,7 +127,6 @@ const AssetDetails = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

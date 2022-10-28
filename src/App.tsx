@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
-import "./App.css";
+import './App.css'
 
 // import AssetDetails from "./components/asset/AssetDetails";
-import { DatasetContext } from "./context/DatasetContext";
-import { SearchContext } from "./context/SearchContext";
+import { DatasetContext } from './context/DatasetContext'
+import { SearchContext } from './context/SearchContext'
 
 import AssetDetails from "./pages/asset/AssetDetails";
 import Home from "./pages/home/Home";
@@ -74,7 +74,7 @@ function App() {
         </SearchContext.Provider>
       </div>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App
