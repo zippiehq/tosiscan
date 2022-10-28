@@ -100,9 +100,9 @@ export default function AssetTab() {
               100,000
               <span
                 style={{
-                  marginLeft: "6px",
-                  fontSize: "20px",
-                  lineHeight: "30px",
+                  marginLeft: '6px',
+                  fontSize: '20px',
+                  lineHeight: '30px',
                 }}
               >
                 TOSI
@@ -166,7 +166,7 @@ export default function AssetTab() {
         />
       </div>
     </div>
-  );
+  )
 }
 
 function AssetTable({ assets }: { assets: any; }) {
@@ -174,9 +174,9 @@ function AssetTable({ assets }: { assets: any; }) {
   let uniqueItems: any = new Set(assets.map((asset: any) => asset.assetName || asset.product));
   uniqueItems = Array.from(uniqueItems);
   return (
-    <div style={{ width: "820px", marginTop: "16px" }}>
+    <div style={{ width: '820px', marginTop: '16px' }}>
       <TableContainer>
-        <Table sx={{ borderRadius: "6px" }}>
+        <Table sx={{ borderRadius: '6px' }}>
           <TableHead>
             <TableRow>
               <TableCell>Item</TableCell>
@@ -202,7 +202,7 @@ function AssetTable({ assets }: { assets: any; }) {
         </Table>
       </TableContainer>
     </div>
-  );
+  )
 }
 
 function IndividualAssetTable({
@@ -212,28 +212,26 @@ function IndividualAssetTable({
   rowsPerPage,
   setRowsPerPage,
 }: {
-  assets: any;
-  page: number;
-  setPage: any;
-  rowsPerPage: any;
-  setRowsPerPage: any;
+  assets: any
+  page: number
+  setPage: any
+  rowsPerPage: any
+  setRowsPerPage: any
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { id } = useParams();
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
   const asset = dataset?.find((item) => item.id === id);
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
 
   return (
     <div style={{ marginTop: "16px" }}>
@@ -482,5 +480,5 @@ function IndividualAssetTable({
         </>
       )}
     </div>
-  );
+  )
 }

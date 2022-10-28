@@ -372,7 +372,7 @@ const AssetDetails = () => {
             <div className="supporting-verifications">
               <div className="flex">
                 <h3>Supporting verification</h3>
-                {/*<img style={{ marginLeft: "8px" }} src={helpIcon} alt="help icon" />*/}
+                {/* <img style={{ marginLeft: "8px" }} src={helpIcon} alt="help icon" /> */}
               </div>
               {/* @ts-ignore */}
 
@@ -414,9 +414,9 @@ const AssetDetails = () => {
                 <div className="social-icon">
                   <a
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      textDecoration: "none",
+                      display: 'flex',
+                      alignItems: 'center',
+                      textDecoration: 'none',
                     }}
                     target="_blank"
                     href="https://twitter.com/lohkowallet"
@@ -428,23 +428,15 @@ const AssetDetails = () => {
                 </div>
               </div>
 
-              <div style={{ justifyContent: "space-between" }} className="flex">
+              <div style={{ justifyContent: 'space-between' }} className="flex">
                 <div className="website">
-                  <a
-                    href="https://lohkowallet.com"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href="https://lohkowallet.com" target="_blank" rel="noreferrer">
                     www.lohkowallet.com
                   </a>
                 </div>
                 <div className="website">
-                  <span style={{ color: "#475467" }}>View in</span>{" "}
-                  <a
-                    href="https://opensea.io/collection/lohkonft"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <span style={{ color: '#475467' }}>View in</span>{' '}
+                  <a href="https://opensea.io/collection/lohkonft" target="_blank" rel="noreferrer">
                     OpenSea
                   </a>
                 </div>

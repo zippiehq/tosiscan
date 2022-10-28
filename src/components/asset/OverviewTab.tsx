@@ -536,5 +536,5 @@ export default function OverviewTab() {
         </div>
       </div>
     </div>
-  );
+  )
 }

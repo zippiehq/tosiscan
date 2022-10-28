@@ -129,7 +129,7 @@ const AssetDetails = () => {
       </div>
       <Footer />
     </>
-  );
+  )
 }
 
 export default function () {
