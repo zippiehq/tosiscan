@@ -27,9 +27,6 @@ import {
 } from '../../assets'
 
 import { ReactComponent as IconVerifiedTick } from '../../assets/VerifiedTick.svg'
-
-import { get } from '../../adapters/axios'
-import unzip from '../../utils/unzip'
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDatachainOutput} from '../../hooks/useDatachainOutput'
 import { IDataset } from '../../interfaces/Dataset.interface'
@@ -45,12 +42,11 @@ interface MetaData {
 }
 
 export default function OverviewTab() {
-  const [metaData, setMetadata] = useState<MetaData>()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const { timestamps, isLoading } = useVerificationTimestamps()
-  const { assets, isLoading: fetchingAsset } = useDatachainOutput()
+  const { assets, isLoading: fetchingAsset, metadata: metaData } = useDatachainOutput()
 
   const creationDate = Math.min(...timestamps)
   const lastVerified = Math.max(...timestamps)
@@ -59,30 +55,6 @@ export default function OverviewTab() {
   const { id } = useParams()
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
   const asset = dataset?.find((item) => item.id === id)
-
-  // use query seal to get latest data
-  async function fetchAssets(assetId: string) {
-    const sealResponse = assetId === '0x80bf3a24' ? await get(
-      '/tosi/api/v1/query-seal/bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe',
-      'json'
-    ) : await get(
-      '/tosi/api/v1/query-seal/bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa',
-      'json'
-    )
-
-    const { data } = await get(
-      '/tosi/api/v0/ipfs/get/' + sealResponse.data.status + '/output.zip',
-      'blob'
-    )
-
-    let res: any = await unzip(data, 'metadata.json')
-    setMetadata(res)
-  }
-
-  useEffect(() => {
-    if (!asset) return
-    fetchAssets(asset.id)
-  }, [asset])
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -298,9 +270,9 @@ export default function OverviewTab() {
 
         {asset?.id === '0x80bf3a24' ?
           <Box sx={{ marginBottom: '160px' }}>
-            <Typography variant='h3' mb={2} sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1.5, color: '#101828' }}>
+            {/* <Typography variant='h3' mb={2} sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1.5, color: '#101828' }}>
               Verified files
-            </Typography>
+            </Typography> */}
 
             {true ?
               '' :

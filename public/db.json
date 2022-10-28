@@ -9,10 +9,11 @@
       "lastVerified": "an hour ago",
       "publisher": "Lohko Pte Ltd",
       "issuers": "Lohko Pte Ltd",
-      "image": "./assets/lohko-logo.png",
+      "image": "/assets/lohko-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 28
+      "assetIssued": 28,
+      "sealId": "bafyreifeidf34n4k6eef4fvammk5rpmu4wswzi774jllakwpjbjv3svasa"
     },
     {
       "id": "0x80bf3a24",
@@ -23,10 +24,11 @@
       "lastVerified": "an hour ago",
       "publisher": "Lohko Pte Ltd",
       "issuers": "Lohko Pte Ltd",
-      "image": "./assets/carbon-credit-logo.png",
+      "image": "/assets/carbon-credit-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 12
+      "assetIssued": 12,
+      "sealId": "bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe"
     },
     {
       "id": "0x80bf3a25",
@@ -40,7 +42,9 @@
       "image": "./assets/nguru-logo.png",
       "status": "Coming soon",
       "available": false,
-      "assetIssued": 25
+      "assetIssued": 25,
+      "sealId": ""
+
     }
   ]
 }

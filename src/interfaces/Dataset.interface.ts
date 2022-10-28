@@ -9,5 +9,6 @@ export interface IDataset {
     issuers: string,
     image: string,
     available: string,
-    assetIssued: number
+    assetIssued: number,
+    sealId: string;
 }
