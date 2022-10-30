@@ -61,7 +61,7 @@ export default function VerificationList() {
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
                 {/* <td>{row.assetIssued}</td> */}
-                <td>{row.assetClass !== "Gold" ? "N/A" : !isLoading ?
+                <td>{row.assetClass === "Satellite image" ? "N/A" : !isLoading ?
                   moment(
                     moment
                       .unix(lastVerified).utc()
@@ -83,7 +83,6 @@ export default function VerificationList() {
             ))}
           </tbody>
         )}
-        <tfoot></tfoot>
       </table>
     </div>
   );
