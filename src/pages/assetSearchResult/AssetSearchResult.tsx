@@ -14,7 +14,7 @@ const AssetDetails = () => {
   const navigate = useNavigate()
 
   const filtered = assets.filter(
-    ({ location }) => location?.contract === assetContract && location?.tokenId === assetTokenId,
+    ({ locations }) => locations[0].contract === assetContract && locations[0].tokenId === assetTokenId,
   )
 
   if (!assetContract || !assetTokenId) {
@@ -59,7 +59,7 @@ const AssetDetails = () => {
 
           <TableBody>
             {filtered.map((asset) => (
-              <TableRow key={asset.serial}>
+              <TableRow key={asset.assetNumber}>
                 <TableCell>
                   <a
                     onClick={() => {
@@ -67,7 +67,7 @@ const AssetDetails = () => {
                     }}
                     style={{ color: '#07939C', textDecoration: 'none', cursor: 'pointer' }}
                   >
-                    {asset.serial}
+                    {asset.assetNumber}
                   </a>
                 </TableCell>
 
@@ -82,31 +82,31 @@ const AssetDetails = () => {
                       alt="."
                     />
                   </span>
-                  {asset.product}
+                  {asset.assetName}
                 </TableCell>
 
                 <TableCell>{asset.status ? <img src={check} alt="." /> : <img src={info} alt="." />}</TableCell>
 
-                <TableCell>{asset.location.name}</TableCell>
+                <TableCell>{asset.locations[0].name}</TableCell>
 
                 <TableCell>
                   <a
-                    href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`}
+                    href={`https://opensea.io/assets/ethereum/${asset.locations[0].contract}/${asset.locations[0].tokenId}`}
                     style={{ color: '#07939C', textDecoration: 'none' }}
                     target="_blank"
                     rel="noreferrer nofollow"
                   >
-                    {`${asset.location.contract.slice(0, 4)}...${asset.location.contract.slice(
-                      asset.location.contract.length - 4,
+                    {`${asset.locations[0].contract?.slice(0, 4)}...${asset.locations[0].contract?.slice(
+                      asset.locations[0].contract.length - 4,
                     )}`}
                   </a>
                 </TableCell>
 
-                <TableCell>{asset?.location.tokenId}</TableCell>
+                <TableCell>{asset?.locations[0].tokenId}</TableCell>
 
                 <TableCell>
-                  {`${asset.location.ownerAccount.slice(0, 4)}...${asset.location.ownerAccount.slice(
-                    asset.location.ownerAccount.length - 4,
+                  {`${asset.locations[0].ownerAccount.slice(0, 4)}...${asset.locations[0].ownerAccount.slice(
+                    asset.locations[0].ownerAccount.length - 4,
                   )}`}
                 </TableCell>
 
