@@ -4,13 +4,13 @@ import { Typography, Box, Table, TableContainer, TableHead, TableRow, TableCell,
 
 import './AssetSearchResult.css'
 
-import { useDataChainOutputContext } from '../../hooks/useDatachainOutput'
+import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 
 import { check, info } from '../../assets'
 
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams()
-  const { assets, isLoading } = useDataChainOutputContext()
+  const { assets, isLoading } = useDataSetAssetsContext()
   const navigate = useNavigate()
 
   const filtered = assets.filter(
@@ -62,10 +62,10 @@ const AssetDetails = () => {
               <TableRow key={asset.serial}>
                 <TableCell>
                   <a
-                    onClick={
-                      () => {navigate(`/single-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)}
-                    }
-                     style={{ color: "#07939C", textDecoration: 'none', cursor: 'pointer' }}
+                    onClick={() => {
+                      navigate(`/single-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)
+                    }}
+                    style={{ color: '#07939C', textDecoration: 'none', cursor: 'pointer' }}
                   >
                     {asset.serial}
                   </a>
@@ -94,7 +94,7 @@ const AssetDetails = () => {
                     href={`https://opensea.io/assets/ethereum/${asset.location.contract}/${asset.location.tokenId}`}
                     style={{ color: '#07939C', textDecoration: 'none' }}
                     target="_blank"
-                    rel='noreferrer nofollow'
+                    rel="noreferrer nofollow"
                   >
                     {`${asset.location.contract.slice(0, 4)}...${asset.location.contract.slice(
                       asset.location.contract.length - 4,

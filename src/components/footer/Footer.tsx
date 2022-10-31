@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { IconButton } from '@mui/material'
 import LogoWhiteBg from '../../assets/LogoWhiteBg'
 import './Footer.css'

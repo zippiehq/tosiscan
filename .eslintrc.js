@@ -67,6 +67,7 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
   settings: {
     'import/resolver': {

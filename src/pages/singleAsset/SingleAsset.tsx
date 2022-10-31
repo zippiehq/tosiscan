@@ -1,102 +1,83 @@
-import React, { useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import { useContext } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import moment from 'moment'
 
-import { Box, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Box, Typography } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
-import {
-  AddressIcon,
-  check,
-  downloadIcon,
-  facebookLogoGrey,
-  lohkoAvatar,
-  verifiedTick,
-} from "../../assets";
-import { info } from "../../assets";
+import { AddressIcon, check, downloadIcon, facebookLogoGrey, lohkoAvatar, verifiedTick, info } from '../../assets'
 
-import Hero from "../../components/header/Hero";
-import Footer from "../../components/footer/Footer";
-
-import { useDatachainOutput, Asset } from "../../hooks/useDatachainOutput";
-import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
-import { IDataset } from "../../interfaces/Dataset.interface";
-import { DatasetContext } from "../../context/DatasetContext";
+import { useDataSetAssetsContext, Asset } from '../../hooks/useDatachainOutput'
+import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
+import { IDataset } from '../../interfaces/Dataset.interface'
+import { DatasetContext } from '../../context/DatasetContext'
 
 const EthLocation = {
-  'Ethereum': 'https://opensea.io/assets/ethereum',
-  'ethereum': 'https://opensea.io/assets/ethereum',
-  'Ethereum Goerli':  'https://testnets.opensea.io/assets/goerli'
+  Ethereum: 'https://opensea.io/assets/ethereum',
+  ethereum: 'https://opensea.io/assets/ethereum',
+  'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
 }
 
-const IssuerLohko = () => {
-  return (
-    <div className="content">
-      <h4>Physical Custody</h4>
-      <h2>BullionStar</h2>
+const IssuerLohko = () => (
+  <div className="content">
+    <h4>Physical Custody</h4>
+    <h2>BullionStar</h2>
 
-      <h2>45 New Bridge Rd, Singapore 059398</h2>
-      <div className="address">
-        <img src={AddressIcon} alt="Address pin" />
-        <p>45 New Bridge Rd, Singapore 059398</p>
-      </div>
-      <p>
-        We have partnered with Singapore-based gold and silver trading company
-        BullionStar to ensure a safe and secure investment process
-      </p>
-
-      <div className="download-document">
-        <img src={downloadIcon} alt="Download Icon" />
-        <p>Insurance Document</p>
-      </div>
-
-      <div className="verifier">
-        <p>
-          Verified by
-          <a
-            href="https://www.bullionstar.com/"
-            target="_blank"
-            style={{
-              fontWeight: 500,
-              color: "#07939c",
-              textDecoration: "none",
-            }}
-          >
-            {" "}
-            BullionStar
-          </a>
-        </p>
-      </div>
+    <h2>45 New Bridge Rd, Singapore 059398</h2>
+    <div className="address">
+      <img src={AddressIcon} alt="Address pin" />
+      <p>45 New Bridge Rd, Singapore 059398</p>
     </div>
-  );
-};
+    <p>
+      We have partnered with Singapore-based gold and silver trading company BullionStar to ensure a safe and secure
+      investment process
+    </p>
+
+    <div className="download-document">
+      <img src={downloadIcon} alt="Download Icon" />
+      <p>Insurance Document</p>
+    </div>
+
+    <div className="verifier">
+      <p>
+        Verified by
+        <a
+          href="https://www.bullionstar.com/"
+          target="_blank"
+          style={{
+            fontWeight: 500,
+            color: '#07939c',
+            textDecoration: 'none',
+          }}
+          rel="noreferrer"
+        >
+          {' '}
+          BullionStar
+        </a>
+      </p>
+    </div>
+  </div>
+)
 const CarbonIssuer = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <Box mt={4} mb={6}>
-      <Typography
-        variant="body2"
-        mb={2}
-        sx={{ fontSize: "16px", lineHeight: 1.5, color: "#667085" }}
-      >
+      <Typography variant="body2" mb={2} sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
         This dataset does not have additional verifications.
       </Typography>
 
-      <Typography
-        variant="body2"
-        sx={{ fontSize: "16px", lineHeight: 1.5, color: "#667085" }}
-      >
+      <Typography variant="body2" sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
         Are you the owner of this dataset? <br />
         Increase your asset’s reliability by adding supporting verifications.
         <a
-          onClick={() => navigate("/coming-soon")}
+          onClick={() => navigate('/coming-soon')}
           style={{
             fontWeight: 600,
-            color: "#07939c",
-            textDecoration: "none",
-            cursor: "pointer",
+            color: '#07939c',
+            textDecoration: 'none',
+            cursor: 'pointer',
           }}
           target="_blank"
           rel="noreferrer nofollow"
@@ -105,31 +86,26 @@ const CarbonIssuer = () => {
         </a>
       </Typography>
     </Box>
-  );
-};
+  )
+}
 const Issuers = {
-  "Lohko Gold": IssuerLohko,
-  "Carbon Credit Futures": CarbonIssuer,
-};
+  'Lohko Gold': IssuerLohko,
+  'Carbon Credit Futures': CarbonIssuer,
+}
 
 const getLocation = (asset: Asset | undefined) => {
   if (asset?.locations && Array.isArray(asset.locations)) {
-    return asset.locations[0];
+    return asset.locations[0]
   }
-  return asset?.location;
-};
-const AssetDetails = () => {
-  const { assetContract, assetTokenId, assetSerial, id } = useParams();
-  const { assets, isLoading: fetchingAsset } = useDatachainOutput();
-  const { timestamps, isLoading } = useVerificationTimestamps();
+  return asset?.location
+}
+export default () => {
+  const { assetContract, assetTokenId, assetSerial, id } = useParams()
+  const { assets, isLoading: fetchingAsset } = useDataSetAssetsContext()
+  const { timestamps, isLoading } = useVerificationTimestamps()
+  const lastVerified = Math.max(...timestamps)
 
-  const [metaData, setMetadata] = useState({
-    name: "Lohko Gold",
-  });
-
-  const lastVerified = Math.max(...timestamps);
-
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const asset = assetSerial
     ? assets.find((asset) => asset.serial === assetSerial)
@@ -137,34 +113,30 @@ const AssetDetails = () => {
         if (asset.locations && Array.isArray(asset.locations)) {
           return (
             asset.locations[0].contract === assetContract &&
-            (asset.locations[0].tokenId === assetTokenId ||
-              asset.locations[0].tokenID === assetTokenId)
-          );
+            (asset.locations[0].tokenId === assetTokenId || asset.locations[0].tokenID === assetTokenId)
+          )
         }
 
-        return (
-          asset.location?.contract === assetContract &&
-          asset.location?.tokenId === assetTokenId
-        );
-      });
+        return asset.location?.contract === assetContract && asset.location?.tokenId === assetTokenId
+      })
 
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext);
-  const datasetDetails = dataset?.find((item) => item.id === id);
-  const datasetName = datasetDetails?.dataset || "Lohko Gold";
-  const location = getLocation(asset);
+  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
+  const datasetDetails = dataset?.find((item) => item.id === id)
+  const datasetName = datasetDetails?.dataset || 'Lohko Gold'
+  const location = getLocation(asset)
   const tokenId = location?.tokenId || location?.tokenID
 
-  //@ts-ignore
+  // @ts-ignore
   const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
-  //@ts-ignore
+  // @ts-ignore
   const Issuer = Issuers[datasetName] || null
   return !asset ? (
     <Box
       sx={{
-        display: "flex",
+        display: 'flex',
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <CircularProgress />
@@ -173,70 +145,61 @@ const AssetDetails = () => {
     <Box
       className="asset-tab-overiew"
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "1300px",
-        margin: "0 auto",
-        marginBottom: "32px",
-        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '1300px',
+        margin: '0 auto',
+        marginBottom: '32px',
+        width: '100%',
       }}
     >
-      <div style={{ paddingBottom: "160px" }}>
+      <div style={{ paddingBottom: '160px' }}>
         <div className="asset-details">
           <div className="dataset-header" style={{ padding: 0 }}>
-            <div
-              className="title"
-              style={{ display: "flex", flexDirection: "column", margin: 0 }}
-            >
+            <div className="title" style={{ display: 'flex', flexDirection: 'column', margin: 0 }}>
               <h2
                 style={{
-                  margin: "0 0 8px",
-                  fontFamily: "Inter",
-                  fontSize: "24px",
+                  margin: '0 0 8px',
+                  fontFamily: 'Inter',
+                  fontSize: '24px',
                   fontWeight: 600,
                   lineHeight: 1.33,
-                  color: "#101828",
+                  color: '#101828',
                 }}
               >
                 Asset details
               </h2>
 
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p
                   style={{
-                    margin: "0 24px 0 0",
-                    fontFamily: "Inter",
-                    fontSize: "16px",
+                    margin: '0 24px 0 0',
+                    fontFamily: 'Inter',
+                    fontSize: '16px',
                     lineHeight: 1.5,
-                    color: "#667085",
+                    color: '#667085',
                   }}
                 >
-                  From{" "}
-                  <span style={{ fontWeight: 500, color: "#1d2939" }}>
-                    {datasetName}
-                  </span>{" "}
-                  dataset
+                  From <span style={{ fontWeight: 500, color: '#1d2939' }}>{datasetName}</span> dataset
                 </p>
 
                 <a
                   onClick={() => {
-                    navigate(`/asset/${id}`);
+                    navigate(`/asset/${id}`)
                   }}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    fontSize: "16px",
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
                     fontWeight: 500,
                     lineHeight: 1.5,
-                    color: "#07939C",
-                    textDecoration: "none",
-                    cursor: "pointer",
+                    color: '#07939C',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
                   }}
                 >
                   View dataset
-                  <ArrowForwardIcon
-                    style={{ width: "20px", height: "20px", marginLeft: "8px" }}
-                  />
+                  <ArrowForwardIcon style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
                 </a>
               </div>
             </div>
@@ -245,28 +208,23 @@ const AssetDetails = () => {
 
         <div className="asset-overview">
           <div className="column-one">
-            <div
-              className="general-info"
-              style={{ marginTop: 0, padding: "24px" }}
-            >
+            <div className="general-info" style={{ marginTop: 0, padding: '24px' }}>
               <h3>Overview</h3>
               <table>
                 <tbody>
                   {asset?.serial && (
                     <tr>
-                      <td style={{ width: "240px", cursor: "default" }}>
-                        Serial No.
-                      </td>
-                      <td style={{ cursor: "default" }}>{asset?.serial}</td>
+                      <td style={{ width: '240px', cursor: 'default' }}>Serial No.</td>
+                      <td style={{ cursor: 'default' }}>{asset?.serial}</td>
                     </tr>
                   )}
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>Asset</td>
+                    <td style={{ width: '240px', cursor: 'default' }}>Asset</td>
                     <td
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        cursor: "default",
+                        display: 'flex',
+                        alignItems: 'center',
+                        cursor: 'default',
                       }}
                     >
                       <img
@@ -274,7 +232,7 @@ const AssetDetails = () => {
                         className="avatar"
                         width="40px"
                         height="40px"
-                        style={{ marginRight: "12px" }}
+                        style={{ marginRight: '12px' }}
                         alt="."
                       />
 
@@ -282,47 +240,28 @@ const AssetDetails = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Last verified
-                    </td>
-                    <td style={{ cursor: "default" }}>
+                    <td style={{ width: '240px', cursor: 'default' }}>Last verified</td>
+                    <td style={{ cursor: 'default' }}>
                       {!isLoading
-                        ? moment(
-                            moment
-                              .unix(lastVerified)
-                              .utc()
-                              .format("DD MMM YYYY HH:mm:ss [UTC]")
-                          ).fromNow()
-                        : "loading..."}
+                        ? moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
+                        : 'loading...'}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Status
-                    </td>
-                    <td style={{ cursor: "default" }}>
-                      {asset?.status === "ok" ? (
-                        <img src={check} alt="." />
-                      ) : (
-                        <img src={info} alt="." />
-                      )}
+                    <td style={{ width: '240px', cursor: 'default' }}>Status</td>
+                    <td style={{ cursor: 'default' }}>
+                      {asset?.status === 'ok' ? <img src={check} alt="." /> : <img src={info} alt="." />}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Blockchain
-                    </td>
-                    <td style={{ cursor: "default" }}>
-                      {location ? location.name : "Zippienet"}
-                    </td>
+                    <td style={{ width: '240px', cursor: 'default' }}>Blockchain</td>
+                    <td style={{ cursor: 'default' }}>{location ? location.name : 'Zippienet'}</td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Contract
-                    </td>
+                    <td style={{ width: '240px', cursor: 'default' }}>Contract</td>
                     <td
                       style={{
-                        cursor: location ? "pointer" : "default",
+                        cursor: location ? 'pointer' : 'default',
                       }}
                     >
                       {/* @ts-ignore */}
@@ -330,37 +269,30 @@ const AssetDetails = () => {
                         <a
                           /* @ts-ignore */
                           href={openSearUrl}
-                          style={{ color: "#07939C", textDecoration: "none" }}
-                          target="_blank" rel="noreferrer"
+                          style={{ color: '#07939C', textDecoration: 'none' }}
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           {location.contract}
                         </a>
                       ) : (
-                        <a style={{ color: "#101828", textDecoration: "none" }}>
-                          {asset?.locations
-                            ? location?.contract
-                            : "0xa40e46adC47781094892c4d6538D7d6f34e4187f"}
+                        <a style={{ color: '#101828', textDecoration: 'none' }}>
+                          {asset?.locations ? location?.contract : '0xa40e46adC47781094892c4d6538D7d6f34e4187f'}
                         </a>
                       )}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Owner Address
-                    </td>
-                    <td style={{ cursor: "default" }}>
-                      {location ? location.ownerAccount : asset?.ownerAccount}
-                    </td>
+                    <td style={{ width: '240px', cursor: 'default' }}>Owner Address</td>
+                    <td style={{ cursor: 'default' }}>{location ? location.ownerAccount : asset?.ownerAccount}</td>
                   </tr>
                   <tr>
-                    <td style={{ width: "240px", cursor: "default" }}>
-                      Dataset
-                    </td>
+                    <td style={{ width: '240px', cursor: 'default' }}>Dataset</td>
                     <td
                       onClick={() => {
-                        navigate(`/asset/${id}`);
+                        navigate(`/asset/${id}`)
                       }}
-                      style={{ color: "#07939C", cursor: "pointer" }}
+                      style={{ color: '#07939C', cursor: 'pointer' }}
                     >
                       {datasetName}
                     </td>
@@ -376,7 +308,7 @@ const AssetDetails = () => {
               </div>
               {/* @ts-ignore */}
 
-              < Issuer/>
+              <Issuer />
             </div>
           </div>
 
@@ -406,8 +338,8 @@ const AssetDetails = () => {
                   </div>
                 </div>
                 <p className="desc">
-                  Whether it’s gold, silver, art, or other assets, Lohko
-                  digitalises tangible assets and gives investors full control.
+                  Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors
+                  full control.
                 </p>
               </div>
               <div className="socials">
@@ -446,15 +378,5 @@ const AssetDetails = () => {
         </div>
       </div>
     </Box>
-  );
-};
-
-export default function () {
-  return (
-    <>
-      <Hero />
-      <AssetDetails />
-      <Footer />
-    </>
-  );
+  )
 }
