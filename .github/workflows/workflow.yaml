@@ -104,13 +104,14 @@ jobs:
       - name: s3 sync
         run: |
           echo "Bucket is set to ${BUCKET}"
-          cd /tmp 
+          cd /tmp
           tar xfvJ /tmp/${{github.sha}}.txz
           cd /tmp/${{github.sha}}/build
           aws s3 sync --delete . s3://${BUCKET}/public/
           # NOTE! awscliv2 syntax
           # NOTE! metadata permissions differ between environments
-          aws s3 cp s3://${BUCKET}/public/* s3://${BUCKET}/public/ \
+          echo "Running copy-props"
+          aws s3 cp s3://${BUCKET}/public s3://${BUCKET}/public \
             --exclude '*'  \
             --include '*.html' \
             --include '*.css' \
@@ -119,6 +120,7 @@ jobs:
             --cache-control 'no-store, must-revalidate' \
             --copy-props 'metadata-directive' \
             --recursive
+          echo "Finished copy-props"
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         if: always()
