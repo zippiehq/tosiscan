@@ -1,26 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
-import { verifiedTick } from "../../assets";
-import { DatasetContext } from "../../context/DatasetContext";
+import { verifiedTick } from '../../assets'
+import { DatasetContext } from '../../context/DatasetContext'
 
-import { useVerificationTimestamps } from "../../hooks/useTimeStamps";
-import moment from "moment";
+import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 
 export default function VerificationList() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
   const { dataset } = useContext(DatasetContext)
   const { timestamps, isLoading } = useVerificationTimestamps()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const lastVerified = Math.max(...timestamps)
 
   useEffect(() => {
-    if(dataset.length) {
+    if (dataset.length) {
       setLoading(false)
-    } 
-  }, [dataset]);
-
+    }
+  }, [dataset])
+  const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
   return (
     <div className="verification-list">
       <table>
@@ -39,15 +39,23 @@ export default function VerificationList() {
         {loading ? (
           <tbody>
             <tr>
-              <td>
-                loading....
-              </td>
+              <td>loading....</td>
             </tr>
           </tbody>
         ) : (
           <tbody>
             {dataset.map((row) => (
-              <tr key={row.id} className={row.available ? '' : 'disabled'} onClick={row.available ? () => { navigate(`/asset/${row.id}`) } : () => void {}}>
+              <tr
+                key={row.id}
+                className={row.available ? '' : 'disabled'}
+                onClick={
+                  row.available
+                    ? () => {
+                        navigate(`/asset/${row.id}`)
+                      }
+                    : null
+                }
+              >
                 <td>
                   <div className="flex">
                     <img className="avatar" src={row.image} alt="." />
@@ -61,12 +69,8 @@ export default function VerificationList() {
                 <td>{row.type}</td>
                 <td>{row.assetClass}</td>
                 {/* <td>{row.assetIssued}</td> */}
-                <td>{row.assetClass === "Satellite image" ? "N/A" : !isLoading ?
-                  moment(
-                    moment
-                      .unix(lastVerified).utc()
-                      .format("DD MMM YYYY HH:mm:ss [UTC]")
-                  ).fromNow() : "loading..."}</td>
+                {/* eslint-disable-next-line no-nested-ternary */}
+                <td>{row.assetClass !== 'Satellite image' ? 'N/A' : !isLoading ? date : 'loading...'}</td>
                 <td>
                   <div className="flex">
                     <div>{row.publisher}</div>
@@ -85,5 +89,5 @@ export default function VerificationList() {
         )}
       </table>
     </div>
-  );
+  )
 }

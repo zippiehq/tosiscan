@@ -1,0 +1,14 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Run ESLint
+        run: yarn lint

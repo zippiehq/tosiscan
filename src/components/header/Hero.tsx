@@ -1,8 +1,8 @@
-import LogoWhiteBg from "../../assets/LogoWhiteBg";
-import { Link } from "react-router-dom";
-import { caretDownWhite, leftVector, rightVector } from "../../assets";
-import "./Hero.css";
-import SearchBar from "./Search";
+import { Link } from 'react-router-dom'
+import LogoWhiteBg from '../../assets/LogoWhiteBg'
+import { caretDownWhite, leftVector, rightVector } from '../../assets'
+import './Hero.css'
+import SearchBar from './Search'
 
 function Hero() {
   return (
@@ -55,7 +55,7 @@ function Hero() {
         <SearchBar />
       </div>
     </div>
-  );
+  )
 }
 
-export default Hero;
+export default Hero
