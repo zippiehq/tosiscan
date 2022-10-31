@@ -110,7 +110,6 @@ jobs:
           aws s3 sync --delete . s3://${BUCKET}/public/
           # NOTE! awscliv2 syntax
           # NOTE! metadata permissions differ between environments
-          echo "Running copy-props"
           aws s3 cp s3://${BUCKET}/public s3://${BUCKET}/public \
             --exclude '*'  \
             --include '*.html' \
@@ -120,7 +119,6 @@ jobs:
             --cache-control 'no-store, must-revalidate' \
             --copy-props 'metadata-directive' \
             --recursive
-          echo "Finished copy-props"
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         if: always()
@@ -161,7 +159,7 @@ jobs:
             aws s3 sync --delete . s3://${BUCKET}/public/
           # NOTE! awscliv2 syntax
           # NOTE! metadata permissions differ between environments
-          aws s3 cp s3://${BUCKET}/public/* s3://${BUCKET}/public/ \
+          aws s3 cp s3://${BUCKET}/public s3://${BUCKET}/public \
             --exclude '*'  \
             --include '*.html' \
             --include '*.css' \
