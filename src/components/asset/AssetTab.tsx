@@ -17,44 +17,12 @@ import {
 import { buttonGroup, check, info, searchIcon } from '../../assets'
 import image from '../../assets/Lohko.svg'
 
-import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
+import { useDataSetAssetsContext, IFinalAsset } from '../../hooks/useDatachainOutput'
 import { IDataset } from '../../interfaces/Dataset.interface'
 import { DatasetContext } from '../../context/DatasetContext'
 
-interface AssetsGold {
-  tokenId?: string
-  product?: string
-  ownerName?: string
-  ownerAccount?: string
-  serial?: string
-  imageUrl?: string
-  location?: {
-    name?: string
-    contract?: string
-    tokenId?: string
-    ownerAccount?: string
-  }
-  status?: string
-}
-
-interface AssetsCredit {
-  assetNumber?: string
-  assetName?: string
-  imageUrl?: string
-  currentLocation?: string
-  location?: [
-    {
-      name?: string
-      contract?: string
-      tokenId?: string
-      ownerAccount?: string
-    },
-  ]
-  status?: string
-}
-
-function AssetTable({ assets }: { assets: any }) {
-  let uniqueItems: any = new Set(assets.map((asset: any) => asset.assetName || asset.product))
+function AssetTable({ assets }: { assets: IFinalAsset[] }) {
+  let uniqueItems: any = new Set(assets.map((asset: IFinalAsset) => asset.assetName))
   uniqueItems = Array.from(uniqueItems)
   return (
     <div style={{ width: '820px', marginTop: '16px' }}>
@@ -92,7 +60,7 @@ function IndividualAssetTable({
   rowsPerPage,
   setRowsPerPage,
 }: {
-  assets: any
+  assets: IFinalAsset[]
   page: number
   setPage: any
   rowsPerPage: any
@@ -131,12 +99,12 @@ function IndividualAssetTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
+                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
                   const location = row.locations[0]
                   const assetContract = location.contract
                   const { ownerAccount } = location
 
-                  const assetTokenId = location.tokenId || location.tokenID
+                  const assetTokenId = location.tokenId
                   const assetSerial = row.assetNumber
 
                   const onAssetClick = () => {
@@ -238,10 +206,11 @@ function IndividualAssetTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
-                  const assetContract = row.location?.contract
-                  const assetTokenId = row.location?.tokenId
-                  const assetSerial = row.serial
+                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
+                  const location = row.locations[0]
+                  const assetContract = location?.contract
+                  const assetTokenId = location?.tokenId
+                  const assetSerial = row.assetNumber
 
                   const onAssetClick = () => {
                     if (assetContract && assetTokenId) {
@@ -262,7 +231,7 @@ function IndividualAssetTable({
                             cursor: 'pointer',
                           }}
                         >
-                          {row.serial}
+                          {assetSerial}
                         </a>
                       </TableCell>
                       <TableCell
@@ -280,11 +249,11 @@ function IndividualAssetTable({
                               marginRight: '12px',
                             }}
                             className="avatar"
-                            src={row.product.indexOf('TEST') > -1 ? image : row.imageUrl}
+                            src={row.assetName.indexOf('TEST') > -1 ? image : row.imageUrl}
                             alt="lohko"
                           />
                         </span>
-                        {row.product}
+                        {row.assetName}
                       </TableCell>
                       <TableCell>
                         <Tooltip
@@ -295,16 +264,14 @@ function IndividualAssetTable({
                         </Tooltip>
                       </TableCell>
                       <TableCell sx={{ cursor: 'text', textTransform: 'capitalize' }}>
-                        {row.location ? row.location.name : 'Zippienet'}
+                        {location ? location.name : 'Zippienet'}
                       </TableCell>
                       <TableCell sx={{ cursor: 'text' }}>
-                        {row.location
-                          ? `${row.location.contract}/${row.location.tokenId}`
-                          : `${row.tokenId.substring(0, 4)}...${row.tokenId.substring(10, 30)}`}
+                        {location.contract
+                          ? `${location.contract}/${location.tokenId}`
+                          : `${location.tokenId.substring(0, 4)}...${location.tokenId.substring(10, 30)}`}
                       </TableCell>
-                      <TableCell sx={{ cursor: 'text' }}>
-                        {row.location ? row.location.ownerAccount : row.ownerAccount}
-                      </TableCell>
+                      <TableCell sx={{ cursor: 'text' }}>{location.ownerAccount}</TableCell>
                     </TableRow>
                   )
                 })}

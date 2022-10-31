@@ -8,7 +8,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import { AddressIcon, check, downloadIcon, facebookLogoGrey, lohkoAvatar, verifiedTick, info } from '../../assets'
 
-import { useDataSetAssetsContext, Asset } from '../../hooks/useDatachainOutput'
+import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { IDataset } from '../../interfaces/Dataset.interface'
 import { DatasetContext } from '../../context/DatasetContext'
@@ -93,12 +93,6 @@ const Issuers = {
   'Carbon Credit Futures': CarbonIssuer,
 }
 
-const getLocation = (asset: Asset | undefined) => {
-  if (asset?.locations && Array.isArray(asset.locations)) {
-    return asset.locations[0]
-  }
-  return asset?.location
-}
 export default () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { assets, isLoading: fetchingAsset } = useDataSetAssetsContext()
@@ -108,23 +102,17 @@ export default () => {
   const navigate = useNavigate()
 
   const asset = assetSerial
-    ? assets.find((asset) => asset.serial === assetSerial)
-    : assets.find((asset) => {
-        if (asset.locations && Array.isArray(asset.locations)) {
-          return (
-            asset.locations[0].contract === assetContract &&
-            (asset.locations[0].tokenId === assetTokenId || asset.locations[0].tokenID === assetTokenId)
-          )
-        }
-
-        return asset.location?.contract === assetContract && asset.location?.tokenId === assetTokenId
-      })
+    ? assets.find((asset) => asset.assetNumber === assetSerial)
+    : assets.find(
+        (asset) => asset.locations[0]?.contract === assetContract && asset.locations[0]?.tokenId === assetTokenId,
+      )
 
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
   const datasetDetails = dataset?.find((item) => item.id === id)
   const datasetName = datasetDetails?.dataset || 'Lohko Gold'
-  const location = getLocation(asset)
-  const tokenId = location?.tokenId || location?.tokenID
+  const location = asset?.locations[0]
+
+  const tokenId = location?.tokenId
 
   // @ts-ignore
   const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
@@ -212,10 +200,10 @@ export default () => {
               <h3>Overview</h3>
               <table>
                 <tbody>
-                  {asset?.serial && (
+                  {asset?.assetNumber && (
                     <tr>
                       <td style={{ width: '240px', cursor: 'default' }}>Serial No.</td>
-                      <td style={{ cursor: 'default' }}>{asset?.serial}</td>
+                      <td style={{ cursor: 'default' }}>{asset?.assetNumber}</td>
                     </tr>
                   )}
                   <tr>
@@ -236,7 +224,7 @@ export default () => {
                         alt="."
                       />
 
-                      {asset?.product}
+                      {asset?.assetName}
                     </td>
                   </tr>
                   <tr>
@@ -277,14 +265,14 @@ export default () => {
                         </a>
                       ) : (
                         <a style={{ color: '#101828', textDecoration: 'none' }}>
-                          {asset?.locations ? location?.contract : '0xa40e46adC47781094892c4d6538D7d6f34e4187f'}
+                          {location?.contract || '0xa40e46adC47781094892c4d6538D7d6f34e4187f'}
                         </a>
                       )}
                     </td>
                   </tr>
                   <tr>
                     <td style={{ width: '240px', cursor: 'default' }}>Owner Address</td>
-                    <td style={{ cursor: 'default' }}>{location ? location.ownerAccount : asset?.ownerAccount}</td>
+                    <td style={{ cursor: 'default' }}>{location?.ownerAccount}</td>
                   </tr>
                   <tr>
                     <td style={{ width: '240px', cursor: 'default' }}>Dataset</td>

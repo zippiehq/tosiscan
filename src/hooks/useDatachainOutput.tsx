@@ -7,11 +7,9 @@ import { DatasetContext } from '../context/DatasetContext'
 import { IDataset } from '../interfaces/Dataset.interface'
 
 interface ILocation {
-  name: string
-  contract: string
+  name?: string
+  contract?: string
   tokenId: string
-  tokenID: string
-
   ownerAccount: string
 }
 export interface Asset {
@@ -26,6 +24,42 @@ export interface Asset {
   status: string
 }
 
+export interface IFinalAsset {
+  assetNumber?: string
+  assetName: string
+  imageUrl: string
+  currentLocation?: string
+  locations: ILocation[]
+  status: string
+}
+
+const getLocations = (data: any): ILocation[] | [] => {
+  if (data.locations) return data.locations
+
+  if (data.location) return [data.location]
+  if (data.ownerAccount) {
+    return [
+      {
+        ownerAccount: data.ownerAccount,
+        tokenId: data.tokenId,
+      },
+    ]
+  }
+  return []
+}
+const getCurrentLocation = (data: any) => {
+  if (data.currentLocation) return data.currentLocation
+
+  if (data.location) return data.location.name
+}
+const formatDataStructure = (data: any): IFinalAsset => ({
+  assetNumber: data.assetNumber || data.serial,
+  assetName: data.assetName || data.product,
+  imageUrl: data.imageUrl,
+  currentLocation: getCurrentLocation(data),
+  locations: getLocations(data),
+  status: data.status,
+})
 export interface DatachainOutputContextT {
   assets: Asset[]
   isLoading: boolean
@@ -49,7 +83,7 @@ export const fetchDataSet = async (id: string) => {
 }
 function useDataSetAssets() {
   const [isLoading, setLoading] = useState<boolean>(true)
-  const [assets, setAssets] = useState<Asset[]>([])
+  const [assets, setAssets] = useState<IFinalAsset[]>([])
   const [metadata, setMetadata] = useState<MetaData | undefined>()
   const { id } = useParams()
   const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
@@ -58,9 +92,9 @@ function useDataSetAssets() {
   const update = async (id: string) => {
     setLoading(true)
     const { assets, metadata } = await fetchDataSet(id)
-
-    // @ts-ignore
-    setAssets(Array.from(assets))
+    const formattedAssets = Array.from(assets).map((asset) => formatDataStructure(asset))
+    setAssets(formattedAssets)
+    console.log(formattedAssets)
     // @ts-ignore
     setMetadata(metadata)
     setLoading(false)
