@@ -84,7 +84,6 @@ const fetchDataSetAssets = async (sealId: string, id: string) => {
 function useDataSetAssets() {
   const [isLoading, setLoading] = useState<boolean>(true)
   const [datasetOutputs, setDataSetOutputs] = useState<IDataSetOutputs>()
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const [selectedDataSet, setSelectedDataSet] = useState<DatachainOutputContextT>()
   const { id } = useParams()
   const { datasets } = useDataSetContext()
