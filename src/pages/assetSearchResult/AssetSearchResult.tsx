@@ -40,7 +40,7 @@ const AssetDetails = () => {
 
   const filtered = assets.filter(
     ({ locations }) =>
-      locations[0].contract?.toLocaleLowerCase() === assetContract &&
+      locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
       // @ts-ignore
       (locations[0].tokenId === assetTokenId || locations[0].tokenID === assetTokenId),
   )
