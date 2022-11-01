@@ -150,7 +150,7 @@ function IndividualAssetTable({
                         </Box>
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell sx={{ cursor: 'default' }}>
                         <img src={row.status === 'ok' ? check : info} alt="." />
                       </TableCell>
 
@@ -159,22 +159,16 @@ function IndividualAssetTable({
                       <TableCell sx={{ cursor: 'text' }}>{ownerAccount}</TableCell>
 
                       <TableCell>
-                        {page > 1 ? (
-                          <a
-                            onClick={() => {
-                              navigate(`/asset/0x80bf3a23`)
-                            }}
-                            style={{
-                              color: '#07939C',
-                              textDecoration: 'none',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            Details
-                          </a>
-                        ) : (
-                          ''
-                        )}
+                        <a
+                          onClick={onAssetClick}
+                          style={{
+                            color: '#07939C',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Details
+                        </a>
                       </TableCell>
                     </TableRow>
                   )
@@ -204,6 +198,7 @@ function IndividualAssetTable({
                   <TableCell>Blockchain</TableCell>
                   <TableCell>Token ID</TableCell>
                   <TableCell>Owner Address</TableCell>
+                  <TableCell> </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -273,6 +268,18 @@ function IndividualAssetTable({
                           : `${location.tokenId.substring(0, 4)}...${location.tokenId.substring(10, 30)}`}
                       </TableCell>
                       <TableCell sx={{ cursor: 'text' }}>{location.ownerAccount}</TableCell>
+                      <TableCell>
+                        <a
+                          onClick={onAssetClick}
+                          style={{
+                            color: '#07939C',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Details
+                        </a>
+                      </TableCell>
                     </TableRow>
                   )
                 })}
