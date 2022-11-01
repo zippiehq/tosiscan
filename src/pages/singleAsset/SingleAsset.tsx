@@ -102,7 +102,10 @@ export default () => {
   const asset = assetSerial
     ? assets.find((asset) => asset.assetNumber === assetSerial)
     : assets.find(
-        (asset) => asset.locations[0]?.contract === assetContract && asset.locations[0]?.tokenId === assetTokenId,
+        (asset) =>
+          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+          // @ts-ignore
+          (asset.locations[0]?.tokenId === assetTokenId || asset.locations[0]?.tokenID === assetTokenId),
       )
 
   const { getDataSetById } = useDataSetContext()

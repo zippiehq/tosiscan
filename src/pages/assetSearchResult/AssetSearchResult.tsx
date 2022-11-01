@@ -16,9 +16,22 @@ const AssetDetails = () => {
   if (!datasetOutputs || isLoading) {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
-  const assets = Object.values(datasetOutputs)
-    .map((dataset) => dataset.assets)
-    .flat()
+  const datasetId = Object.keys(datasetOutputs).find((id) => {
+    const { assets } = datasetOutputs[id]
+    return assets.some(
+      ({ locations }) =>
+        locations[0].contract?.toLocaleLowerCase() === assetContract &&
+        // @ts-ignore
+        (locations[0].tokenId === assetTokenId || locations[0].tokenID === assetTokenId),
+    )
+  })
+
+  if (!assetContract || !assetTokenId || !datasetId) {
+    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Not found</div>
+  }
+
+  const { assets } = datasetOutputs[datasetId]
+
   const filtered = assets.filter(
     ({ locations }) =>
       locations[0].contract?.toLocaleLowerCase() === assetContract &&
@@ -69,7 +82,7 @@ const AssetDetails = () => {
                 <TableCell>
                   <a
                     onClick={() => {
-                      navigate(`/single-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)
+                      navigate(`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`)
                     }}
                     style={{ color: '#07939C', textDecoration: 'none', cursor: 'pointer' }}
                   >
