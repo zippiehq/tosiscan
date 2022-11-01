@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Routes, Route, Outlet } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 
 import './App.css'
 
 // import AssetDetails from "./components/asset/AssetDetails";
-import axios from 'axios'
-import { DatasetContext } from './context/DatasetContext'
 import { SearchContext } from './context/SearchContext'
 
 import AssetDetails from './pages/asset/AssetDetails'
@@ -16,6 +14,8 @@ import SingleAsset from './pages/singleAsset/SingleAsset'
 import AssetSearchResult from './pages/assetSearchResult/AssetSearchResult'
 
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
+import { DataSetProvider } from './hooks/useDataset'
+
 import { VerificationTimestampsProvider } from './hooks/useTimeStamps'
 import { theme } from './theme'
 import Hero from './components/header/Hero'
@@ -33,32 +33,17 @@ const Layout = () => (
 
 function App() {
   const [value, setValue] = useState<any>({ term: '', filter: 'all' })
-  const [dataset, setDataset] = useState<any>([])
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('/db.json')
-      if (response && response.data) {
-        setDataset(response.data.verifications)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <SearchContext.Provider value={{ value, setValue }}>
-          <DatasetContext.Provider value={{ dataset, setDataset }}>
+          <DataSetProvider>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/asset/:id" element={<AssetDetails />} />
-                <Route path="/search-asset/:id/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
                 <Route path="/single-asset/:id">
                   <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
                   <Route path=":assetSerial" element={<SingleAsset />} />
@@ -66,7 +51,7 @@ function App() {
               </Route>
               <Route path="/coming-soon" element={<ComingSoon />} />
             </Routes>
-          </DatasetContext.Provider>
+          </DataSetProvider>
         </SearchContext.Provider>
       </div>
     </ThemeProvider>

@@ -1,25 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
 import { verifiedTick } from '../../assets'
-import { DatasetContext } from '../../context/DatasetContext'
 
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
+import { useDataSetContext } from '../../hooks/useDataset'
 
 export default function VerificationList() {
   const [loading, setLoading] = useState(true)
-  const { dataset } = useContext(DatasetContext)
+  const { datasets } = useDataSetContext()
+
   const { timestamps, isLoading } = useVerificationTimestamps()
   const navigate = useNavigate()
 
   const lastVerified = Math.max(...timestamps)
 
   useEffect(() => {
-    if (dataset.length) {
+    if (datasets.length) {
       setLoading(false)
     }
-  }, [dataset])
+  }, [datasets])
   const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
   return (
     <div className="verification-list">
@@ -44,7 +45,7 @@ export default function VerificationList() {
           </tbody>
         ) : (
           <tbody>
-            {dataset.map((row) => (
+            {datasets.map((row) => (
               <tr
                 key={row.id}
                 className={row.available ? '' : 'disabled'}

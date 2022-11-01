@@ -2,8 +2,7 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 
 import { useParams } from 'react-router-dom'
 import { get } from '../adapters/axios'
-import { DatasetContext } from '../context/DatasetContext'
-import { IDataset } from '../interfaces/Dataset.interface'
+import { useDataSetContext } from './useDataset'
 
 export interface VerificationTimestampContextT {
   timestamps: number[]
@@ -21,8 +20,9 @@ export const VerificationTimestampsProvider: React.FC<PropsWithChildren> = ({ ch
   const [isLoading, setLoading] = useState<boolean>(true)
   const [timestamps, setTimeStamps] = useState<number[]>([])
   const { id } = useParams()
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const asset = dataset?.find((item) => item.id === id)
+  const { getDataSetById } = useDataSetContext()
+
+  const asset = getDataSetById(id)
   useEffect(() => {
     if (!asset?.id) {
       return

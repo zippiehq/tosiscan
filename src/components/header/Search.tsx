@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-
-
-import { searchIcon } from "../../assets";
+import { searchIcon } from '../../assets'
 
 export default function SearchBar() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [searchValue, setSearchValue] = useState('')
   const [assetTokenId, setAssetTokenId] = useState('')
@@ -19,29 +17,24 @@ export default function SearchBar() {
 
     setAssetContract(searchValue.split('/').slice(-2, -1)[0])
     setAssetTokenId(searchValue.substring(searchValue.lastIndexOf('/') + 1))
-
   }, [searchValue])
 
-  // remove hardcoded id
-  const handleSubmit = () => {
-    navigate(`/search-asset/0x80bf3a23/${assetContract}/${assetTokenId}`)
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      navigate(`/search-asset/${assetContract}/${assetTokenId}`)
+    }
   }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="search-box">
-        <img src={searchIcon} alt="Search Icon" />
-        <input
-          type="text"
-          placeholder="Token URL"
-          onChange={(ev) => {
-            setSearchValue(ev.target.value)
-          }}
-        />
-       
-      </div>
-    </form>
-  );
+    <div className="search-box">
+      <img src={searchIcon} alt="Search Icon" />
+      <input
+        type="text"
+        placeholder="Token URL"
+        onKeyDown={handleKeyDown}
+        onChange={(ev) => {
+          setSearchValue(ev.target.value)
+        }}
+      />
+    </div>
+  )
 }
-
-

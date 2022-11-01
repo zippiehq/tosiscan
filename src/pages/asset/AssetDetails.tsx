@@ -11,16 +11,15 @@ import BasicTabs from '../../components/asset/Tabs'
 
 import { ReactComponent as IconHome } from '../../assets/icon-home.svg'
 
-import { DatasetContext } from '../../context/DatasetContext'
-import { IDataset } from '../../interfaces/Dataset.interface'
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
+import { useDataSetContext } from '../../hooks/useDataset'
 
 export default () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { getDataSetById } = useDataSetContext()
 
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const asset = dataset?.find((item) => item.id === id)
+  const asset = getDataSetById(id)
 
   const { timestamps, isLoading } = useVerificationTimestamps()
   const lastVerified = Math.max(...timestamps)

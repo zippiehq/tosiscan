@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -18,8 +18,7 @@ import { buttonGroup, check, info, searchIcon } from '../../assets'
 import image from '../../assets/Lohko.svg'
 
 import { useDataSetAssetsContext, IFinalAsset } from '../../hooks/useDatachainOutput'
-import { IDataset } from '../../interfaces/Dataset.interface'
-import { DatasetContext } from '../../context/DatasetContext'
+import { useDataSetContext } from '../../hooks/useDataset'
 
 function AssetTable({ assets }: { assets: IFinalAsset[] }) {
   let uniqueItems: any = new Set(assets.map((asset: IFinalAsset) => asset.assetName))
@@ -69,8 +68,10 @@ function IndividualAssetTable({
   const navigate = useNavigate()
 
   const { id } = useParams()
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const asset = dataset?.find((item) => item.id === id)
+
+  const { getDataSetById } = useDataSetContext()
+
+  const asset = getDataSetById(id)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -296,13 +297,13 @@ export default function AssetTab() {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
-  const { assets, isLoading } = useDataSetAssetsContext()
-  const { id } = useParams()
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const asset = dataset?.find((item) => item.id === id)
-  return isLoading ? (
-    <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
-  ) : (
+  const { selectedDataSet, isLoading } = useDataSetAssetsContext()
+  if (isLoading || !selectedDataSet) {
+    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+  }
+  const { assets, dataSetId } = selectedDataSet
+
+  return (
     <div className="asset-tab">
       <div className="asset-tab-overiew">
         <div className="col-1">
@@ -370,7 +371,7 @@ export default function AssetTab() {
             </p>
           </div>
 
-          {asset?.id === '0x80bf3a24' ? (
+          {dataSetId === '0x80bf3a24' ? (
             ''
           ) : (
             <div className="search">

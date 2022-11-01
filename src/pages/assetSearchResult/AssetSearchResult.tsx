@@ -10,18 +10,24 @@ import { check, info } from '../../assets'
 
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams()
-  const { assets, isLoading } = useDataSetAssetsContext()
+  const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const navigate = useNavigate()
 
+  if (!datasetOutputs || isLoading) {
+    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
+  }
+  const assets = Object.values(datasetOutputs)
+    .map((dataset) => dataset.assets)
+    .flat()
   const filtered = assets.filter(
-    ({ locations }) => locations[0].contract === assetContract && locations[0].tokenId === assetTokenId,
+    ({ locations }) =>
+      locations[0].contract?.toLocaleLowerCase() === assetContract &&
+      // @ts-ignore
+      (locations[0].tokenId === assetTokenId || locations[0].tokenID === assetTokenId),
   )
 
   if (!assetContract || !assetTokenId) {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Not found</div>
-  }
-  if (isLoading) {
-    return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
 
   return filtered.length === 0 ? (

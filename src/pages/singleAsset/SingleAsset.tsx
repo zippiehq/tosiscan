@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
@@ -10,8 +9,7 @@ import { AddressIcon, check, downloadIcon, facebookLogoGrey, lohkoAvatar, verifi
 
 import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
-import { IDataset } from '../../interfaces/Dataset.interface'
-import { DatasetContext } from '../../context/DatasetContext'
+import { useDataSetContext } from '../../hooks/useDataset'
 
 const EthLocation = {
   Ethereum: 'https://opensea.io/assets/ethereum',
@@ -95,20 +93,21 @@ const Issuers = {
 
 export default () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
-  const { assets, isLoading: fetchingAsset } = useDataSetAssetsContext()
+  const { selectedDataSet, isLoading: fetchingAsset } = useDataSetAssetsContext()
   const { timestamps, isLoading } = useVerificationTimestamps()
   const lastVerified = Math.max(...timestamps)
 
   const navigate = useNavigate()
-
+  const assets = selectedDataSet?.assets || []
   const asset = assetSerial
     ? assets.find((asset) => asset.assetNumber === assetSerial)
     : assets.find(
         (asset) => asset.locations[0]?.contract === assetContract && asset.locations[0]?.tokenId === assetTokenId,
       )
 
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const datasetDetails = dataset?.find((item) => item.id === id)
+  const { getDataSetById } = useDataSetContext()
+
+  const datasetDetails = getDataSetById(id)
   const datasetName = datasetDetails?.dataset || 'Lohko Gold'
   const location = asset?.locations[0]
 

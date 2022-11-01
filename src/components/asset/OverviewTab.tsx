@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
@@ -20,33 +20,21 @@ import { facebookLogoGrey, verifiedTick, lohkoAvatar, downloadIcon, AddressIcon 
 import { ReactComponent as IconVerifiedTick } from '../../assets/VerifiedTick.svg'
 import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
-import { IDataset } from '../../interfaces/Dataset.interface'
-import { DatasetContext } from '../../context/DatasetContext'
-
-interface MetaData {
-  contract: string
-  name: string
-  ['asset-description']: string
-  ['asset-class']: string
-  ['main-location']: string
-  ['supported-locations']: string[]
-}
+import { useDataSetContext } from '../../hooks/useDataset'
 
 export default function OverviewTab() {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const { timestamps, isLoading } = useVerificationTimestamps()
-  const { assets, isLoading: fetchingAsset, metadata: metaData } = useDataSetAssetsContext()
-
+  const { isLoading: fetchingAsset, selectedDataSet } = useDataSetAssetsContext()
+  const { getDataSetById } = useDataSetContext()
   const creationDate = Math.min(...timestamps)
   const lastVerified = Math.max(...timestamps)
 
   const navigate = useNavigate()
   const { id } = useParams()
-  const { dataset }: { dataset: IDataset[] } = useContext(DatasetContext)
-  const asset = dataset?.find((item) => item.id === id)
-
+  const dataSet = getDataSetById(id)
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }
@@ -55,6 +43,8 @@ export default function OverviewTab() {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
+  const assets = selectedDataSet?.assets
+  const metaData = selectedDataSet?.metadata
 
   return (
     <div className="asset-overview">
@@ -68,7 +58,7 @@ export default function OverviewTab() {
             Summary
           </Typography>
 
-          {asset?.id === '0x80bf3a24' ? (
+          {id === '0x80bf3a24' ? (
             <Box>
               <Typography variant="body2" mb={2} sx={{ fontSize: '16px', lineHeight: 1.5, color: '#475467' }}>
                 Lohko carbon credit futures are issued from a high-quality tropical reforestation project that
@@ -205,7 +195,7 @@ export default function OverviewTab() {
             Supporting verification
           </Typography>
 
-          {asset?.id === '0x80bf3a24' ? (
+          {selectedDataSet?.dataSetId === '0x80bf3a24' ? (
             <Box mt={4} mb={6}>
               <Typography variant="body2" mb={2} sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
                 This dataset does not have additional verifications.
@@ -262,7 +252,7 @@ export default function OverviewTab() {
           )}
         </div>
 
-        {asset?.id === '0x80bf3a24' ? (
+        {selectedDataSet?.dataSetId === '0x80bf3a24' ? (
           <Box sx={{ marginBottom: '160px' }}>
             {/* <Typography variant='h3' mb={2} sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1.5, color: '#101828' }}>
               Verified files
@@ -311,7 +301,7 @@ export default function OverviewTab() {
                             borderBottom: 'none',
                           }}
                         >
-                          <img src={asset?.image} width="40px" height="40px" alt="." />
+                          <img src={dataSet?.image} width="40px" height="40px" alt="." />
 
                           <Stack ml={2}>
                             <Typography
@@ -500,7 +490,7 @@ export default function OverviewTab() {
                 <p>Datasets</p>
               </div>
               <div className="asset-stat">
-                <span>{!fetchingAsset ? assets.length : null}</span>
+                <span>{!fetchingAsset ? assets?.length : null}</span>
                 <p>Verified assets</p>
               </div>
             </div>
