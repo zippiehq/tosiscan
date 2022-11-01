@@ -117,7 +117,7 @@ const AssetDetails = () => {
                 <TableCell>
                   <a
                     // @ts-ignore
-                    href={`${EthLocation[asset.location[0].name]}/${asset.location[0].contract}/${
+                    href={`${EthLocation[asset.locations[0].name]}/${asset.locations[0].contract}/${
                       // @ts-ignore
                       asset.locations[0].tokenId || asset.locations[0].tokenID
                     }`}
