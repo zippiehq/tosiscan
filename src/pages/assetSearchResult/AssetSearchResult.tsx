@@ -8,6 +8,12 @@ import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 
 import { check, info } from '../../assets'
 
+const EthLocation = {
+  Ethereum: 'https://opensea.io/assets/ethereum',
+  ethereum: 'https://opensea.io/assets/ethereum',
+  'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
+}
+
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
@@ -110,7 +116,11 @@ const AssetDetails = () => {
 
                 <TableCell>
                   <a
-                    href={`https://opensea.io/assets/ethereum/${asset.locations[0].contract}/${asset.locations[0].tokenId}`}
+                    // @ts-ignore
+                    href={`${EthLocation[asset.location[0].name]}/${asset.location[0].contract}/${
+                      // @ts-ignore
+                      asset.locations[0].tokenId || asset.locations[0].tokenID
+                    }`}
                     style={{ color: '#07939C', textDecoration: 'none' }}
                     target="_blank"
                     rel="noreferrer nofollow"
@@ -131,7 +141,7 @@ const AssetDetails = () => {
 
                 <TableCell>
                   <Link
-                    to="/asset/0x80bf3a23"
+                    to={`/asset/${datasetId}`}
                     style={{
                       color: '#07939C',
                       textDecoration: 'none',
