@@ -151,7 +151,12 @@ function IndividualAssetTable({
                       </TableCell>
 
                       <TableCell sx={{ cursor: 'default' }}>
-                        <img src={row.status === 'ok' ? check : info} alt="." />
+                        <Tooltip
+                          title={row.status === 'ok' ? 'Verified successfully' : `${row.failedReason}`}
+                          placement="top"
+                        >
+                          <img src={row.status === 'ok' ? check : info} alt="check icon" />
+                        </Tooltip>
                       </TableCell>
 
                       <TableCell sx={{ cursor: 'text', textTransform: 'capitalize' }}>{location.name}</TableCell>
@@ -253,7 +258,7 @@ function IndividualAssetTable({
                       </TableCell>
                       <TableCell>
                         <Tooltip
-                          title={row.status === 'ok' ? 'Signature match' : `${row.failedReason}`}
+                          title={row.status === 'ok' ? 'Verified successfully' : `${row.failedReason}`}
                           placement="top"
                         >
                           <img src={row.status === 'ok' ? check : info} alt="check icon" />
