@@ -253,7 +253,7 @@ function IndividualAssetTable({
                       </TableCell>
                       <TableCell>
                         <Tooltip
-                          title={row.status === 'ok' ? 'Signature match' : 'Signature does not match'}
+                          title={row.status === 'ok' ? 'Signature match' : `${row.failedReason}`}
                           placement="top"
                         >
                           <img src={row.status === 'ok' ? check : info} alt="check icon" />
