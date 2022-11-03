@@ -33,6 +33,7 @@ export interface IFinalAsset {
   currentLocation?: string
   locations: ILocation[]
   status: string
+  failedReason: string
 }
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT
@@ -64,6 +65,7 @@ const formatDataStructure = (data: any): IFinalAsset => ({
   currentLocation: getCurrentLocation(data),
   locations: getLocations(data),
   status: data.status,
+  failedReason: data.failedReason,
 })
 
 export const fetchDataSet = async (id: string) => {
