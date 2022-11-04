@@ -87,7 +87,7 @@ const AssetDetails = () => {
               <TableCell>Status</TableCell>
               <TableCell>Blockchain</TableCell>
               <TableCell>Contract</TableCell>
-              <TableCell>Token ID</TableCell>
+              <TableCell>Token Id</TableCell>
               <TableCell>Owner Address</TableCell>
               <TableCell> </TableCell>
             </TableRow>
