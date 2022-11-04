@@ -79,7 +79,7 @@ export const fetchDataSet = async (id: string) => {
 
 const fetchDataSetAssets = async (sealId: string, id: string) => {
   const { assets, metadata } = await fetchDataSet(sealId)
-  const formattedAssets = Array.from(assets).map((asset) => formatDataStructure(asset))
+  const formattedAssets = Array.from(assets)
   return { assets: formattedAssets, metadata, dataSetId: id }
 }
 

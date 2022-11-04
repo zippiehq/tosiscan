@@ -12,6 +12,7 @@ import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDataSetContext } from '../../hooks/useDataset'
 
 const EthLocation = {
+  'Ethereum Mainet': 'https://opensea.io/assets/ethereum',
   Ethereum: 'https://opensea.io/assets/ethereum',
   ethereum: 'https://opensea.io/assets/ethereum',
   'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',

@@ -9,11 +9,11 @@ import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 import { check, info } from '../../assets'
 
 const EthLocation = {
+  'Ethereum Mainet': 'https://opensea.io/assets/ethereum',
   Ethereum: 'https://opensea.io/assets/ethereum',
   ethereum: 'https://opensea.io/assets/ethereum',
   'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
 }
-
 const AssetDetails = () => {
   const { assetContract, assetTokenId } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
