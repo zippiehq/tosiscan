@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Tooltip } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
@@ -116,6 +116,7 @@ export default () => {
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
+  const hovermessage = 'Verified successfully'
 
   // @ts-ignore
   const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
@@ -241,7 +242,9 @@ export default () => {
                   <tr>
                     <td style={{ width: '240px', cursor: 'default' }}>Status</td>
                     <td style={{ cursor: 'default' }}>
-                      {asset?.status === 'ok' ? <img src={check} alt="." /> : <img src={info} alt="." />}
+                      <Tooltip title={asset?.status === 'ok' ? hovermessage : asset?.failedReason} placement="top">
+                        <img src={asset?.status === 'ok' ? check : info} alt="check icon" />
+                      </Tooltip>
                     </td>
                   </tr>
                   <tr>
