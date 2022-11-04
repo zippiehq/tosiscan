@@ -1,6 +1,16 @@
 import React from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { Typography, Box, Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from '@mui/material/'
+import {
+  Typography,
+  Box,
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Tooltip,
+} from '@mui/material/'
 
 import './AssetSearchResult.css'
 
@@ -48,7 +58,8 @@ const AssetDetails = () => {
   if (!assetContract || !assetTokenId) {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Not found</div>
   }
-
+  const hovermessage = 'Verified successfully'
+  // const message = asset.status === 'ok' ? hovermessage : asset.failedReason
   return filtered.length === 0 ? (
     <div style={{ margin: '100px 50px', fontSize: '20px' }}>No data</div>
   ) : (
@@ -110,7 +121,11 @@ const AssetDetails = () => {
                   {asset.assetName}
                 </TableCell>
 
-                <TableCell>{asset.status ? <img src={check} alt="." /> : <img src={info} alt="." />}</TableCell>
+                <TableCell>
+                  <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
+                    <img src={asset.status === 'ok' ? check : info} alt="check icon" />
+                  </Tooltip>
+                </TableCell>
 
                 <TableCell>{asset.locations[0].name}</TableCell>
 

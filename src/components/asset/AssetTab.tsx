@@ -81,7 +81,7 @@ function IndividualAssetTable({
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
-
+  const hovermessage = 'Verified successfully'
   return (
     <div style={{ marginTop: '16px' }}>
       {asset?.id === '0x80bf3a24' ? (
@@ -115,7 +115,7 @@ function IndividualAssetTable({
                       navigate(`/single-asset/${id}/${assetSerial}`)
                     }
                   }
-
+                  const message = row.status === 'ok' ? hovermessage : row.failedReason
                   return (
                     <TableRow sx={{ cursor: 'none' }} key={assetTokenId}>
                       <TableCell sx={{ cursor: 'text' }}>
@@ -151,10 +151,7 @@ function IndividualAssetTable({
                       </TableCell>
 
                       <TableCell sx={{ cursor: 'default' }}>
-                        <Tooltip
-                          title={row.status === 'ok' ? 'Verified successfully' : `${row.failedReason}`}
-                          placement="top"
-                        >
+                        <Tooltip title={message} placement="top">
                           <img src={row.status === 'ok' ? check : info} alt="check icon" />
                         </Tooltip>
                       </TableCell>
@@ -220,7 +217,7 @@ function IndividualAssetTable({
                       navigate(`/single-asset/${id}/${assetSerial}`)
                     }
                   }
-
+                  const message = row.status === 'ok' ? hovermessage : row.failedReason
                   return (
                     <TableRow sx={{ cursor: 'none' }} key={assetTokenId}>
                       <TableCell sx={{ cursor: 'text' }}>
@@ -257,10 +254,7 @@ function IndividualAssetTable({
                         {row.assetName}
                       </TableCell>
                       <TableCell>
-                        <Tooltip
-                          title={row.status === 'ok' ? 'Verified successfully' : `${row.failedReason}`}
-                          placement="top"
-                        >
+                        <Tooltip title={message} placement="top">
                           <img src={row.status === 'ok' ? check : info} alt="check icon" />
                         </Tooltip>
                       </TableCell>

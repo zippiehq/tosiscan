@@ -115,7 +115,8 @@ export default () => {
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
-
+  const hovermessage = 'Verified successfully'
+  const message = asset?.status === 'ok' ? hovermessage : asset?.failedReason
   // @ts-ignore
   const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
   // @ts-ignore
@@ -240,7 +241,7 @@ export default () => {
                   <tr>
                     <td style={{ width: '240px', cursor: 'default' }}>Status</td>
                     <td style={{ cursor: 'default' }}>
-                      {asset?.status === 'ok' ? <img src={check} alt="." /> : <img src={info} alt="." />}
+                      <img src={asset?.status === 'ok' ? check : info} alt="check icon" title={message} />
                     </td>
                   </tr>
                   <tr>
