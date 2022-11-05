@@ -94,7 +94,7 @@ function IndividualAssetTable({
                   <TableCell>Product</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Blockchain</TableCell>
-                  <TableCell>Token ID</TableCell>
+                  <TableCell>Token Id</TableCell>
                   <TableCell>Owner Address</TableCell>
                   <TableCell> </TableCell>
                 </TableRow>
@@ -198,7 +198,7 @@ function IndividualAssetTable({
                   <TableCell>Asset</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Blockchain</TableCell>
-                  <TableCell>Token ID</TableCell>
+                  <TableCell>Token Id</TableCell>
                   <TableCell>Owner Address</TableCell>
                   <TableCell> </TableCell>
                 </TableRow>
