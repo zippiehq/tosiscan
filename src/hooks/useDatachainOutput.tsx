@@ -72,7 +72,7 @@ export const fetchDataSet = async (id: string) => {
 
 const fetchDataSetAssets = async (sealId: string, id: string) => {
   const { assets, metadata, timestamps, creationDate, lastVerified, verifications } = await fetchDataSet(sealId)
-  const formattedAssets = Array.from(assets)
+  const formattedAssets = assets ? Array.from(assets) : []
   return { assets: formattedAssets, metadata, dataSetId: id, timestamps, creationDate, lastVerified, verifications }
 }
 
