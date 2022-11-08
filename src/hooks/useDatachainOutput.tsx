@@ -16,6 +16,9 @@ export interface DatachainOutputContextT {
   assets: IFinalAsset[]
   metadata?: MetaData
   dataSetId: string
+  timestamps: number[]
+  creationDate: number
+  lastVerified: number
 }
 interface MetaData {
   contract: string
@@ -38,49 +41,23 @@ export interface IFinalAsset {
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT
 }
-const getLocations = (data: any): ILocation[] | [] => {
-  if (data.locations) return data.locations
-
-  if (data.location) return [data.location]
-  if (data.ownerAccount) {
-    return [
-      {
-        ownerAccount: data.ownerAccount,
-        tokenId: data.tokenId,
-        name: 'Zippienet',
-      },
-    ]
-  }
-  return []
-}
-const getCurrentLocation = (data: any) => {
-  if (data.currentLocation) return data.currentLocation
-
-  if (data.location) return data.location.name
-}
-const formatDataStructure = (data: any): IFinalAsset => ({
-  assetNumber: data.assetNumber || data.serial,
-  assetName: data.assetName || data.product,
-  imageUrl: data.imageUrl,
-  currentLocation: getCurrentLocation(data),
-  locations: getLocations(data),
-  status: data.status,
-  failedReason: data.failedReason,
-})
 
 export const fetchDataSet = async (id: string) => {
   const sealResponse = await get(`/tosi/api/v1/query-seal/${id}`, 'json')
   const path = sealResponse.data.status
   const { data } = await get(`/tosi/api/v0/ipfs/get/${path}/output.zip`, 'blob')
   const [assets, metadata] = await Promise.all([unzip(data, 'assets.json'), unzip(data, 'metadata.json')])
-
-  return { assets, metadata, id }
+  const { data: claimsData } = await get(`/tosi/api/v1/query-claims/${id}`, 'json')
+  const timestamps = claimsData.map((item: any) => item.timestamp)
+  const creationDate = Math.min(...timestamps)
+  const lastVerified = Math.max(...timestamps)
+  return { assets, metadata, timestamps, creationDate, lastVerified }
 }
 
 const fetchDataSetAssets = async (sealId: string, id: string) => {
-  const { assets, metadata } = await fetchDataSet(sealId)
+  const { assets, metadata, timestamps, creationDate, lastVerified } = await fetchDataSet(sealId)
   const formattedAssets = Array.from(assets)
-  return { assets: formattedAssets, metadata, dataSetId: id }
+  return { assets: formattedAssets, metadata, dataSetId: id, timestamps, creationDate, lastVerified }
 }
 
 function useDataSetAssets() {

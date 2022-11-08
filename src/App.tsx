@@ -15,20 +15,16 @@ import AssetSearchResult from './pages/assetSearchResult/AssetSearchResult'
 
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
-
-import { VerificationTimestampsProvider } from './hooks/useTimeStamps'
 import { theme } from './theme'
 import Hero from './components/header/Hero'
 import Footer from './components/footer/Footer'
 
 const Layout = () => (
-  <DataSetAssetsProvider>
-    <VerificationTimestampsProvider>
-      <Hero />
-      <Outlet />
-      <Footer />
-    </VerificationTimestampsProvider>
-  </DataSetAssetsProvider>
+  <>
+    <Hero />
+    <Outlet />
+    <Footer />
+  </>
 )
 
 function App() {
@@ -39,18 +35,20 @@ function App() {
       <div className="App">
         <SearchContext.Provider value={{ value, setValue }}>
           <DataSetProvider>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/asset/:id" element={<AssetDetails />} />
-                <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
-                <Route path="/single-asset/:id">
-                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
-                  <Route path=":assetSerial" element={<SingleAsset />} />
+            <DataSetAssetsProvider>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/asset/:id" element={<AssetDetails />} />
+                  <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                  <Route path="/single-asset/:id">
+                    <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
+                    <Route path=":assetSerial" element={<SingleAsset />} />
+                  </Route>
                 </Route>
-              </Route>
-              <Route path="/coming-soon" element={<ComingSoon />} />
-            </Routes>
+                <Route path="/coming-soon" element={<ComingSoon />} />
+              </Routes>
+            </DataSetAssetsProvider>
           </DataSetProvider>
         </SearchContext.Provider>
       </div>

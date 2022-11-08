@@ -8,7 +8,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { AddressIcon, check, downloadIcon, facebookLogoGrey, lohkoAvatar, verifiedTick, info } from '../../assets'
 
 import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
-import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDataSetContext } from '../../hooks/useDataset'
 
 const EthLocation = {
@@ -94,9 +93,8 @@ const Issuers = {
 
 export default () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
-  const { selectedDataSet, isLoading: fetchingAsset } = useDataSetAssetsContext()
-  const { timestamps, isLoading } = useVerificationTimestamps()
-  const lastVerified = Math.max(...timestamps)
+  const { selectedDataSet, isLoading } = useDataSetAssetsContext()
+  const lastVerified = selectedDataSet?.lastVerified
 
   const navigate = useNavigate()
   const assets = selectedDataSet?.assets || []
@@ -234,7 +232,7 @@ export default () => {
                   <tr>
                     <td style={{ width: '240px', cursor: 'default' }}>Last verified</td>
                     <td style={{ cursor: 'default' }}>
-                      {!isLoading
+                      {!isLoading && lastVerified
                         ? moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
                         : 'loading...'}
                     </td>
@@ -327,7 +325,7 @@ export default () => {
                     <p>Datasets</p>
                   </div>
                   <div className="asset-stat">
-                    <span>{!fetchingAsset ? assets.length : null}</span>
+                    <span>{!isLoading ? assets.length : null}</span>
                     <p>Verified assets</p>
                   </div>
                 </div>

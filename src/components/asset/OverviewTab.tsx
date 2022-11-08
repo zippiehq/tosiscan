@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import moment from 'moment'
 
 import {
   Box,
@@ -18,19 +17,16 @@ import {
 import { facebookLogoGrey, verifiedTick, lohkoAvatar, downloadIcon, AddressIcon } from '../../assets'
 
 import { ReactComponent as IconVerifiedTick } from '../../assets/VerifiedTick.svg'
-import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 import { useDataSetContext } from '../../hooks/useDataset'
+import { formatTimeStamp } from '../../utils/timestapFormater'
 
 export default function OverviewTab() {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
-  const { timestamps, isLoading } = useVerificationTimestamps()
-  const { isLoading: fetchingAsset, selectedDataSet } = useDataSetAssetsContext()
+  const { isLoading, selectedDataSet } = useDataSetAssetsContext()
   const { getDataSetById } = useDataSetContext()
-  const creationDate = Math.min(...timestamps)
-  const lastVerified = Math.max(...timestamps)
 
   const navigate = useNavigate()
   const { id } = useParams()
@@ -45,7 +41,8 @@ export default function OverviewTab() {
   }
   const assets = selectedDataSet?.assets
   const metaData = selectedDataSet?.metadata
-
+  const creationDate = selectedDataSet?.creationDate
+  const lastVerified = selectedDataSet?.lastVerified
   return (
     <div className="asset-overview">
       <div className="column-one">
@@ -126,12 +123,7 @@ export default function OverviewTab() {
               </tr>
               <tr>
                 <td>Creation date</td>
-                <td>
-                  {isLoading ? 'loading...' : moment.unix(creationDate).utc().format('DD MMM YYYY HH:mm:ss [UTC]')}{' '}
-                  {!isLoading
-                    ? `(${moment(moment.unix(creationDate).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()})`
-                    : null}
-                </td>
+                <td>{isLoading || !creationDate ? 'loading...' : formatTimeStamp(creationDate)}</td>
               </tr>
             </tbody>
           </table>
@@ -154,12 +146,7 @@ export default function OverviewTab() {
               </tr>
               <tr>
                 <td>Last successful verification</td>
-                <td>
-                  {isLoading ? 'loading...' : moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')}{' '}
-                  {!isLoading
-                    ? `(${moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()})`
-                    : null}
-                </td>
+                <td>{isLoading || !lastVerified ? 'loading...' : formatTimeStamp(lastVerified)}</td>
               </tr>
               <tr>
                 <td>Last failed verification</td>
@@ -490,7 +477,7 @@ export default function OverviewTab() {
                 <p>Datasets</p>
               </div>
               <div className="asset-stat">
-                <span>{!fetchingAsset ? assets?.length : null}</span>
+                <span>{!isLoading ? assets?.length : null}</span>
                 <p>Verified assets</p>
               </div>
             </div>

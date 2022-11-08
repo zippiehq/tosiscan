@@ -11,18 +11,17 @@ import BasicTabs from '../../components/asset/Tabs'
 
 import { ReactComponent as IconHome } from '../../assets/icon-home.svg'
 
-import { useVerificationTimestamps } from '../../hooks/useTimeStamps'
 import { useDataSetContext } from '../../hooks/useDataset'
+import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
 
 export default () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { getDataSetById } = useDataSetContext()
-
+  const { isLoading, selectedDataSet } = useDataSetAssetsContext()
   const asset = getDataSetById(id)
 
-  const { timestamps, isLoading } = useVerificationTimestamps()
-  const lastVerified = Math.max(...timestamps)
+  const lastVerified = selectedDataSet?.lastVerified
 
   const breadcrumbs = [
     <Typography
@@ -160,7 +159,7 @@ export default () => {
                 sx={{ fontSize: '14px', fontStyle: 'italic', color: '#98a2b3' }}
               >
                 Last verified{' '}
-                {isLoading
+                {isLoading || !lastVerified
                   ? 'loading...'
                   : moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()}
               </Typography>
