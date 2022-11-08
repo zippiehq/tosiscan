@@ -42,7 +42,7 @@ export default function VerificationList() {
         ) : (
           <tbody>
             {datasets.map((row) => {
-              const lastVerified = isLoading ? '' : datasetOutputs[row.id]?.lastVerified
+              const lastVerified = isLoading ? 0 : datasetOutputs[row.id]?.lastVerified
               const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
 
               return (
