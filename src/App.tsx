@@ -20,11 +20,11 @@ import Hero from './components/header/Hero'
 import Footer from './components/footer/Footer'
 
 const Layout = () => (
-  <>
+  <DataSetAssetsProvider>
     <Hero />
     <Outlet />
     <Footer />
-  </>
+  </DataSetAssetsProvider>
 )
 
 function App() {
@@ -35,20 +35,18 @@ function App() {
       <div className="App">
         <SearchContext.Provider value={{ value, setValue }}>
           <DataSetProvider>
-            <DataSetAssetsProvider>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/asset/:id" element={<AssetDetails />} />
-                  <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
-                  <Route path="/single-asset/:id">
-                    <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
-                    <Route path=":assetSerial" element={<SingleAsset />} />
-                  </Route>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/asset/:id" element={<AssetDetails />} />
+                <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                <Route path="/single-asset/:id">
+                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
+                  <Route path=":assetSerial" element={<SingleAsset />} />
                 </Route>
-                <Route path="/coming-soon" element={<ComingSoon />} />
-              </Routes>
-            </DataSetAssetsProvider>
+              </Route>
+              <Route path="/coming-soon" element={<ComingSoon />} />
+            </Routes>
           </DataSetProvider>
         </SearchContext.Provider>
       </div>
