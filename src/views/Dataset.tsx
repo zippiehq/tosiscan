@@ -59,6 +59,9 @@ const Dataset = () => {
   const asset = getDataSetById(id)
 
   const lastVerified = selectedDataSet?.lastVerified
+  const status = selectedDataSet?.verifications[0].status
+  const statusmessage =
+    status === 'warning' ? selectedDataSet?.verifications[0].message : selectedDataSet?.verifications[1].message
 
   const breadcrumbs = [
     <Typography
@@ -137,8 +140,8 @@ const Dataset = () => {
               {asset?.id === 'Carbon Credit Futures' ? (
                 ''
               ) : (
-                <Badge className="error" ml={1.25}>
-                  There is a problem with this dataset
+                <Badge className="warning" ml={1.25}>
+                  {statusmessage}
                 </Badge>
               )}
 
