@@ -131,7 +131,7 @@ const VerificationList = () => {
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{asset.assetClass}</TableBodyCell>
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
                     {/* eslint-disable-next-line no-nested-ternary */}
-                    {asset.assetClass !== 'Satellite image' ? 'N/A' : !isLoading ? date : 'loading...'}
+                    {asset.assetClass === 'Satellite image' ? 'N/A' : !isLoading ? date : 'loading...'}
                   </TableBodyCell>
 
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
