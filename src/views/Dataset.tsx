@@ -13,6 +13,7 @@ import Tabs from '../components/Tabs'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
+import { customTheme } from '../theme'
 
 const ContentContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.up('xl')]: {
@@ -62,6 +63,9 @@ const Dataset = () => {
   const status = selectedDataSet?.verifications[0].status
   const statusmessage =
     status === 'warning' ? selectedDataSet?.verifications[0].message : selectedDataSet?.verifications[1].message
+
+  const messagecolor = status === 'warning' ? customTheme.palette.warning[700] : customTheme.palette.error[700]
+  const messagebackgroundcolor = status === 'warning' ? customTheme.palette.warning[50] : customTheme.palette.error[50]
 
   const breadcrumbs = [
     <Typography
@@ -140,7 +144,7 @@ const Dataset = () => {
               {asset?.id === 'Carbon Credit Futures' ? (
                 ''
               ) : (
-                <Badge className="warning" ml={1.25}>
+                <Badge sx={{ backgroundColor: messagebackgroundcolor, color: messagecolor }} ml={1.25}>
                   {statusmessage}
                 </Badge>
               )}
