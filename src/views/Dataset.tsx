@@ -1,20 +1,57 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
-import { Box, Typography, Breadcrumbs } from '@mui/material'
+import { Box, Typography, Breadcrumbs, Container } from '@mui/material'
+import { styled } from '@mui/system'
 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 
-import './AssetDetails.css'
-import BasicTabs from '../../components/asset/Tabs'
+import { ReactComponent as IconHome } from '../assets/images/icon-home.svg'
 
-import { ReactComponent as IconHome } from '../../assets/icon-home.svg'
+import Tabs from '../components/Tabs'
 
-import { useDataSetContext } from '../../hooks/useDataset'
-import { useDataSetAssetsContext } from '../../hooks/useDatachainOutput'
+import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+import { useDataSetContext } from '../hooks/useDataset'
 
-export default () => {
+const ContentContainer = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.up('xl')]: {
+    maxWidth: '1280px',
+  },
+  [theme.breakpoints.up('xs')]: {
+    paddingRight: theme.spacing(2.5),
+    paddingLeft: theme.spacing(2.5),
+  },
+  margin: '0 auto',
+}))
+
+const Badge = styled(Typography)(({ theme }) => ({
+  paddingTop: theme.spacing(0.25),
+  paddingRight: theme.spacing(1.25),
+  paddingBottom: theme.spacing(0.25),
+  paddingLeft: theme.spacing(1.25),
+  fontSize: '14px',
+  fontWeight: 600,
+  lineHeight: 1.43,
+  borderRadius: '16px',
+
+  '&.primary': {
+    color: theme.palette.primary['700'],
+    backgroundColor: theme.palette.primary['50'],
+  },
+
+  '&.error': {
+    color: theme.palette.error['700'],
+    backgroundColor: theme.palette.error['50'],
+  },
+
+  '&.warning': {
+    color: theme.palette.warning['700'],
+    backgroundColor: theme.palette.warning['50'],
+  },
+}))
+
+const Dataset = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { getDataSetById } = useDataSetContext()
@@ -66,17 +103,17 @@ export default () => {
   ]
 
   return (
-    <div className="asset-details">
-      <div className="dataset-header">
+    <ContentContainer>
+      <Box mt={4}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" fill="" />} aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
 
-        <div className="title">
+        <Box mt={4} mb={6.25} sx={{ display: 'flex' }}>
           <img src={asset?.image} width="64px" height="64px" alt="." />
 
-          <Box className="details" ml={2.5}>
-            <Box display="flex" alignItems="center">
+          <Box ml={2.5}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography
                 variant="h2"
                 mb={1.25}
@@ -86,91 +123,44 @@ export default () => {
               </Typography>
 
               {asset?.id === '0x80bf3a24' ? (
-                <Typography
-                  variant="body2"
-                  my={0}
-                  ml={1.25}
-                  py={0.25}
-                  px={1.25}
-                  sx={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    lineHeight: 1.43,
-                    color: '#a96721',
-                    backgroundColor: '#fcf6ea',
-                    borderRadius: '16px',
-                  }}
-                >
+                <Badge className="warning" ml={1.25}>
                   DEMO
-                </Typography>
+                </Badge>
               ) : (
                 ''
               )}
             </Box>
 
-            <div className="badges">
-              {asset?.id === '0x80bf3a24' ? (
-                ''
-              ) : (
-                <Typography
-                  variant="body2"
-                  my={0}
-                  py={0.25}
-                  px={1.25}
-                  sx={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    lineHeight: 1.43,
-                    color: '#07757c',
-                    backgroundColor: '#e9f5f5',
-                    borderRadius: '16px',
-                  }}
-                >
-                  Asset backed
-                </Typography>
-              )}
+            <Box sx={{ display: 'flex' }}>
+              {asset?.id === '0x80bf3a24' ? '' : <Badge className="primary">Asset backed</Badge>}
 
               {asset?.id === '0x80bf3a24' ? (
                 ''
               ) : (
-                <Typography
-                  variant="body1"
-                  my={0}
-                  ml={1.25}
-                  py={0.25}
-                  px={1.25}
-                  sx={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    lineHeight: 1.43,
-                    color: '#b73731',
-                    backgroundColor: '#fef1ef',
-                    borderRadius: '16px',
-                  }}
-                >
+                <Badge className="error" ml={1.25}>
                   There is a problem with this dataset
-                </Typography>
+                </Badge>
               )}
 
               <Typography
                 variant="body1"
                 my={0}
                 ml={1.25}
-                sx={{ fontSize: '14px', fontStyle: 'italic', color: '#98a2b3' }}
+                sx={{ fontSize: '14px', fontStyle: 'italic', color: 'grey.400' }}
               >
                 Last verified{' '}
                 {isLoading || !lastVerified
                   ? 'loading...'
                   : moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()}
               </Typography>
-            </div>
+            </Box>
           </Box>
-        </div>
+        </Box>
+      </Box>
 
-        <div className="tabs-button">
-          <BasicTabs />
-        </div>
-      </div>
-    </div>
+      <Tabs />
+    </ContentContainer>
   )
 }
+
+export default () => <Dataset />

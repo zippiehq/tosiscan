@@ -1,19 +1,23 @@
-import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
+import React from 'react'
+import { useNavigate, Link as RouterLink } from 'react-router-dom'
 
-import Typography from '@mui/material/Typography'
-import { useNavigate } from 'react-router-dom'
-import Button from '@mui/material/Button'
-import { ReactComponent as TosiScanLogo } from '../assets/tosi-scan-logo.svg'
-import { ReactComponent as ArrowLeftIcon } from '../assets/arrow-left-icon.svg'
-import Footer from '../components/footer/Footer'
-import { linkedInIcon, twitterIcon, youtubeIcon } from '../assets'
+import { Box, IconButton, Typography, Button } from '@mui/material'
 
-export default function ComingSoon() {
+import TwitterIcon from '@mui/icons-material/Twitter'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+
+import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-colors.svg'
+
+import Footer from '../components/Footer'
+
+const ComingSoon = () => {
   const navigate = useNavigate()
   const onExternalLinkClick = (url: string) => {
     window.open(url, '_blank')
   }
+
   return (
     <>
       <Box
@@ -27,24 +31,16 @@ export default function ComingSoon() {
         justifyContent="center"
         width="100%"
       >
-        <TosiScanLogo />
+        <Logo style={{ width: '96px', height: '28px' }} />
 
-        <Typography
-          mt={3}
-          mb={3}
-          sx={{
-            fontSize: '72px',
-            color: '#101828',
-            fontWeight: '600',
-          }}
-        >
+        <Typography variant="h1" mt={3} mb={3} sx={{ fontWeight: '600', lineHeight: 1.25, color: 'grey.900' }}>
           Coming soon
         </Typography>
 
         <Typography
           sx={{
             fontSize: '20px',
-            color: '#667085',
+            color: 'grey.500',
             maxWidth: '480px',
           }}
         >
@@ -53,37 +49,54 @@ export default function ComingSoon() {
 
         <Box display="flex" mt={6}>
           <Button
+            component={RouterLink}
+            to=".."
             variant="outlined"
-            startIcon={<ArrowLeftIcon />}
+            startIcon={<ArrowBackIcon />}
             sx={{
-              color: 'text.primary',
-              borderColor: 'text.primary',
+              marginRight: 1.5,
+              paddingY: 1.5,
+              paddingX: 2.5,
             }}
             onClick={() => navigate(-1)}
           >
             Go back
           </Button>
 
-          <Button variant="contained" sx={{ marginLeft: 1.5 }} onClick={() => navigate('/')}>
+          <Button
+            component={RouterLink}
+            to="/"
+            variant="contained"
+            sx={{
+              paddingY: 1.5,
+              paddingX: 2.5,
+            }}
+          >
             Take me home
           </Button>
         </Box>
+
         <Box display="flex" mt={10}>
           <IconButton onClick={() => onExternalLinkClick('https://twitter.com/tosichain')} sx={{ marginRight: 2 }}>
-            <img src={twitterIcon} alt="Twitter Icon" />
+            <TwitterIcon style={{ fill: '#98a2b3' }} />
           </IconButton>
+
           <IconButton
             sx={{ marginRight: 2 }}
             onClick={() => onExternalLinkClick('https://www.youtube.com/channel/UCMdL-559OXnd95KocIRJsVA')}
           >
-            <img src={youtubeIcon} alt="youtube Icon" />
-          </IconButton>{' '}
+            <YouTubeIcon style={{ fill: '#98a2b3' }} />
+          </IconButton>
+
           <IconButton onClick={() => onExternalLinkClick('https://www.linkedin.com/company/tosichain.com')}>
-            <img src={linkedInIcon} alt="linkedin Icon" />
+            <LinkedInIcon style={{ fill: '#98a2b3' }} />
           </IconButton>
         </Box>
       </Box>
+
       <Footer />
     </>
   )
 }
+
+export default () => <ComingSoon />

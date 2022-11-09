@@ -1,23 +1,22 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Routes, Route, Outlet } from 'react-router-dom'
+
 import { ThemeProvider } from '@mui/material/styles'
 
 import './App.css'
+import { theme } from './theme'
 
-// import AssetDetails from "./components/asset/AssetDetails";
+import Dataset from './views/Dataset'
+import Home from './views/Home'
+import ComingSoon from './views/ComingSoon'
+import SingleAsset from './views/SingleAsset'
+import AssetSearchResult from './views/AssetSearchResult'
+import Hero from './components/Hero'
+import Footer from './components/Footer'
+
 import { SearchContext } from './context/SearchContext'
-
-import AssetDetails from './pages/asset/AssetDetails'
-import Home from './pages/home/Home'
-import ComingSoon from './pages/ComingSoon'
-import SingleAsset from './pages/singleAsset/SingleAsset'
-import AssetSearchResult from './pages/assetSearchResult/AssetSearchResult'
-
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
-import { theme } from './theme'
-import Hero from './components/header/Hero'
-import Footer from './components/footer/Footer'
 
 const Layout = () => (
   <DataSetAssetsProvider>
@@ -38,7 +37,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/asset/:id" element={<AssetDetails />} />
+                <Route path="/dataset/:id" element={<Dataset />} />
                 <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
                 <Route path="/single-asset/:id">
                   <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
