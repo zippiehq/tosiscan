@@ -122,7 +122,7 @@ const Dataset = () => {
                 {asset?.dataset}
               </Typography>
 
-              {asset?.id === 'Carbon Credit Futures' ? (
+              {asset?.dataset === 'Carbon Credit Futures' ? (
                 <Badge className="warning" ml={1.25}>
                   DEMO
                 </Badge>
@@ -134,7 +134,7 @@ const Dataset = () => {
             <Box sx={{ display: 'flex' }}>
               {asset?.dataset === 'Carbon Credit Futures' ? '' : <Badge className="primary">Asset backed</Badge>}
 
-              {asset?.id === 'Carbon Credit Futures' ? (
+              {asset?.dataset === 'Carbon Credit Futures' ? (
                 ''
               ) : (
                 <Badge className="error" ml={1.25}>

@@ -11,7 +11,7 @@ import {
   TableCell,
   TableBody,
   Link,
-  Tooltip
+  Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -88,9 +88,8 @@ const AssetSearchResult = () => {
     const { assets } = datasetOutputs[id]
     return assets.some(
       ({ locations }) =>
-        locations[0].contract?.toLocaleLowerCase() === assetContract &&
-        // @ts-ignore
-        (locations[0].tokenId === assetTokenId || locations[0].tokenID === assetTokenId),
+        locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+        locations[0].tokenId === assetTokenId,
     )
   })
 
@@ -109,8 +108,7 @@ const AssetSearchResult = () => {
   const filtered = assets.filter(
     ({ locations }) =>
       locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
-      // @ts-ignore
-      (locations[0].tokenId === assetTokenId || locations[0].tokenID === assetTokenId),
+      locations[0].tokenId === assetTokenId,
   )
 
   if (!assetContract || !assetTokenId) {

@@ -2,7 +2,18 @@ import React from 'react'
 import { useParams, Link as RouterLink } from 'react-router-dom'
 import moment from 'moment'
 
-import { Box, Container, Typography, Link, TableContainer, Table, TableBody, TableRow, TableCell, Tooltip } from '@mui/material'
+import {
+  Box,
+  Container,
+  Typography,
+  Link,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Tooltip,
+} from '@mui/material'
 import { styled } from '@mui/system'
 
 import CircularProgress from '@mui/material/CircularProgress'
@@ -69,11 +80,10 @@ const SingleAsset = () => {
   const asset = assetSerial
     ? assets.find((asset) => asset.assetNumber === assetSerial)
     : assets.find(
-      (asset) =>
-        asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-        // @ts-ignore
-        (asset.locations[0]?.tokenId === assetTokenId || asset.locations[0]?.tokenID === assetTokenId),
-    )
+        (asset) =>
+          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+          asset.locations[0]?.tokenId === assetTokenId,
+      )
 
   const { getDataSetById } = useDataSetContext()
 
