@@ -1,9 +1,10 @@
 {
   "verifications": [
     {
-      "id": "0x80bf3a23",
+      "id": "bafyreihfoldyasfgdbi5ngwgdfo722khzlzke55v5keasg2ffjywcwfknm",
+
       "dataset": "Lohko Gold",
-      "contract": "0x80bf3a23...89764372",
+      "contract": "bafyreihfo...fjywcwfknm",
       "type": "Digital Asset",
       "assetClass": "Gold",
       "lastVerified": "an hour ago",
@@ -12,13 +13,12 @@
       "image": "/assets/lohko-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 28,
-      "sealId": "bafyreihfoldyasfgdbi5ngwgdfo722khzlzke55v5keasg2ffjywcwfknm"
+      "assetIssued": 28
     },
     {
-      "id": "0x80bf3a24",
+      "id": "bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe",
       "dataset": "Carbon Credit Futures",
-      "contract": "0x80bf3a23...89764372",
+      "contract": "bafyreiccf...h4ax2m4vbe",
       "type": "Digital Asset",
       "assetClass": "Carbon Credits",
       "lastVerified": "an hour ago",
@@ -27,8 +27,7 @@
       "image": "/assets/carbon-credit-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 12,
-      "sealId": "bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe"
+      "assetIssued": 12
     },
     {
       "id": "0x80bf3a25",
@@ -42,8 +41,7 @@
       "image": "./assets/nguru-logo.png",
       "status": "Coming soon",
       "available": false,
-      "assetIssued": 25,
-      "sealId": ""
+      "assetIssued": 25
     }
   ]
 }
