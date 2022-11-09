@@ -23,7 +23,7 @@ const TableHeadCell = styled(TableCell)(({ theme }) => ({
   borderBottomColor: 'grey.200',
 }))
 
-const TableBodyRow = styled(TableRow)(({ theme }) => ({
+const TableBodyRow = styled(TableRow)(() => ({
   cursor: 'pointer',
 
   '&.disabled': {

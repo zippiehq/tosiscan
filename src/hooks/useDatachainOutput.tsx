@@ -26,7 +26,7 @@ interface ILocation {
 export interface DatachainOutputContextT {
   assets: IFinalAsset[]
   metadata?: MetaData
-  dataSetId: string
+  id: string
   timestamps: number[]
   creationDate: number
   lastVerified: number
@@ -67,13 +67,9 @@ export const fetchDataSet = async (id: string) => {
   const timestamps = claimsData.map((item: any) => item.timestamp)
   const creationDate = Math.min(...timestamps)
   const lastVerified = Math.max(...timestamps)
-  return { assets, metadata, timestamps, creationDate, lastVerified, verifications }
-}
-
-const fetchDataSetAssets = async (sealId: string, id: string) => {
-  const { assets, metadata, timestamps, creationDate, lastVerified, verifications } = await fetchDataSet(sealId)
   const formattedAssets = assets ? Array.from(assets) : []
-  return { assets: formattedAssets, metadata, dataSetId: id, timestamps, creationDate, lastVerified, verifications }
+
+  return { assets: formattedAssets, metadata, timestamps, creationDate, lastVerified, verifications, id }
 }
 
 function useDataSetAssets() {
@@ -86,10 +82,10 @@ function useDataSetAssets() {
   const fetchAssets = async () => {
     setLoading(true)
     const assets = await Promise.all(
-      datasets.filter((dataset) => dataset.sealId).map((dataset) => fetchDataSetAssets(dataset.sealId, dataset.id)),
+      datasets.filter((dataset) => dataset.available).map((dataset) => fetchDataSet(dataset.id)),
     )
 
-    const finalAssets = assets.reduce((prev, dataSet) => ({ ...prev, [dataSet.dataSetId]: dataSet }), {})
+    const finalAssets = assets.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
     setDataSetOutputs(finalAssets)
     setLoading(false)
   }
@@ -98,6 +94,7 @@ function useDataSetAssets() {
     if (datasets.length) {
       fetchAssets()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasets])
 
   useEffect(() => {

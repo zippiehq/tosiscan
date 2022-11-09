@@ -10,7 +10,7 @@ import BgHeroDecorationRight from '../assets/images/bg-hero-decoration-right.svg
 import Header from './Header'
 import Search from './Search'
 
-const Wrapper = styled(Box)(({ theme }) => ({
+const Wrapper = styled(Box)(() => ({
   position: 'relative',
   minHeight: '389px',
   background:

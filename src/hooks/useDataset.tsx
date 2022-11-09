@@ -14,7 +14,6 @@ export interface IDataset {
   image: string
   available: string
   assetIssued: number
-  sealId: string
 }
 
 function useDataSet() {

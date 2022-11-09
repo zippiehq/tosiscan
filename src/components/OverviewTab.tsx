@@ -1,23 +1,7 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import moment from 'moment'
+import { useParams } from 'react-router-dom'
 
-import {
-  Box,
-  Stack,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableContainer,
-  TablePagination,
-  Typography,
-  Link,
-} from '@mui/material'
+import { Box, Table, TableBody, TableRow, TableCell, TableContainer, Typography, Link } from '@mui/material'
 import { styled } from '@mui/system'
-
-import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
@@ -25,6 +9,33 @@ import { formatTimeStamp } from '../utils/timestapFormater'
 
 import Verifications from './Verifications'
 import Issuer from './Issuer'
+
+const OverviewTabHeaderLohko = () => (
+  <Typography>
+    Lohko Gold bars are numbered and stored in a secure vault and owners have a legal right to claim them anytime.
+  </Typography>
+)
+const OverviewTabHeaderCarbon = () => (
+  <Box>
+    <Typography variant="body1" color="grey.600" mb={2} sx={{ lineHeight: 1.5 }}>
+      Lohko carbon credit futures are issued from a high-quality tropical reforestation project that prioritizes
+      original forest growth, biodiversity, and community livelihood.
+    </Typography>
+
+    <Typography variant="body1" color="grey.600" sx={{ lineHeight: 1.5 }}>
+      Each future gives right to 1 carbon credit (1 ton carbon) from the
+      <Link
+        href="https://app.lohkoinvest.com/products/carbon_credit_futures"
+        target="_blank"
+        rel="noreferrer nofollow"
+        sx={{ fontWeight: 500, color: 'primary.600', textDecoration: 'none' }}
+      >
+        &nbsp;Nguru Project
+      </Link>
+      .
+    </Typography>
+  </Box>
+)
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
@@ -62,24 +73,12 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const OverviewTab = () => {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-
   const { isLoading, selectedDataSet } = useDataSetAssetsContext()
   const { getDataSetById } = useDataSetContext()
 
   const { id } = useParams()
   const dataSet = getDataSetById(id)
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-  const assets = selectedDataSet?.assets
   const metaData = selectedDataSet?.metadata
   const creationDate = selectedDataSet?.creationDate
   const lastVerified = selectedDataSet?.lastVerified
@@ -87,7 +86,12 @@ const OverviewTab = () => {
 
   // @ts-ignore
   const Verification = Verifications[datasetName] || null
-
+  const Headers = {
+    'Lohko Gold': OverviewTabHeaderLohko,
+    'Carbon Credit Futures': OverviewTabHeaderCarbon,
+  }
+  // @ts-ignore
+  const Header = Headers[datasetName] || null
   return (
     <Box sx={{ display: 'flex', marginBottom: '160px' }}>
       <Box mr={5.25} sx={{ maxWidth: { xl: '820px' } }}>
@@ -95,33 +99,7 @@ const OverviewTab = () => {
           <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
             Summary
           </Typography>
-
-          {id === '0x80bf3a24' ? (
-            <Box>
-              <Typography variant="body1" color="grey.600" mb={2} sx={{ lineHeight: 1.5 }}>
-                Lohko carbon credit futures are issued from a high-quality tropical reforestation project that
-                prioritizes original forest growth, biodiversity, and community livelihood.
-              </Typography>
-
-              <Typography variant="body1" color="grey.600" sx={{ lineHeight: 1.5 }}>
-                Each future gives right to 1 carbon credit (1 ton carbon) from the
-                <Link
-                  href="https://app.lohkoinvest.com/products/carbon_credit_futures"
-                  target="_blank"
-                  rel="noreferrer nofollow"
-                  sx={{ fontWeight: 500, color: 'primary.600', textDecoration: 'none' }}
-                >
-                  &nbsp;Nguru Project
-                </Link>
-                .
-              </Typography>
-            </Box>
-          ) : (
-            <Typography>
-              Lohko Gold bars are numbered and stored in a secure vault and owners have a legal right to claim them
-              anytime.
-            </Typography>
-          )}
+          <Header />
         </SectionWrapper>
 
         <SectionWrapper>

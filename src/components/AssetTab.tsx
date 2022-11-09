@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   Box,
@@ -21,7 +21,6 @@ import IconInfo from '../assets/images/icon-info.svg'
 import GoldBar from '../assets/images/gold-bar.svg'
 
 import { useDataSetAssetsContext, IFinalAsset } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -113,8 +112,6 @@ const IndividualAssetTable = ({
   const navigate = useNavigate()
 
   const { id } = useParams()
-  const { getDataSetById } = useDataSetContext()
-  const asset = getDataSetById(id)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -129,201 +126,105 @@ const IndividualAssetTable = ({
 
   return (
     <Box>
-      {asset?.id === '0x80bf3a24' ? (
-        <>
-          <TableContainer>
-            <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-              <TableHead>
-                <TableRow
-                  sx={{ backgroundColor: 'grey.50', borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                >
-                  <TableHeadCell sx={{ width: '120px', paddingX: 3 }}>#</TableHeadCell>
-                  <TableHeadCell sx={{ width: '330px', paddingX: 3 }}>Product</TableHeadCell>
-                  <TableHeadCell sx={{ width: '92px', paddingX: 3 }}>Status</TableHeadCell>
-                  <TableHeadCell sx={{ width: '163px', paddingX: 3 }}>Blockchain</TableHeadCell>
-                  <TableHeadCell sx={{ width: '196px', paddingX: 3 }}>Token ID</TableHeadCell>
-                  <TableHeadCell sx={{ width: '197px', paddingX: 3 }}>Owner Address</TableHeadCell>
-                  <TableHeadCell sx={{ width: '256px' }}> </TableHeadCell>
-                </TableRow>
-              </TableHead>
+      <>
+        <TableContainer>
+          <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+            <TableHead>
+              <TableRow
+                sx={{ backgroundColor: 'grey.50', borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+              >
+                <TableHeadCell sx={{ width: '125px', paddingY: 1.5, paddingX: 3 }}>Serial No.</TableHeadCell>
+                <TableHeadCell sx={{ width: '367px', paddingY: 1.5, paddingX: 3 }}>Asset</TableHeadCell>
+                <TableHeadCell sx={{ width: '92px', paddingY: 1.5, paddingX: 3 }}>Status</TableHeadCell>
+                <TableHeadCell sx={{ width: '120px', paddingY: 1.5, paddingX: 3 }}>Blockchain</TableHeadCell>
+                <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Token ID</TableHeadCell>
+                <TableHeadCell sx={{ width: '196px', paddingY: 1.5, paddingX: 3 }}>Owner Address</TableHeadCell>
+                <TableHeadCell sx={{ width: '146px' }}> </TableHeadCell>
+              </TableRow>
+            </TableHead>
 
-              <TableBody>
-                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
-                  const location = row.locations[0]
-                  const assetContract = location.contract
-                  const { ownerAccount } = location
+            <TableBody>
+              {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
+                const location = row.locations[0]
+                const assetContract = location?.contract
+                const assetTokenId = location?.tokenId
+                const assetSerial = row.assetNumber
 
-                  const assetTokenId = location.tokenId
-                  const assetSerial = row.assetNumber
-
-                  const onAssetClick = () => {
-                    if (assetContract && assetTokenId) {
-                      navigate(`/single-asset/${id}/${assetContract}/${assetTokenId}`)
-                    } else {
-                      navigate(`/single-asset/${id}/${assetSerial}`)
-                    }
+                const onAssetClick = () => {
+                  if (assetContract && assetTokenId) {
+                    navigate(`/single-asset/${id}/${assetContract}/${assetTokenId}`)
+                  } else {
+                    navigate(`/single-asset/${id}/${assetSerial}`)
                   }
+                }
 
-                  const message = row.status === 'ok' ? hovermessage : row.failedReason
+                const message = row.status === 'ok' ? hovermessage : row.failedReason
 
-                  return (
-                    <TableRow
-                      key={assetTokenId}
-                      sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                    >
-                      <TableCell sx={{ paddingY: 2.75, paddingX: 3, border: 'none' }}>
-                        <CustomLink onClick={onAssetClick} sx={{ cursor: 'pointer' }}>
-                          {row.assetNumber}
-                        </CustomLink>
-                      </TableCell>
+                return (
+                  <TableRow
+                    key={assetTokenId}
+                    sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+                  >
+                    <TableCell sx={{ paddingY: 1.75, paddingX: 3, border: 'none' }}>
+                      <CustomLink onClick={onAssetClick} sx={{ cursor: 'pointer' }}>
+                        {assetSerial}
+                      </CustomLink>
+                    </TableCell>
 
-                      <TableCell sx={{ display: 'flex', alignItems: 'center', paddingX: 2.8, border: 'none' }}>
-                        <img src={row.imageUrl} width="36" height="36" alt="." />
+                    <TableCell sx={{ display: 'flex', alignItems: 'center', paddingX: 3, border: 'none' }}>
+                      <img
+                        src={row.assetName.indexOf('TEST') > -1 ? GoldBar : row.imageUrl}
+                        width="36"
+                        height="36"
+                        alt="."
+                      />
+                      <Typography variant="body2" color="grey.900">
+                        {row.assetName}
+                      </Typography>
+                    </TableCell>
 
-                        <Box ml={1.5}>
-                          <Typography sx={{ fontSize: '14px', lineHeight: 1.43, color: 'grey.900' }}>
-                            {row.assetName}
-                          </Typography>
-                        </Box>
-                      </TableCell>
+                    <TableCell sx={{ paddingY: 1.75, paddingX: 4.5, border: 'none' }}>
+                      <Tooltip title={message} placement="top">
+                        <img src={row.status === 'ok' ? IconCheck : IconInfo} alt="." />
+                      </Tooltip>
+                    </TableCell>
 
-                      <TableCell sx={{ paddingY: 2.75, paddingX: 4.5, border: 'none' }}>
-                        <Tooltip title={message} placement="top">
-                          <img src={row.status === 'ok' ? IconCheck : IconInfo} alt="." />
-                        </Tooltip>
-                      </TableCell>
+                    <TableCell sx={{ paddingX: 3, color: 'grey.600', border: 'none' }}>
+                      {location ? location.name : 'Zippienet'}
+                    </TableCell>
 
-                      <TableCell sx={{ paddingX: 3, border: 'none' }}>{location.name}</TableCell>
-                      <TableCell sx={{ paddingX: 3, border: 'none' }}>{assetTokenId}</TableCell>
-                      <TableCell sx={{ paddingX: 3, border: 'none' }}>{ownerAccount}</TableCell>
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>
+                      {location.contract
+                        ? `${location.contract.substring(0, 4)}...${location.contract.substring(10, 30)}`
+                        : `${location.tokenId.substring(0, 4)}...${location.tokenId.substring(10, 30)}`}
+                    </TableCell>
 
-                      <TableCell sx={{ textAlign: 'right', border: 'none' }}>
-                        {page > 1 ? (
-                          <CustomLink onClick={onAssetClick} sx={{ fontWeight: 500 }}>
-                            Details
-                          </CustomLink>
-                        ) : (
-                          ''
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>
+                      {`${location.ownerAccount.substring(0, 4)}...${location.ownerAccount.substring(10, 30)}`}
+                    </TableCell>
 
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={assets.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      ) : (
-        <>
-          <TableContainer>
-            <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-              <TableHead>
-                <TableRow
-                  sx={{ backgroundColor: 'grey.50', borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                >
-                  <TableHeadCell sx={{ width: '125px', paddingY: 1.5, paddingX: 3 }}>Serial No.</TableHeadCell>
-                  <TableHeadCell sx={{ width: '367px', paddingY: 1.5, paddingX: 3 }}>Asset</TableHeadCell>
-                  <TableHeadCell sx={{ width: '92px', paddingY: 1.5, paddingX: 3 }}>Status</TableHeadCell>
-                  <TableHeadCell sx={{ width: '120px', paddingY: 1.5, paddingX: 3 }}>Blockchain</TableHeadCell>
-                  <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Token ID</TableHeadCell>
-                  <TableHeadCell sx={{ width: '196px', paddingY: 1.5, paddingX: 3 }}>Owner Address</TableHeadCell>
-                  <TableHeadCell sx={{ width: '146px' }}> </TableHeadCell>
-                </TableRow>
-              </TableHead>
+                    <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>
+                      <CustomLink onClick={onAssetClick} sx={{ fontWeight: 500, cursor: 'pointer' }}>
+                        Details
+                      </CustomLink>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-              <TableBody>
-                {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
-                  const location = row.locations[0]
-                  const assetContract = location?.contract
-                  const assetTokenId = location?.tokenId
-                  const assetSerial = row.assetNumber
-
-                  const onAssetClick = () => {
-                    if (assetContract && assetTokenId) {
-                      navigate(`/single-asset/${id}/${assetContract}/${assetTokenId}`)
-                    } else {
-                      navigate(`/single-asset/${id}/${assetSerial}`)
-                    }
-                  }
-
-                  const message = row.status === 'ok' ? hovermessage : row.failedReason
-
-                  return (
-                    <TableRow
-                      key={assetTokenId}
-                      sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                    >
-                      <TableCell sx={{ paddingY: 1.75, paddingX: 3, border: 'none' }}>
-                        <CustomLink onClick={onAssetClick} sx={{ cursor: 'pointer' }}>
-                          {assetSerial}
-                        </CustomLink>
-                      </TableCell>
-
-                      <TableCell sx={{ display: 'flex', alignItems: 'center', paddingX: 3, border: 'none' }}>
-                        <img
-                          src={row.assetName.indexOf('TEST') > -1 ? GoldBar : row.imageUrl}
-                          width="36"
-                          height="36"
-                          alt="."
-                        />
-                        <Typography variant="body2" color="grey.900">
-                          {row.assetName}
-                        </Typography>
-                      </TableCell>
-
-                      <TableCell sx={{ paddingY: 1.75, paddingX: 4.5, border: 'none' }}>
-                        <Tooltip title={message} placement="top">
-                          <img src={row.status === 'ok' ? IconCheck : IconInfo} alt="." />
-                        </Tooltip>
-                      </TableCell>
-
-                      <TableCell sx={{ paddingX: 3, color: 'grey.600', border: 'none' }}>
-                        {location ? location.name : 'Zippienet'}
-                      </TableCell>
-
-                      <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                        {location.contract
-                          ? `${location.contract.substring(0, 4)}...${location.contract.substring(10, 30)}`
-                          : `${location.tokenId.substring(0, 4)}...${location.tokenId.substring(10, 30)}`}
-                      </TableCell>
-
-                      <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                        {`${location.ownerAccount.substring(0, 4)}...${location.ownerAccount.substring(10, 30)}`}
-                      </TableCell>
-
-                      <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>
-                        <CustomLink onClick={onAssetClick} sx={{ fontWeight: 500, cursor: 'pointer' }}>
-                          Details
-                        </CustomLink>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={assets.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      )}
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={assets.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </>
     </Box>
   )
 }
@@ -336,7 +237,7 @@ const AssetTab = () => {
   if (isLoading || !selectedDataSet) {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
-  const { assets, dataSetId } = selectedDataSet
+  const { assets } = selectedDataSet
 
   return (
     <>
