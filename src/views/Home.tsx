@@ -4,7 +4,7 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { Container, Box, Typography, Button } from '@mui/material'
 import { styled } from '@mui/system'
 
-import BgCta from '../assets/images/bg-cta.png'
+import BgCta from '../assets/images/bg-cta.jpg'
 
 import VerificationList from '../components/VerificationList'
 

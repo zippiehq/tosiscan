@@ -18,7 +18,7 @@ import { styled } from '@mui/system'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
-import GoldBar from '../assets/images/gold-bar.svg'
+import GoldBar from '../assets/images/gold-bar.jpg'
 
 import { useDataSetAssetsContext, IFinalAsset } from '../hooks/useDatachainOutput'
 
