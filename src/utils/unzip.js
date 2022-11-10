@@ -8,6 +8,6 @@ export default async function unzip(blob, file) {
     assets = JSON.parse(assets)
     return assets
   } catch (e) {
-    console.error(e)
+    // console.warn(e)
   }
 }

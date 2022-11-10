@@ -60,12 +60,11 @@ const Dataset = () => {
   const asset = getDataSetById(id)
 
   const lastVerified = selectedDataSet?.lastVerified
-  const status = selectedDataSet?.verifications[0].status
-  const statusmessage =
-    status === 'warning' ? selectedDataSet?.verifications[0].message : selectedDataSet?.verifications[1].message
+  const status = selectedDataSet?.verifications ? selectedDataSet?.verifications[0].status : null
+  const statusMessage = 'There is a problem with this dataset'
 
-  const messagecolor = status === 'warning' ? customTheme.palette.warning[700] : customTheme.palette.error[700]
-  const messagebackgroundcolor = status === 'warning' ? customTheme.palette.warning[50] : customTheme.palette.error[50]
+  const messageColor = status === 'warning' ? customTheme.palette.warning[700] : customTheme.palette.error[700]
+  const messageBackgroundColor = status === 'warning' ? customTheme.palette.warning[50] : customTheme.palette.error[50]
 
   const breadcrumbs = [
     <Typography
@@ -82,24 +81,6 @@ const Dataset = () => {
     >
       <IconHome />
     </Typography>,
-
-    /* <Typography
-      key='2'
-      /!*onClick={() => navigate('')}*!/
-      sx={[{ fontFamily: 'Inter', fontSize: '14px', fontWeight: 500,lineHeight: 1.43, color: '#737373', cursor: 'default' },
-        { '&:hover': { color: '#667085' }}, { '&:focus-within': { color: '#737373' }} ]}
-    >
-      {asset ? asset.type : 'Digital Asset'}
-    </Typography>,
-
-    <Typography
-      key='3'
-      /!*onClick={() => navigate('')}*!/
-      sx={[{ fontFamily: 'Inter', fontSize: '14px', fontWeight: 500,lineHeight: 1.43, color: '#737373', cursor: 'default' },
-        { '&:hover': { color: '#667085' }}, { '&:focus-within': { color: '#737373' }} ]}
-    >
-      {asset ? asset.assetClass : 'Gold'}
-    </Typography>, */
 
     <Typography
       key="3"
@@ -141,11 +122,9 @@ const Dataset = () => {
             <Box sx={{ display: 'flex' }}>
               {asset?.dataset === 'Carbon Credit Futures' ? '' : <Badge className="primary">Asset backed</Badge>}
 
-              {asset?.dataset === 'Carbon Credit Futures' ? (
-                ''
-              ) : (
-                <Badge sx={{ backgroundColor: messagebackgroundcolor, color: messagecolor }} ml={1.25}>
-                  {statusmessage}
+              {status && (
+                <Badge sx={{ backgroundColor: messageBackgroundColor, color: messageColor }} ml={1.25}>
+                  {statusMessage}
                 </Badge>
               )}
 

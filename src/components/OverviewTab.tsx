@@ -1,14 +1,69 @@
 import { useParams } from 'react-router-dom'
-
+import { useState } from 'react'
 import { Box, Table, TableBody, TableRow, TableCell, TableContainer, Typography, Link } from '@mui/material'
 import { styled } from '@mui/system'
+import Tooltip from '@mui/material/Tooltip'
 
-import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+import { useDataSetAssetsContext, StatusType, IVerifications } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
-import { formatTimeStamp } from '../utils/timestapFormater'
+import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
 
 import Verifications from './Verifications'
 import Issuer from './Issuer'
+import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
+
+interface IVerificationsErrors {
+  verifications: IVerifications[]
+}
+
+const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
+  const [datasetErrorsOpen, setDatasetErrorsOpen] = useState(false)
+  const lastVerificationError = verifications.find((verification) => verification.status === StatusType.failure)
+  const colors = {
+    [StatusType.warning]: 'warning.700',
+    [StatusType.failure]: 'error.600',
+    [StatusType.success]: 'success.2',
+  }
+  const message = {
+    [StatusType.warning]: 'WARNING',
+    [StatusType.failure]: 'ERROR',
+    [StatusType.success]: 'SUCCESS',
+  }
+
+  const timeFormat = 'YYYY-MMM-DD HH:mm:ss'
+  return !lastVerificationError ? (
+    <Typography>&mdash;</Typography>
+  ) : (
+    <>
+      <Box display="flex" alignItems="flexStart">
+        <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px' }} />
+        <Typography variant="body2" color="error.600" ml={1}>
+          {lastVerificationError.message} . {formatDate(lastVerificationError.timestamp, timeFormat)} (
+          {formatTimeLeft(lastVerificationError.timestamp)})
+        </Typography>
+      </Box>
+      <Typography
+        variant="body2"
+        color="gray.500"
+        sx={{ cursor: 'pointer' }}
+        mt={2}
+        onClick={() => setDatasetErrorsOpen(!datasetErrorsOpen)}
+      >
+        {datasetErrorsOpen ? 'Hide logs' : 'View logs'}
+      </Typography>
+      <Box display="flex" flexDirection="column" marginLeft="-270px" mt={3}>
+        {datasetErrorsOpen
+          ? verifications.map((verification) => (
+              <Typography variant="body2" color={colors[verification.status]} mt={1}>
+                [{message[verification.status]} - {formatDate(lastVerificationError.timestamp, timeFormat)}]{' '}
+                {verification.message}.
+              </Typography>
+            ))
+          : null}
+      </Box>
+    </>
+  )
+}
 
 const OverviewTabHeaderLohko = () => (
   <Typography>
@@ -83,7 +138,7 @@ const OverviewTab = () => {
   const creationDate = selectedDataSet?.creationDate
   const lastVerified = selectedDataSet?.lastVerified
   const datasetName = dataSet?.dataset || 'Lohko Gold'
-
+  const datasetVerifications = selectedDataSet?.verifications || []
   // @ts-ignore
   const Verification = Verifications[datasetName] || null
   const Headers = {
@@ -165,7 +220,16 @@ const OverviewTab = () => {
               <TableBody>
                 <TableRow sx={{ backgroundColor: 'grey.50' }}>
                   <TableNameCell>Verification frequency</TableNameCell>
-                  <TableValueCell>Weekly</TableValueCell>
+                  <TableValueCell>
+                    <Box display="flex" alignItems="center">
+                      <Typography color="textPrimary" mr={1}>
+                        Weekly
+                      </Typography>{' '}
+                      {/* <Tooltip title="Delete">
+                        <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px', cursor: 'pointer' }} />
+                      </Tooltip> */}
+                    </Box>
+                  </TableValueCell>
                 </TableRow>
 
                 <TableRow>
@@ -175,11 +239,12 @@ const OverviewTab = () => {
                   </TableValueCell>
                 </TableRow>
 
-                <TableRow sx={{ backgroundColor: 'grey.50' }}>
+                <TableRow sx={{ backgroundColor: 'grey.50', verticalAlign: 'baseline' }}>
                   <TableNameCell>Last failed verification</TableNameCell>
-                  <TableValueCell>&mdash;</TableValueCell>
+                  <TableValueCell>
+                    <VerificationsErrors verifications={datasetVerifications} />
+                  </TableValueCell>
                 </TableRow>
-
                 <TableRow>
                   <TableNameCell>Availability score</TableNameCell>
                   <TableValueCell>
