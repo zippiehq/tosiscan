@@ -5,13 +5,13 @@ import { get } from '../adapters/axios'
 import unzip from '../utils/unzip'
 import { useDataSetContext } from './useDataset'
 
-enum StatusType {
+export enum StatusType {
   success = 'success',
   warning = 'warning',
   failure = 'failure',
 }
 
-interface IVerifications {
+export interface IVerifications {
   timestamp: number
   status: StatusType
   message: string
@@ -30,7 +30,7 @@ export interface DatachainOutputContextT {
   timestamps: number[]
   creationDate: number
   lastVerified: number
-  verifications: IVerifications[]
+  verifications?: IVerifications[]
 }
 interface MetaData {
   contract: string
