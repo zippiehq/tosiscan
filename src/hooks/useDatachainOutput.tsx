@@ -30,7 +30,7 @@ export interface DatachainOutputContextT {
   timestamps: number[]
   creationDate: number
   lastVerified: number
-  verifications: IVerifications
+  verifications: IVerifications[]
 }
 interface MetaData {
   contract: string
