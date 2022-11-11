@@ -86,7 +86,7 @@ const VerificationList = () => {
             {datasets.map((asset: any) => {
               const lastVerified = isLoading || !datasetOutputs ? 0 : datasetOutputs[asset.id]?.lastVerified
               const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
-
+              const { publisher } = asset
               return (
                 <TableBodyRow
                   key={asset.id}
@@ -135,7 +135,7 @@ const VerificationList = () => {
                   </TableBodyCell>
 
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
-                    {asset.publisher}
+                    {publisher.name}
                     <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
                   </TableBodyCell>
 
