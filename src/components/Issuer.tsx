@@ -2,13 +2,14 @@ import React from 'react'
 
 import { Box, Link, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/system'
-
+import { useParams } from 'react-router-dom'
 import TwitterIcon from '@mui/icons-material/Twitter'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { ReactComponent as LogoLohko } from '../assets/images/logo-lohko.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+import { useDataSetContext } from '../hooks/useDataset'
 
 const CustomLink = styled(Link)(({ theme }) => ({
   fontSize: '16px',
@@ -28,8 +29,11 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 
 const Issuer = () => {
   const { isLoading: fetchingAsset, selectedDataSet } = useDataSetAssetsContext()
+  const { getDataSetById } = useDataSetContext()
+  const { id } = useParams()
+  const dataSet = getDataSetById(id)
   const assets = selectedDataSet?.assets
-
+  const publisher = dataSet?.publisher
   return (
     <SectionWrapper>
       <Typography
@@ -42,8 +46,7 @@ const Issuer = () => {
       </Typography>
 
       <Box mb={3} sx={{ display: 'flex', alignItems: 'center' }}>
-        <LogoLohko style={{ width: '56"', height: '56' }} />
-
+        <img src={publisher?.logo} alt="" style={{ width: '56"', height: '56' }} />
         <Box ml={2.5}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -52,13 +55,13 @@ const Issuer = () => {
               mr={1}
               sx={{ fontSize: '18px', fontWeight: 600, lineHeight: 1.56 }}
             >
-              Lohko Pte Ltd
+              {dataSet?.issuers}
             </Typography>
             <IconVerifiedTick style={{ width: '14px', height: '14px' }} />
           </Box>
 
           <Typography variant="body2" color="grey.500">
-            Publisher since May 2022
+            Publisher since {publisher?.publisherSince}
           </Typography>
         </Box>
       </Box>
@@ -94,30 +97,40 @@ const Issuer = () => {
       </Stack>
 
       <Typography variant="body1" color="grey.600" mb={3.5} sx={{ fontSize: '15px', linHeight: 1.6 }}>
-        Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full
-        control.
+        {publisher?.description}
       </Typography>
 
-      <Box mb={2.75} sx={{ display: 'flex' }}>
-        <TwitterIcon style={{ fill: '#98a2b3' }} />
-        <CustomLink href="https://twitter.com/lohkowallet" target="_blank" rel="noreferrer nofollow" ml={0.5}>
-          @LohkoWallet
-        </CustomLink>
-      </Box>
+      {publisher?.twitter && (
+        <Box mb={2.75} sx={{ display: 'flex' }}>
+          <TwitterIcon style={{ fill: '#98a2b3' }} />
+          <CustomLink
+            href={`https://twitter.com/${publisher?.twitter}`}
+            target="_blank"
+            rel="noreferrer nofollow"
+            ml={0.5}
+          >
+            @{publisher?.twitter}
+          </CustomLink>
+        </Box>
+      )}
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <CustomLink href="https://app.lohkoinvest.com" target="_blank" rel="noreferrer nofollow">
-          app.lohkoinvest.com
-        </CustomLink>
+        {publisher?.web && (
+          <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow">
+            {publisher?.web}
+          </CustomLink>
+        )}
 
-        <Box>
-          <Typography variant="body1" color="grey.500" sx={{ lineHeight: 1.5 }}>
-            View in
-            <CustomLink href="https://opensea.io/collection/lohkonft" target="_blank" rel="noreferrer nofollor">
-              &nbsp;OpenSea
-            </CustomLink>
-          </Typography>
-        </Box>
+        {publisher?.opensea && (
+          <Box>
+            <Typography variant="body1" color="grey.500" sx={{ lineHeight: 1.5 }}>
+              View in
+              <CustomLink href={publisher?.opensea} target="_blank" rel="noreferrer nofollor">
+                &nbsp;OpenSea
+              </CustomLink>
+            </Typography>
+          </Box>
+        )}
       </Box>
     </SectionWrapper>
   )

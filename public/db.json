@@ -8,12 +8,20 @@
       "type": "Digital Asset",
       "assetClass": "Gold",
       "lastVerified": "an hour ago",
-      "publisher": "Lohko Pte Ltd",
       "issuers": "Lohko Pte Ltd",
       "image": "/assets/lohko-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 28
+      "assetIssued": 28,
+      "publisher": {
+        "name": "Lohko Pte Ltd",
+        "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
+        "twitter": "lohkowallet",
+        "web": "https://app.lohkoinvest.com",
+        "opensea": "https://opensea.io/collection/lohkonft",
+        "publisherSince": "May 2022",
+        "logo": "/assets/logo-lohko-publisher.svg"
+      }
     },
     {
       "id": "bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe",
@@ -22,26 +30,43 @@
       "type": "Digital Asset",
       "assetClass": "Carbon Credits",
       "lastVerified": "an hour ago",
-      "publisher": "Lohko Pte Ltd",
+      "publisherDescription": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
       "issuers": "Lohko Pte Ltd",
       "image": "/assets/carbon-credit-logo.png",
       "status": "",
       "available": true,
-      "assetIssued": 12
+      "assetIssued": 12,
+      "datasetLinked": ["bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m"],
+      "publisher": {
+        "name": "Lohko Pte Ltd",
+        "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
+        "twitter": "lohkowallet",
+        "web": "https://app.lohkoinvest.com",
+        "opensea": "https://opensea.io/collection/lohkonft",
+        "publisherSince": "May 2022",
+        "logo": "/assets/logo-lohko-publisher.svg"
+      }
     },
     {
-      "id": "0x80bf3a25",
+      "id": "bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m",
       "dataset": "Nguru Project Satellite Images",
       "contract": "0x80bf3a23...89764372",
       "type": "File timestamp",
       "assetClass": "Satellite image",
       "lastVerified": "an hour ago",
-      "publisher": "AirImpact",
-      "issuers": "PAMS Foundation",
-      "image": "./assets/nguru-logo.png",
-      "status": "Coming soon",
-      "available": false,
-      "assetIssued": 25
+      "publisherDescription": "",
+      "issuers": "AirImpact",
+      "image": "/assets/nguru-logo.png",
+      "status": "",
+      "available": true,
+      "assetIssued": 25,
+      "publisher": {
+        "name": "AirImpact",
+        "description": "We develop solutions to enable transparent value transfer in donations, carbon credits, mobile airtime, and digital coupons.",
+        "web": "https://airimpact.co/",
+        "publisherSince": "May 2022",
+        "logo": "/assets/logo-airimpact-publisher.svg"
+      }
     }
   ]
 }

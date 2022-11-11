@@ -89,6 +89,7 @@ const VerificationCarbon = () => (
 const Verifications = {
   'Lohko Gold': VerificationLohko,
   'Carbon Credit Futures': VerificationCarbon,
+  'Nguru Project Satellite Images': VerificationCarbon,
 }
 
 export default Verifications

@@ -2,6 +2,15 @@ import constate from 'constate'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+interface IPublisher {
+  name: string
+  description: string
+  twitter?: string
+  web?: string
+  opensea?: string
+  publisherSince: string
+  logo: string
+}
 export interface IDataset {
   id: string
   dataset: string
@@ -9,11 +18,12 @@ export interface IDataset {
   type: string
   assetClass: string
   lastVerified: string
-  publisher: string
+  publisher: IPublisher
   issuers: string
   image: string
   available: string
   assetIssued: number
+  datasetLinked?: string[]
 }
 
 function useDataSet() {

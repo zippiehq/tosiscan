@@ -120,7 +120,7 @@ const Dataset = () => {
             </Box>
 
             <Box sx={{ display: 'flex' }}>
-              {asset?.dataset === 'Carbon Credit Futures' ? '' : <Badge className="primary">Asset backed</Badge>}
+              {asset?.dataset !== 'Lohko Gold' ? '' : <Badge className="primary">Asset backed</Badge>}
 
               {status && (
                 <Badge sx={{ backgroundColor: messageBackgroundColor, color: messageColor }} ml={1.25}>

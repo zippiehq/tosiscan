@@ -1,6 +1,17 @@
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
-import { Box, Table, TableBody, TableRow, TableCell, TableContainer, Typography, Link } from '@mui/material'
+import {
+  Box,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  Typography,
+  Link,
+  TableHead,
+  Stack,
+} from '@mui/material'
 import { styled } from '@mui/system'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -11,9 +22,131 @@ import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFo
 import Verifications from './Verifications'
 import Issuer from './Issuer'
 import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
+import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
 interface IVerificationsErrors {
   verifications: IVerifications[]
+}
+
+const VerificationFiles = ({ datasetId }: { datasetId: string }) => {
+  const { datasetOutputs } = useDataSetAssetsContext()
+
+  const datasetVerifiedFiles = datasetOutputs ? datasetOutputs[datasetId] : null
+
+  const assets = datasetVerifiedFiles?.assets || []
+  const lastVerified = datasetVerifiedFiles?.lastVerified || 0
+  return (
+    <Box>
+      <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
+        Verified files
+      </Typography>
+
+      <Box>
+        <TableContainer>
+          <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: 'grey.50' }}>
+                <TableCell
+                  sx={{
+                    paddingY: 2.25,
+                    paddingX: 3,
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: 1.43,
+                    color: '#667085',
+                  }}
+                >
+                  Dataset
+                </TableCell>
+                <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
+                  Last verified
+                </TableCell>
+                <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
+                  Publisher
+                </TableCell>
+                <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
+                  Issuer/s
+                </TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {assets.map((asset) => (
+                <TableRow sx={{ borderBottom: '1px solid #eaecf0' }}>
+                  <TableCell
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      paddingY: 2.5,
+                      paddingX: 3,
+                      borderBottom: 'none',
+                    }}
+                  >
+                    <img src={asset?.imageUrl} width="40px" height="40px" alt="." />
+
+                    <Stack ml={2}>
+                      <Typography
+                        variant="h4"
+                        sx={{ fontSize: '16px', fontWeight: 500, lineHeight: 1.5, color: '#101828' }}
+                      >
+                        {asset.assetName}
+                      </Typography>
+
+                      <Typography
+                        variant="body2"
+                        sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
+                      >
+                        {`${asset.locations[0].ownerAccount.substring(
+                          0,
+                          4,
+                        )}...${asset.locations[0].ownerAccount.substring(10, 30)}`}
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+
+                  <TableCell sx={{ fontSize: '14px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
+                    {formatTimeStamp(lastVerified)}
+                  </TableCell>
+
+                  <TableCell sx={{ borderBottom: 'none' }}>
+                    <Stack
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        fontSize: '14px',
+                        lineHeight: 1.43,
+                        color: '101828',
+                      }}
+                    >
+                      Airimpact
+                      <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
+                    </Stack>
+                  </TableCell>
+
+                  <TableCell sx={{ borderBottom: 'none' }}>
+                    <Stack
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        fontSize: '14px',
+                        lineHeight: 1.43,
+                        color: '101828',
+                      }}
+                    >
+                      Airimpact
+                      <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
+  )
 }
 
 const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
@@ -68,6 +201,14 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
 const OverviewTabHeaderLohko = () => (
   <Typography>
     Lohko Gold bars are numbered and stored in a secure vault and owners have a legal right to claim them anytime.
+  </Typography>
+)
+
+const OverviewTabHeaderNguruProjectSatelite = () => (
+  <Typography>
+    The Nguru mountains is a rare rainforest in Eastern Africa which has lost 80% of the forest coverage during the last
+    couple of hundred years. Pilot phase of the project is already ongoing with 300,000 seedlings being planted into
+    Nguru mountains. The total scale of the project is 225 km2 and 15 million trees.
   </Typography>
 )
 const OverviewTabHeaderCarbon = () => (
@@ -144,6 +285,7 @@ const OverviewTab = () => {
   const Headers = {
     'Lohko Gold': OverviewTabHeaderLohko,
     'Carbon Credit Futures': OverviewTabHeaderCarbon,
+    'Nguru Project Satellite Images': OverviewTabHeaderNguruProjectSatelite,
   }
   // @ts-ignore
   const Header = Headers[datasetName] || null
@@ -277,200 +419,7 @@ const OverviewTab = () => {
           <Verification />
         </Box>
 
-        {/* {selectedDataSet?.dataSetId === '0x80bf3a24' ? (
-          <Box>
-            <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-              Verified files
-            </Typography>
-
-            <Box>
-              <TableContainer>
-                <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-                  <TableHead>
-                    <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                      <TableCell
-                        sx={{
-                          paddingY: 2.25,
-                          paddingX: 3,
-                          fontSize: '14px',
-                          fontWeight: 500,
-                          lineHeight: 1.43,
-                          color: '#667085',
-                        }}
-                      >
-                        Dataset
-                      </TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
-                        Last verified
-                      </TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
-                        Publisher
-                      </TableCell>
-                      <TableCell sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#667085' }}>
-                        Issuer/s
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    <TableRow sx={{ borderBottom: '1px solid #eaecf0' }}>
-                      <TableCell
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          paddingY: 2.5,
-                          paddingX: 3,
-                          borderBottom: 'none',
-                        }}
-                      >
-                        <img src={asset?.image} width="40px" height="40px" alt="." />
-
-                        <Stack ml={2}>
-                          <Typography
-                            variant="h4"
-                            sx={{ fontSize: '16px', fontWeight: 500, lineHeight: 1.5, color: '#101828' }}
-                          >
-                            Nguru Project Satellite Images
-                          </Typography>
-
-                          <Typography
-                            variant="body2"
-                            sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
-                          >
-                            0x80bf3a23...89764372
-                          </Typography>
-                        </Stack>
-                      </TableCell>
-
-                      <TableCell sx={{ fontSize: '14px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
-                        an hour ago
-                      </TableCell>
-
-                      <TableCell sx={{ borderBottom: 'none' }}>
-                        <Stack
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            fontSize: '14px',
-                            lineHeight: 1.43,
-                            color: '101828',
-                          }}
-                        >
-                          Airimpact
-                          <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
-                        </Stack>
-                      </TableCell>
-
-                      <TableCell sx={{ borderBottom: 'none' }}>
-                        <Stack
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            fontSize: '14px',
-                            lineHeight: 1.43,
-                            color: '101828',
-                          }}
-                        >
-                          Airimpact
-                          <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-
-              {page > 1 ? (
-                <TablePagination
-                  rowsPerPageOptions={[]}
-                  component="div"
-                  count={1}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  backIconButtonProps={{}}
-                  nextIconButtonProps={{}}
-                  sx={{
-                    position: 'relative',
-                    margin: 0,
-                    padding: 0,
-                    border: '1px solid #eaecf0',
-                    borderTop: 'none',
-
-                    '& .MuiToolbar-root': {
-                      margin: 0,
-                      padding: 0,
-                    },
-                    '& .MuiTablePagination-displayedRows': {
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      margin: 0,
-                      padding: 0,
-                      transform: 'translate(-50%, -50%)',
-                    },
-                    '& .MuiTablePagination-actions': {
-                      position: 'absolute',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      margin: 0,
-                      marginLeft: '0 !important',
-                      padding: 0,
-                    },
-                    '& .MuiTablePagination-actions button': {
-                      position: 'relative',
-                      height: '36px',
-                      padding: '8px 14px',
-                      color: '#344054',
-                      border: '1px solid rgba(16, 24, 40, 0.05)',
-                      borderRadius: '100px',
-                    },
-                    '& .MuiTablePagination-actions button:first-of-type': {
-                      left: '24px',
-                      justifyContent: 'flex-start',
-                      width: '114px',
-                    },
-                    '& .MuiTablePagination-actions button:last-child': {
-                      right: '24px',
-                      justifyContent: 'flex-end',
-                      width: '88px',
-                    },
-                    '& .MuiTablePagination-actions button:first-of-type::before': {
-                      position: 'absolute',
-                      top: '50%',
-                      left: '42px',
-                      content: '"Previous"',
-                      fontFamily: 'Inter',
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      lineHeight: 1.43,
-                      transform: 'translateY(-50%)',
-                    },
-                    '& .MuiTablePagination-actions button:last-child::after': {
-                      position: 'absolute',
-                      top: '50%',
-                      right: '42px',
-                      content: '"Next"',
-                      fontFamily: 'Inter',
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      lineHeight: 1.43,
-                      transform: 'translateY(-50%)',
-                    },
-                  }}
-                />
-              ) : (
-                ''
-              )}
-            </Box>
-          </Box>
-        ) : (
-          ''
-        )} */}
+        {dataSet?.datasetLinked ? <VerificationFiles datasetId={dataSet?.datasetLinked[0]} /> : ''}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>
