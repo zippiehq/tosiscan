@@ -166,7 +166,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell>
                   <Link
                     component={RouterLink}
-                    to={`/single-asset/0x80bf3a23/${assetContract}/${assetTokenId}`}
+                    to={`/single-asset/$${datasetId}/${assetContract}/${assetTokenId}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',
@@ -216,7 +216,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell sx={{ textAlign: 'center' }}>
                   <Link
                     component={RouterLink}
-                    to="/dataset/0x80bf3a23"
+                    to={`/dataset/${datasetId}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',

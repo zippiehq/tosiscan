@@ -60,7 +60,7 @@ const Search = () => {
   }
 
   return (
-    <Box component="form" sx={{ position: 'relative', width: '640px', margin: '0 auto' }}>
+    <Box sx={{ position: 'relative', width: '640px', margin: '0 auto' }}>
       <SearchIcon
         style={{
           position: 'absolute',
