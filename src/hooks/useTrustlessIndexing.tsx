@@ -57,8 +57,8 @@ const useTrustlessIndexing = () => {
 
     const dsItem: ITLIDataSet = {
       contract: {
-        name: response.contractData.constractName,
-        owner: response.contractData.constractOwner,
+        name: response.contractData.contractName,
+        owner: response.contractData.contractOwner,
         address: response.contractData.contractAddress,
         metadata: response.contractData.contractMetadata,
         type: response.contractData.contractType,
