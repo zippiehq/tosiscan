@@ -10,6 +10,7 @@ import Dataset from './views/Dataset'
 import Home from './views/Home'
 import ComingSoon from './views/ComingSoon'
 import SingleAsset from './views/SingleAsset'
+import SingleAssetNft from './views/SingleAssetNft'
 import AssetSearchResult from './views/AssetSearchResult'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
@@ -44,6 +45,9 @@ function App() {
                   <Route path="/single-asset/:id">
                     <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
                     <Route path=":assetSerial" element={<SingleAsset />} />
+                  </Route>
+                  <Route path="/single-asset-nft/:id">
+                    <Route path=":assetContract/:assetTokenId" element={<SingleAssetNft />} />
                   </Route>
                 </Route>
                 <Route path="/coming-soon" element={<ComingSoon />} />

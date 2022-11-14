@@ -1,0 +1,20 @@
+{
+  "issuers": [
+    {
+      "id": "singleAssetNft",
+      "issuer": {
+        "type": "Publisher",
+        "name": "Zippie",
+        "publisherSince": "May 2022",
+        "image": "/assets/logo-zippie.png",
+        "description": "Zippie makes Web3 and blockchain beneficial and accessible for both users and developers while helping businesses move into Web3 easily and securely.",
+        "connectedWithZippie": true,
+        "social": {
+          "twitter": "https://twitter.com/zippiehq",
+          "linkedin": "https://linkedin.com/company/zippie"
+        },
+        "website": "https://www.zippie.com/"
+      }
+    }
+  ]
+}

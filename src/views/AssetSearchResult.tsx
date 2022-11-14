@@ -239,7 +239,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell>
                   <Link
                     component={RouterLink}
-                    to={`/single-asset/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                    to={`/single-asset-nft/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',
