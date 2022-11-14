@@ -260,9 +260,9 @@ const AssetSearchResult = () => {
                 </TableBodyCell>
 
                 <TableBodyCell sx={{ textAlign: 'center' }}>
-                  {/* <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
-                    <img src={asset.status ? IconCheck : IconInfo} alt="." />
-                  </Tooltip> */}
+                  <Tooltip title={hovermessage} placement="top">
+                    <img src={IconCheck} alt="." />
+                  </Tooltip>
                 </TableBodyCell>
 
                 <TableBodyCell>Ethereum Mainnet</TableBodyCell>
