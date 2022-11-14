@@ -76,10 +76,6 @@ const AssetSearchResult = () => {
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
-  // REMOVE
-  useEffect(() => {
-    console.log(TLIDataSet)
-  }, [TLIDataSet])
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
   if (!datasetOutputs || isLoading || !TLIDataSet || isTLILoading) {
@@ -95,7 +91,7 @@ const AssetSearchResult = () => {
   const datasetId = Object.keys(datasetOutputs).find((id) => {
     const { assets } = datasetOutputs[id]
     return assets.some(
-      ({ locations }: any) =>
+      ({ locations }) =>
         locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
         locations[0].tokenId === assetTokenId,
     )
@@ -111,11 +107,11 @@ const AssetSearchResult = () => {
     )
   }
 
-  const { assets } = datasetId ? datasetOutputs[datasetId] : { assets: null }
+  const assets = datasetId ? datasetOutputs[datasetId].assets : []
 
   const filtered = assets
     ? assets.filter(
-        ({ locations }: any) =>
+        ({ locations }) =>
           locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
           locations[0].tokenId === assetTokenId,
       )
@@ -171,74 +167,73 @@ const AssetSearchResult = () => {
           </TableHead>
 
           <TableBody>
-            {filtered &&
-              filtered.map((asset: any) => (
-                <TableRow key={asset.assetNumber}>
-                  <TableBodyCell>
-                    <Link
-                      component={RouterLink}
-                      to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
-                      sx={{
-                        color: 'primary.600',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {asset.assetNumber}
-                    </Link>
-                  </TableBodyCell>
+            {filtered.map((asset: any) => (
+              <TableRow key={asset.assetNumber}>
+                <TableBodyCell>
+                  <Link
+                    component={RouterLink}
+                    to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {asset.assetNumber}
+                  </Link>
+                </TableBodyCell>
 
-                  <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
-                    <img src={asset.imageUrl} style={{ width: '32px', height: '32px', marginRight: '12px' }} alt="." />
-                    {asset.assetName}
-                  </TableBodyCell>
+                <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
+                  <img src={asset.imageUrl} style={{ width: '32px', height: '32px', marginRight: '12px' }} alt="." />
+                  {asset.assetName}
+                </TableBodyCell>
 
-                  <TableBodyCell sx={{ textAlign: 'center' }}>
-                    <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
-                      <img src={asset.status ? IconCheck : IconInfo} alt="." />
-                    </Tooltip>
-                  </TableBodyCell>
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
+                    <img src={asset.status ? IconCheck : IconInfo} alt="." />
+                  </Tooltip>
+                </TableBodyCell>
 
-                  <TableBodyCell>{asset.locations[0].name}</TableBodyCell>
+                <TableBodyCell>{asset.locations[0].name}</TableBodyCell>
 
-                  <TableBodyCell>
-                    <CustomLink
-                      // @ts-ignore
-                      href={`${EthLocation[asset.locations[0].name]}/${asset.locations[0].contract}/${
-                        asset.locations[0].tokenId || asset.locations[0].tokenId
-                      }`}
-                      target="_blank"
-                      rel="noreferrer nofollow"
-                    >
-                      {`${asset.locations[0].contract?.slice(0, 4)}...${asset.locations[0].contract?.slice(
-                        asset.locations[0].contract.length - 4,
-                      )}`}
-                    </CustomLink>
-                  </TableBodyCell>
-
-                  <TableBodyCell>{asset?.locations[0].tokenId}</TableBodyCell>
-
-                  <TableBodyCell>
-                    {`${asset.locations[0].ownerAccount.slice(0, 4)}...${asset.locations[0].ownerAccount.slice(
-                      asset.locations[0].ownerAccount.length - 4,
+                <TableBodyCell>
+                  <CustomLink
+                    // @ts-ignore
+                    href={`${EthLocation[asset.locations[0].name]}/${asset.locations[0].contract}/${
+                      asset.locations[0].tokenId || asset.locations[0].tokenId
+                    }`}
+                    target="_blank"
+                    rel="noreferrer nofollow"
+                  >
+                    {`${asset.locations[0].contract?.slice(0, 4)}...${asset.locations[0].contract?.slice(
+                      asset.locations[0].contract.length - 4,
                     )}`}
-                  </TableBodyCell>
+                  </CustomLink>
+                </TableBodyCell>
 
-                  <TableBodyCell sx={{ textAlign: 'center' }}>
-                    <Link
-                      component={RouterLink}
-                      to={`/dataset/${datasetId}`}
-                      sx={{
-                        color: 'primary.600',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      View Dataset
-                    </Link>
-                  </TableBodyCell>
-                </TableRow>
-              ))}
+                <TableBodyCell>{asset?.locations[0].tokenId}</TableBodyCell>
+
+                <TableBodyCell>
+                  {`${asset.locations[0].ownerAccount.slice(0, 4)}...${asset.locations[0].ownerAccount.slice(
+                    asset.locations[0].ownerAccount.length - 4,
+                  )}`}
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Link
+                    component={RouterLink}
+                    to={`/dataset/${datasetId}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    View Dataset
+                  </Link>
+                </TableBodyCell>
+              </TableRow>
+            ))}
             {TLIDataSet && (
               <TableRow key={TLIDataSet.token.id}>
                 <TableBodyCell>

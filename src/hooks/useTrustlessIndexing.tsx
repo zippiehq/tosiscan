@@ -80,11 +80,13 @@ const useTrustlessIndexing = () => {
     if (TLIQuery !== undefined && TLIQuery.assetContract && TLIQuery.assetTokenId) {
       setIsTLILoading(true)
 
-      if (TLIDataSet) {
-        if (TLIDataSet.contract.address === TLIQuery.assetContract && TLIDataSet.token.id === TLIQuery.assetTokenId) {
-          setIsTLILoading(false)
-          return
-        }
+      if (
+        TLIDataSet &&
+        TLIDataSet.contract.address === TLIQuery.assetContract &&
+        TLIDataSet.token.id === TLIQuery.assetTokenId
+      ) {
+        setIsTLILoading(false)
+        return
       }
 
       fetchSingleAsset(TLIQuery.assetContract, TLIQuery.assetTokenId)
