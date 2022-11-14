@@ -1,0 +1,286 @@
+import React, { useEffect } from 'react'
+import { Link as RouterLink, useParams } from 'react-router-dom'
+
+import { Container, Box, Typography, Link, Stack, Paper, List, ListItem } from '@mui/material'
+import { styled } from '@mui/system'
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+
+import LogoZippie from '../assets/images/logo-zippie.png'
+import LogoPecFriends from '../assets/images/logo-pecfriends.png'
+import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
+
+import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
+
+import TabsSingleAsset from '../components/TabsSingleAsset'
+import Publisher from '../components/Publisher'
+
+const ContentContainer = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.up('xl')]: {
+    maxWidth: '1280px',
+  },
+  [theme.breakpoints.up('xs')]: {
+    paddingRight: theme.spacing(2.5),
+    paddingLeft: theme.spacing(2.5),
+  },
+  margin: '0 auto',
+}))
+
+const Badge = styled(Typography)(({ theme }) => ({
+  paddingTop: theme.spacing(0.25),
+  paddingRight: theme.spacing(1.25),
+  paddingBottom: theme.spacing(0.25),
+  paddingLeft: theme.spacing(1.25),
+  fontSize: '14px',
+  fontWeight: 600,
+  lineHeight: 1.43,
+  borderRadius: '16px',
+
+  '&.primary': {
+    color: theme.palette.primary['700'],
+    backgroundColor: theme.palette.primary['50'],
+  },
+
+  '&.error': {
+    color: theme.palette.error['700'],
+    backgroundColor: theme.palette.error['50'],
+  },
+
+  '&.warning': {
+    color: theme.palette.warning['700'],
+    backgroundColor: theme.palette.warning['50'],
+  },
+}))
+
+const CustomLink = styled(Link)(({ theme }) => ({
+  fontSize: '14px',
+  lineHeight: 1.43,
+  color: theme.palette.primary['600'],
+  textDecoration: 'none',
+})) as typeof Link
+
+/* Will be replaced to button with a dropdown later */
+const LinkDropdown = styled(Link)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  alignSelf: 'flex-end',
+  paddingTop: theme.spacing(1.25),
+  paddingRight: theme.spacing(2),
+  paddingBottom: theme.spacing(1.25),
+  paddingLeft: theme.spacing(2),
+  fontWeight: 500,
+  color: theme.palette.grey['700'],
+  textDecoration: 'none',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: theme.palette.grey['300'],
+  borderRadius: '100px',
+})) as typeof Link
+
+const SectionWrapper = styled(Box)(({ theme }) => ({
+  marginBottom: theme.spacing(3),
+  padding: theme.spacing(3),
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: theme.palette.grey['200'],
+  borderRadius: '10px',
+}))
+
+const AssetPropertyWrapper = styled(Paper)(({ theme }) => ({
+  width: '250px',
+  padding: theme.spacing(2),
+  marginRight: theme.spacing(1.5),
+  marginBottom: theme.spacing(1.5),
+  backgroundColor: theme.palette.grey['25'],
+  boxShadow: 'none',
+
+  '&:nth-of-type(even)': {
+    marginRight: 0,
+  },
+
+  '& p:first-of-type': {
+    marginBottom: theme.spacing(0.5),
+    fontSize: '14px',
+    lineHeight: 1.43,
+    color: theme.palette.grey['600'],
+  },
+
+  '& p:last-of-type': {
+    fontSize: '20px',
+    lineHeight: 1.5,
+    color: theme.palette.grey['900'],
+  },
+}))
+
+const DatasetItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderBottomWidth: '1px',
+  borderBottomStyle: 'solid',
+  borderBottomColor: theme.palette.grey['200'],
+
+  '&:last-of-type': {
+    borderBottom: 'none',
+  },
+}))
+
+const SingleAssetNft = () => {
+  const { assetContract, assetTokenId } = useParams()
+  const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
+
+  useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
+
+  console.log(TLIDataSet?.token.owner)
+  return (
+    <ContentContainer>
+      <Box mt={4} mb={5.25} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box>
+          <Typography variant="h6" color="grey.900" mb={1} sx={{ lineHeight: 1.33 }}>
+            Asset Details
+          </Typography>
+
+          <Typography variant="body1" color="grey.500" mb={1} sx={{ lineHeight: 1.5 }}>
+            From
+            <span style={{ fontWeight: 500, color: '#344054' }}>&nbsp;Trustless Ethereum NFT Index&nbsp;</span>
+            and
+            <span style={{ fontWeight: 500, color: '#344054' }}>&nbsp;1 other dataset</span>
+          </Typography>
+        </Box>
+
+        <LinkDropdown component={RouterLink} to="/coming-soon">
+          View dataset
+          <KeyboardArrowDownIcon style={{ width: '20px', height: '20px', marginLeft: '8px', fill: '#344054' }} />
+        </LinkDropdown>
+      </Box>
+
+      <SectionWrapper mb={5.25}>
+        <Typography
+          variant="subtitle1"
+          color="grey.900"
+          mb={1.25}
+          sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1.5 }}
+        >
+          Overview
+        </Typography>
+
+        <Box sx={{ display: 'flex' }}>
+          <Box mr={3} sx={{ display: 'flex', width: '657px' }}>
+            <img
+              src={TLIDataSet?.token.metadata.image}
+              width="200"
+              height="200"
+              alt="."
+              style={{ borderRadius: '10px' }}
+            />
+
+            <Box ml={3}>
+              <Typography
+                variant="h2"
+                color="grey.900"
+                mb={1.5}
+                sx={{ fontSize: '32px', fontWeight: 600, lineHeight: 1.19 }}
+              >
+                {TLIDataSet?.token.metadata.name}
+              </Typography>
+
+              <Box mb={3} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Badge className="primary">{TLIDataSet?.contract.type}</Badge>
+                <Typography variant="body2" color="grey.400" ml={1}>
+                  Last verified 20 mins ago
+                </Typography>
+              </Box>
+
+              <Typography variant="body2" color="grey.500" mb={1.5}>
+                By
+                <span style={{ color: '#1d2939' }}>&nbsp;2E35A6</span>
+              </Typography>
+
+              <Typography variant="body2" color="grey.500" mb={1.5}>
+                PEC Friends is one of PECland&apos;s 3D collections of 9000 randomly generated and stylistically curated
+                NFTs that exist on the Ethereum Blockchain.
+                <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 500 }}>
+                  &nbsp;Read more
+                </CustomLink>
+              </Typography>
+            </Box>
+          </Box>
+
+          <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', width: '520px' }}>
+            <AssetPropertyWrapper>
+              <Typography>Blockhain</Typography>
+              <Typography>Ethereum</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Last verified</Typography>
+              <Typography>An hour ago</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Token ID</Typography>
+              <Typography>{TLIDataSet?.token.id}</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Current owner</Typography>
+              <Typography>
+                {TLIDataSet && TLIDataSet.token.owner
+                  ? `${TLIDataSet.token.owner.slice(0, 6)}...${TLIDataSet.token.owner.slice(
+                      TLIDataSet.token.owner.length - 4,
+                    )}`
+                  : ''}
+              </Typography>
+            </AssetPropertyWrapper>
+          </Stack>
+        </Box>
+      </SectionWrapper>
+
+      <Box sx={{ display: 'flex', marginBottom: '160px' }}>
+        <Box mr={4.5} sx={{ width: { xl: '820px' } }}>
+          <TabsSingleAsset />
+        </Box>
+
+        <Box sx={{ width: { xl: '384px' } }}>
+          <Publisher />
+
+          <SectionWrapper>
+            <Typography
+              variant="subtitle1"
+              color="grey.900"
+              mb={1.25}
+              sx={{ fontSize: '18px', fontWeight: 600, lineHeight: 1.56 }}
+            >
+              Dataset
+            </Typography>
+
+            <List
+              sx={{
+                padding: 0,
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: 'grey.200',
+                borderRadius: '8px',
+              }}
+            >
+              <DatasetItem disablePadding>
+                <img src={LogoZippie} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
+
+                <Box ml={2}>
+                  <Typography variant="body1" color="grey.900" mb={0.25} sx={{ fontWeight: 500 }}>
+                    Trustless Ethereum NFT Index
+                  </Typography>
+
+                  <Typography variant="body1" color="grey.900" sx={{ display: 'flex', alignItems: 'center' }}>
+                    Zippie
+                    <IconVerifiedTick style={{ marginLeft: '6px' }} />
+                  </Typography>
+                </Box>
+              </DatasetItem>
+            </List>
+          </SectionWrapper>
+        </Box>
+      </Box>
+    </ContentContainer>
+  )
+}
+
+export default () => <SingleAssetNft />

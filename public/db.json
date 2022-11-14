@@ -2,7 +2,6 @@
   "verifications": [
     {
       "id": "bafyreihfoldyasfgdbi5ngwgdfo722khzlzke55v5keasg2ffjywcwfknm",
-
       "dataset": "Lohko Gold",
       "contract": "bafyreihfo...fjywcwfknm",
       "type": "Digital Asset",
@@ -45,6 +44,27 @@
         "opensea": "https://opensea.io/collection/lohkonft",
         "publisherSince": "May 2022",
         "logo": "/assets/logo-lohko-publisher.svg"
+      }
+    },
+    {
+      "id": "bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m",
+      "dataset": "Nguru Project Satellite Images",
+      "contract": "0x80bf3a23...89764372",
+      "type": "File timestamp",
+      "assetClass": "Satellite image",
+      "lastVerified": "an hour ago",
+      "publisherDescription": "",
+      "issuers": "AirImpact",
+      "image": "/assets/nguru-logo.png",
+      "status": "",
+      "available": true,
+      "assetIssued": 25,
+      "publisher": {
+        "name": "AirImpact",
+        "description": "We develop solutions to enable transparent value transfer in donations, carbon credits, mobile airtime, and digital coupons.",
+        "web": "https://airimpact.co/",
+        "publisherSince": "May 2022",
+        "logo": "/assets/logo-airimpact-publisher.svg"
       }
     },
     {
