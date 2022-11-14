@@ -282,7 +282,7 @@ const AssetSearchResult = () => {
 
                 <TableBodyCell>{TLIDataSet.token.id}</TableBodyCell>
 
-                <TableBodyCell sx={{ textAlign: 'center' }}>
+                <TableBodyCell>
                   {TLIDataSet.token.owner
                     ? `${TLIDataSet.token.owner.slice(0, 4)}...${TLIDataSet.token.owner.slice(
                         TLIDataSet.token.owner.length - 4,

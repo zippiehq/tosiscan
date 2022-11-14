@@ -129,7 +129,7 @@ const SingleAssetNft = () => {
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
-  console.log(TLIDataSet?.token.owner)
+  const token = TLIDataSet ? TLIDataSet.token : undefined
   return (
     <ContentContainer>
       <Box mt={4} mb={5.25} sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -195,8 +195,7 @@ const SingleAssetNft = () => {
               </Typography>
 
               <Typography variant="body2" color="grey.500" mb={1.5}>
-                PEC Friends is one of PECland&apos;s 3D collections of 9000 randomly generated and stylistically curated
-                NFTs that exist on the Ethereum Blockchain.
+                {token?.metadata.description}
                 <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 500 }}>
                   &nbsp;Read more
                 </CustomLink>

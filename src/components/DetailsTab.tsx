@@ -46,6 +46,7 @@ const DetailsTab = () => {
   const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
+  const token = TLIDataSet ? TLIDataSet.token : undefined
 
   return (
     <>
@@ -54,12 +55,7 @@ const DetailsTab = () => {
           Description
         </Typography>
 
-        <Typography>
-          PEC Friends is one of PECland&apos;s 3D collections of 9000 randomly generated and stylistically curated NFTs
-          that exist on the Ethereum Blockchain. The free mint round supply is 1000. The second public round supply is
-          3000. The third public round supply is 5000. The PECland mobile version of the game will be available on 20th
-          October.
-        </Typography>
+        <Typography>{token?.metadata?.description}</Typography>
       </SectionWrapper>
 
       <SectionWrapper>
@@ -74,7 +70,7 @@ const DetailsTab = () => {
                 <TableNameCell>Contract Address</TableNameCell>
                 <TableValueCell>
                   {TLIDataSet
-                    ? `${TLIDataSet.contract.address.slice(0, 6)}...${TLIDataSet.contract.address.slice(
+                    ? `${TLIDataSet.contract.address?.slice(0, 6)}...${TLIDataSet.contract.address?.slice(
                         TLIDataSet.contract.address.length - 4,
                       )}`
                     : ''}
@@ -129,7 +125,7 @@ const DetailsTab = () => {
                 <TableNameCell>Creator</TableNameCell>
                 <TableValueCell>
                   {TLIDataSet
-                    ? `${TLIDataSet.contract.owner.slice(0, 6)}...${TLIDataSet.contract.owner.slice(
+                    ? `${TLIDataSet.contract.owner?.slice(0, 6)}...${TLIDataSet.contract.owner?.slice(
                         TLIDataSet.contract.owner.length - 4,
                       )}`
                     : ''}
