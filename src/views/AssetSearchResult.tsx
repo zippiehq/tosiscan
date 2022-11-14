@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link as RouterLink } from 'react-router-dom'
 
 import {
@@ -16,6 +16,7 @@ import {
 import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
@@ -73,8 +74,11 @@ const CustomLink = styled(Link)(({ theme }) => ({
 const AssetSearchResult = () => {
   const { assetContract, assetTokenId } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
+  const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
-  if (!datasetOutputs || isLoading) {
+  useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
+
+  if (!datasetOutputs || isLoading || !TLIDataSet || isTLILoading) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
@@ -93,7 +97,7 @@ const AssetSearchResult = () => {
     )
   })
 
-  if (!assetContract || !assetTokenId || !datasetId) {
+  if (!assetContract || !assetTokenId || (!datasetId && !TLIDataSet)) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
@@ -103,13 +107,15 @@ const AssetSearchResult = () => {
     )
   }
 
-  const { assets } = datasetOutputs[datasetId]
+  const assets = datasetId ? datasetOutputs[datasetId].assets : []
 
-  const filtered = assets.filter(
-    ({ locations }) =>
-      locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
-      locations[0].tokenId === assetTokenId,
-  )
+  const filtered = assets
+    ? assets.filter(
+        ({ locations }) =>
+          locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
+          locations[0].tokenId === assetTokenId,
+      )
+    : []
 
   if (!assetContract || !assetTokenId) {
     return (
@@ -123,7 +129,7 @@ const AssetSearchResult = () => {
 
   const hovermessage = 'Verified successfully'
 
-  return filtered.length === 0 ? (
+  return filtered.length === 0 && !TLIDataSet ? (
     <ContainerWithoutData>
       <Typography variant="body2" sx={{ fontSize: '20px' }}>
         No data
@@ -161,7 +167,7 @@ const AssetSearchResult = () => {
           </TableHead>
 
           <TableBody>
-            {filtered.map((asset) => (
+            {filtered.map((asset: any) => (
               <TableRow key={asset.assetNumber}>
                 <TableBodyCell>
                   <Link
@@ -228,6 +234,77 @@ const AssetSearchResult = () => {
                 </TableBodyCell>
               </TableRow>
             ))}
+            {TLIDataSet && (
+              <TableRow key={TLIDataSet.token.id}>
+                <TableBodyCell>
+                  <Link
+                    component={RouterLink}
+                    to={`/single-asset/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    1
+                  </Link>
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
+                  <img
+                    src={TLIDataSet.token.metadata.image}
+                    style={{ width: '32px', height: '32px', marginRight: '12px' }}
+                    alt="."
+                  />
+                  {TLIDataSet.token.metadata.name}
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  {/* <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
+                    <img src={asset.status ? IconCheck : IconInfo} alt="." />
+                  </Tooltip> */}
+                </TableBodyCell>
+
+                <TableBodyCell>Ethereum Mainnet</TableBodyCell>
+
+                <TableBodyCell>
+                  <CustomLink
+                    // @ts-ignore
+                    href={`${EthLocation['Ethereum Mainet']}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                    target="_blank"
+                    rel="noreferrer nofollow"
+                  >
+                    {`${TLIDataSet.contract.address.slice(0, 4)}...${TLIDataSet.contract.address.slice(
+                      TLIDataSet.contract.address.length - 4,
+                    )}`}
+                  </CustomLink>
+                </TableBodyCell>
+
+                <TableBodyCell>{TLIDataSet.token.id}</TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  {TLIDataSet.token.owner
+                    ? `${TLIDataSet.token.owner.slice(0, 4)}...${TLIDataSet.token.owner.slice(
+                        TLIDataSet.token.owner.length - 4,
+                      )}`
+                    : '-'}
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Link
+                    component={RouterLink}
+                    to="/coming-soon"
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    View Dataset
+                  </Link>
+                </TableBodyCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

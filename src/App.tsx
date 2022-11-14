@@ -17,6 +17,7 @@ import Footer from './components/Footer'
 import { SearchContext } from './context/SearchContext'
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
+import { TrustlessIndexingProvider } from './hooks/useTrustlessIndexing'
 
 const Layout = () => (
   <DataSetAssetsProvider>
@@ -34,18 +35,20 @@ function App() {
       <div className="App">
         <SearchContext.Provider value={{ value, setValue }}>
           <DataSetProvider>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/dataset/:id" element={<Dataset />} />
-                <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
-                <Route path="/single-asset/:id">
-                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
-                  <Route path=":assetSerial" element={<SingleAsset />} />
+            <TrustlessIndexingProvider>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/dataset/:id" element={<Dataset />} />
+                  <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                  <Route path="/single-asset/:id">
+                    <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
+                    <Route path=":assetSerial" element={<SingleAsset />} />
+                  </Route>
                 </Route>
-              </Route>
-              <Route path="/coming-soon" element={<ComingSoon />} />
-            </Routes>
+                <Route path="/coming-soon" element={<ComingSoon />} />
+              </Routes>
+            </TrustlessIndexingProvider>
           </DataSetProvider>
         </SearchContext.Provider>
       </div>
