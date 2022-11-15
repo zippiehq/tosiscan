@@ -17,6 +17,7 @@
         "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
         "twitter": "lohkowallet",
         "web": "https://app.lohkoinvest.com",
+        "webName": "app.lohkoinvest.com",
         "opensea": "https://opensea.io/collection/lohkonft",
         "publisherSince": "May 2022",
         "logo": "/assets/logo-lohko-publisher.svg"
@@ -41,6 +42,7 @@
         "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
         "twitter": "lohkowallet",
         "web": "https://app.lohkoinvest.com",
+        "webName": "app.lohkoinvest.com",
         "opensea": "https://opensea.io/collection/lohkonft",
         "publisherSince": "May 2022",
         "logo": "/assets/logo-lohko-publisher.svg"
@@ -63,6 +65,7 @@
         "name": "AirImpact",
         "description": "We develop solutions to enable transparent value transfer in donations, carbon credits, mobile airtime, and digital coupons.",
         "web": "https://airimpact.co/",
+        "webName": "https://airimpact.co/",
         "publisherSince": "May 2022",
         "logo": "/assets/logo-airimpact-publisher.svg"
       }

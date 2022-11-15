@@ -137,7 +137,7 @@ const IndividualAssetTable = ({
                 <TableHeadCell sx={{ width: '367px', paddingY: 1.5, paddingX: 3 }}>Asset</TableHeadCell>
                 <TableHeadCell sx={{ width: '92px', paddingY: 1.5, paddingX: 3 }}>Status</TableHeadCell>
                 <TableHeadCell sx={{ width: '120px', paddingY: 1.5, paddingX: 3 }}>Blockchain</TableHeadCell>
-                <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Token ID</TableHeadCell>
+                <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Token Ref.</TableHeadCell>
                 <TableHeadCell sx={{ width: '196px', paddingY: 1.5, paddingX: 3 }}>Owner Address</TableHeadCell>
                 <TableHeadCell sx={{ width: '146px' }}> </TableHeadCell>
               </TableRow>
@@ -178,7 +178,7 @@ const IndividualAssetTable = ({
                         height="36"
                         alt="."
                       />
-                      <Typography variant="body2" color="grey.900">
+                      <Typography variant="body2" color="grey.900" ml={1.5}>
                         {row.assetName}
                       </Typography>
                     </TableCell>
@@ -192,15 +192,16 @@ const IndividualAssetTable = ({
                     <TableCell sx={{ paddingX: 3, color: 'grey.600', border: 'none' }}>
                       {location ? location.name : 'Zippienet'}
                     </TableCell>
-
                     <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                      {location.contract
-                        ? `${location.contract.substring(0, 4)}...${location.contract.substring(10, 30)}`
-                        : `${location.tokenId.substring(0, 4)}...${location.tokenId.substring(10, 30)}`}
+                      {location && location.contract
+                        ? `${location.contract.slice(0, 6)}...${location.contract.slice(location.contract.length - 4)}`
+                        : `${location.tokenId.slice(0, 6)}...${location.tokenId.slice(location.tokenId.length - 4)}`}
                     </TableCell>
 
                     <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                      {`${location.ownerAccount.substring(0, 4)}...${location.ownerAccount.substring(10, 30)}`}
+                      {`${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
+                        location.ownerAccount.length - 4,
+                      )}`}
                     </TableCell>
 
                     <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>
