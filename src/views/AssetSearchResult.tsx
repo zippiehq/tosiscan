@@ -74,11 +74,11 @@ const CustomLink = styled(Link)(({ theme }) => ({
 const AssetSearchResult = () => {
   const { assetContract, assetTokenId } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
-  const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
+  const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
-  if (!datasetOutputs || isLoading || !TLIDataSet || isTLILoading) {
+  if (!datasetOutputs || isLoading) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
@@ -108,7 +108,6 @@ const AssetSearchResult = () => {
   }
 
   const assets = datasetId ? datasetOutputs[datasetId].assets : []
-
   const filtered = assets
     ? assets.filter(
         ({ locations }) =>
@@ -116,16 +115,6 @@ const AssetSearchResult = () => {
           locations[0].tokenId === assetTokenId,
       )
     : []
-
-  if (!assetContract || !assetTokenId) {
-    return (
-      <ContainerWithoutData>
-        <Typography variant="body2" sx={{ fontSize: '20px' }}>
-          Not found
-        </Typography>
-      </ContainerWithoutData>
-    )
-  }
 
   const hovermessage = 'Verified successfully'
 
