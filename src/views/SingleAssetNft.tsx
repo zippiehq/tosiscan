@@ -195,10 +195,11 @@ const SingleAssetNft = () => {
               </Typography>
 
               <Typography variant="body2" color="grey.500" mb={1.5}>
-                {token?.metadata.description}
-                <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 500 }}>
-                  &nbsp;Read more
-                </CustomLink>
+                {TLIDataSet?.contract?.metadata?.description && (
+                  <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 500 }}>
+                    &nbsp;Read more
+                  </CustomLink>
+                )}
               </Typography>
             </Box>
           </Box>
