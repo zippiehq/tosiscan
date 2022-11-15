@@ -260,8 +260,8 @@ const AssetSearchResult = () => {
                 </TableBodyCell>
 
                 <TableBodyCell sx={{ textAlign: 'center' }}>
-                  <Tooltip title={hovermessage} placement="top">
-                    <img src={IconCheck} alt="." />
+                  <Tooltip title="Asset not verified" placement="top">
+                    <img src={IconInfo} alt="." />
                   </Tooltip>
                 </TableBodyCell>
 
