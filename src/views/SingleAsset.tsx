@@ -214,8 +214,14 @@ const SingleAsset = () => {
                   </TableRow>
 
                   <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                    <TableNameCell>Owner Address</TableNameCell>
-                    <TableValueCell>{location?.ownerAccount}</TableValueCell>
+                    <TableNameCell>Token Ref.</TableNameCell>
+                    <TableValueCell>
+                      {location
+                        ? `${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
+                            location.ownerAccount.length - 4,
+                          )}`
+                        : ''}
+                    </TableValueCell>
                   </TableRow>
 
                   <TableRow>

@@ -117,7 +117,7 @@ const Issuer = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         {publisher?.web && (
           <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow">
-            {publisher?.web}
+            {publisher?.webName}
           </CustomLink>
         )}
 

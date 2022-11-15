@@ -160,7 +160,7 @@ const AssetSearchResult = () => {
               <TableHeadCell sx={{ textAlign: 'center' }}>Status</TableHeadCell>
               <TableHeadCell>Blockchain</TableHeadCell>
               <TableHeadCell>Contract</TableHeadCell>
-              <TableHeadCell>Token ID</TableHeadCell>
+              <TableHeadCell>Token Ref.</TableHeadCell>
               <TableHeadCell>Owner Address</TableHeadCell>
               <TableHeadCell> </TableHeadCell>
             </TableRow>
@@ -205,7 +205,7 @@ const AssetSearchResult = () => {
                     target="_blank"
                     rel="noreferrer nofollow"
                   >
-                    {`${asset.locations[0].contract?.slice(0, 4)}...${asset.locations[0].contract?.slice(
+                    {`${asset.locations[0].contract?.slice(0, 6)}...${asset.locations[0].contract?.slice(
                       asset.locations[0].contract.length - 4,
                     )}`}
                   </CustomLink>
@@ -214,7 +214,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell>{asset?.locations[0].tokenId}</TableBodyCell>
 
                 <TableBodyCell>
-                  {`${asset.locations[0].ownerAccount.slice(0, 4)}...${asset.locations[0].ownerAccount.slice(
+                  {`${asset.locations[0].ownerAccount.slice(0, 6)}...${asset.locations[0].ownerAccount.slice(
                     asset.locations[0].ownerAccount.length - 4,
                   )}`}
                 </TableBodyCell>
@@ -274,7 +274,7 @@ const AssetSearchResult = () => {
                     target="_blank"
                     rel="noreferrer nofollow"
                   >
-                    {`${TLIDataSet.contract.address.slice(0, 4)}...${TLIDataSet.contract.address.slice(
+                    {`${TLIDataSet.contract.address.slice(0, 6)}...${TLIDataSet.contract.address.slice(
                       TLIDataSet.contract.address.length - 4,
                     )}`}
                   </CustomLink>
@@ -284,7 +284,7 @@ const AssetSearchResult = () => {
 
                 <TableBodyCell>
                   {TLIDataSet.token.owner
-                    ? `${TLIDataSet.token.owner.slice(0, 4)}...${TLIDataSet.token.owner.slice(
+                    ? `${TLIDataSet.token.owner.slice(0, 6)}...${TLIDataSet.token.owner.slice(
                         TLIDataSet.token.owner.length - 4,
                       )}`
                     : '-'}

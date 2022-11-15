@@ -217,7 +217,7 @@ const SingleAssetNft = () => {
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
-              <Typography>Token ID</Typography>
+              <Typography>Token Ref.</Typography>
               <Typography>{TLIDataSet?.token.id}</Typography>
             </AssetPropertyWrapper>
 

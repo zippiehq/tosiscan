@@ -7,6 +7,7 @@ interface IPublisher {
   description: string
   twitter?: string
   web?: string
+  webName?: string
   opensea?: string
   publisherSince: string
   logo: string

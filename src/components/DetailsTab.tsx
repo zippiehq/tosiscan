@@ -92,7 +92,7 @@ const DetailsTab = () => {
               </TableRow>
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>Token ID</TableNameCell>
+                <TableNameCell>Token Ref.</TableNameCell>
                 <TableValueCell>{TLIDataSet?.token.id}</TableValueCell>
               </TableRow>
 
