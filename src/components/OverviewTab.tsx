@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+
 import {
   Box,
   Table,
@@ -11,9 +12,9 @@ import {
   Link,
   TableHead,
   Stack,
+  Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import Tooltip from '@mui/material/Tooltip'
 
 import { useDataSetAssetsContext, StatusType, IVerifications } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
@@ -35,6 +36,7 @@ const VerificationFiles = ({ datasetId }: { datasetId: string }) => {
 
   const assets = datasetVerifiedFiles?.assets || []
   const lastVerified = datasetVerifiedFiles?.lastVerified || 0
+
   return (
     <Box>
       <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
@@ -163,7 +165,12 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     [StatusType.success]: 'SUCCESS',
   }
 
-  const timeFormat = 'YYYY-MMM-DD HH:mm:ss'
+  const timeFormat = 'DD MMM YYYY HH:mm:ss [UTC]'
+  const timestamp = lastVerificationError?.timestamp ? lastVerificationError.timestamp : ''
+  const trimmedTimestamp =
+    timestamp.toString().split('').length > 9 ? Number(timestamp.toString().slice(0, 10)) : Number(timestamp)
+  const failedVerificationDate = formatDate(trimmedTimestamp, timeFormat)
+
   return !lastVerificationError ? (
     <Typography>&mdash;</Typography>
   ) : (
@@ -171,8 +178,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
       <Box display="flex" alignItems="flexStart">
         <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px' }} />
         <Typography variant="body2" color="error.600" ml={1}>
-          {lastVerificationError.message} . {formatDate(lastVerificationError.timestamp, timeFormat)} (
-          {formatTimeLeft(lastVerificationError.timestamp)})
+          {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
         </Typography>
       </Box>
       <Typography
@@ -187,7 +193,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
       <Box display="flex" flexDirection="column" marginLeft="-270px" mt={3}>
         {datasetErrorsOpen
           ? verifications.map((verification) => (
-              <Typography variant="body2" color={colors[verification.status]} mt={1}>
+              <Typography variant="body2" key={verification.timestamp} color={colors[verification.status]} mt={1}>
                 [{message[verification.status]} - {formatDate(lastVerificationError.timestamp, timeFormat)}]{' '}
                 {verification.message}.
               </Typography>
@@ -280,6 +286,7 @@ const OverviewTab = () => {
   const lastVerified = selectedDataSet?.lastVerified
   const datasetName = dataSet?.dataset || 'Lohko Gold'
   const datasetVerifications = selectedDataSet?.verifications || []
+
   // @ts-ignore
   const Verification = Verifications[datasetName] || null
   const Headers = {
