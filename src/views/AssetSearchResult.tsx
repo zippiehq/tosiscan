@@ -17,6 +17,7 @@ import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
+import { useDataSetContext } from '../hooks/useDataset'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
@@ -59,9 +60,7 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
   lineHeight: 1.43,
   textAlign: 'left',
   color: theme.palette.grey['600'],
-  borderBottomWidth: '1px',
-  borderBottomStyle: 'solid',
-  borderBottomColor: 'grey.200',
+  border: 'none',
 }))
 
 const CustomLink = styled(Link)(({ theme }) => ({
@@ -73,6 +72,7 @@ const CustomLink = styled(Link)(({ theme }) => ({
 
 const AssetSearchResult = () => {
   const { assetContract, assetTokenId } = useParams()
+  const { datasets } = useDataSetContext()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
   const lenthToken = TLIDataSet?.token.id.length as number
@@ -99,6 +99,10 @@ const AssetSearchResult = () => {
         locations[0].tokenId === assetTokenId,
     )
   })
+
+  const datasetIndex: any = Object.keys(datasets).find((item: any) =>
+    datasets[item].id === datasetId ? datasets[item].id : '',
+  )
 
   if (!assetContract || !assetTokenId || (!datasetId && !TLIDataSet)) {
     return (
@@ -173,21 +177,25 @@ const AssetSearchResult = () => {
       <TableContainer sx={{ mb: '160px' }}>
         <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
           <TableHead sx={{ backgroundColor: 'grey.50' }}>
-            <TableRow>
-              <TableHeadCell>Serial No.</TableHeadCell>
-              <TableHeadCell>Asset</TableHeadCell>
+            <TableRow sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+              <TableHeadCell sx={{ width: '140px' }}>Serial No.</TableHeadCell>
+              <TableHeadCell sx={{ width: '300px' }}>Asset</TableHeadCell>
               <TableHeadCell sx={{ textAlign: 'center' }}>Status</TableHeadCell>
               <TableHeadCell>Blockchain</TableHeadCell>
               <TableHeadCell>Contract</TableHeadCell>
               <TableHeadCell>Token Ref.</TableHeadCell>
               <TableHeadCell>Owner Address</TableHeadCell>
-              <TableHeadCell> </TableHeadCell>
+              <TableHeadCell sx={{ width: '197px' }}>Dataset</TableHeadCell>
+              <TableHeadCell sx={{ width: '82px' }}> </TableHeadCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {filtered.map((asset: any) => (
-              <TableRow key={asset.assetNumber}>
+              <TableRow
+                key={asset.assetNumber}
+                sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+              >
                 <TableBodyCell>
                   <Link
                     component={RouterLink}
@@ -238,7 +246,7 @@ const AssetSearchResult = () => {
                   )}`}
                 </TableBodyCell>
 
-                <TableBodyCell sx={{ textAlign: 'center' }}>
+                <TableBodyCell>
                   <Link
                     component={RouterLink}
                     to={`/dataset/${datasetId}`}
@@ -248,13 +256,30 @@ const AssetSearchResult = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    View Dataset
+                    {datasetId ? datasetOutputs[datasetId].metadata?.name : ''}
+                  </Link>
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Link
+                    component={RouterLink}
+                    to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Details
                   </Link>
                 </TableBodyCell>
               </TableRow>
             ))}
             {TLIDataSet && (
-              <TableRow key={TLIDataSet.token.id}>
+              <TableRow
+                key={TLIDataSet.token.id}
+                sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+              >
                 <TableBodyCell>
                   <Link
                     component={RouterLink}
@@ -309,17 +334,19 @@ const AssetSearchResult = () => {
                     : '-'}
                 </TableBodyCell>
 
+                <TableBodyCell>Trustless Ethereum NFT</TableBodyCell>
+
                 <TableBodyCell sx={{ textAlign: 'center' }}>
                   <Link
                     component={RouterLink}
-                    to="/coming-soon"
+                    to={`/single-asset-nft/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',
                       cursor: 'pointer',
                     }}
                   >
-                    View Dataset
+                    Details
                   </Link>
                 </TableBodyCell>
               </TableRow>
@@ -342,7 +369,7 @@ const AssetSearchResult = () => {
                   </Link>
                 </TableBodyCell>
 
-                <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900', borderBottom: 'none' }}>
+                <TableBodyCell sx={{ color: 'grey.900', borderBottom: 'none' }}>
                   {asset.locations[0].name}
                 </TableBodyCell>
 
@@ -364,7 +391,7 @@ const AssetSearchResult = () => {
 
                 <TableBodyCell> - </TableBodyCell>
 
-                <TableBodyCell sx={{ textAlign: 'center' }}>
+                <TableBodyCell>
                   <Link
                     component={RouterLink}
                     to={`/dataset/${verifiedId}`}
@@ -374,7 +401,21 @@ const AssetSearchResult = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    View Dataset
+                    Verra Carbon Registry
+                  </Link>
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Link
+                    component={RouterLink}
+                    to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Details
                   </Link>
                 </TableBodyCell>
               </TableRow>
