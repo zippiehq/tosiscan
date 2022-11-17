@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
 import { styled } from '@mui/system'
-
+import moment from 'moment'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
@@ -47,6 +47,10 @@ const DetailsTab = () => {
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
   const token = TLIDataSet ? TLIDataSet.token : undefined
+  const dateValue = TLIDataSet?.token.mintTimestamp
+
+  const dateTime = moment.unix(dateValue)
+  const date = dateTime.format('dddd, Do MMM YYYY, h:mm:ss A')
 
   return (
     <>
@@ -118,7 +122,7 @@ const DetailsTab = () => {
 
               <TableRow>
                 <TableNameCell>Minted</TableNameCell>
-                <TableValueCell>October 7th, 2022 at 11:52 PM</TableValueCell>
+                <TableValueCell>{date}</TableValueCell>
               </TableRow>
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>

@@ -17,6 +17,7 @@ export interface ITLIDataSet {
     owner: string
     tokenUri: string
     uri: string
+    mintTimestamp: any
   }
 }
 
@@ -70,6 +71,7 @@ const useTrustlessIndexing = () => {
         owner: response.tokenData.tokenOwner,
         tokenUri: response.tokenData.tokenUri,
         uri: response.tokenData.uri,
+        mintTimestamp: response.tokenData.tokenMintTimestamp,
       },
     }
     setTLIDataSet(dsItem)
