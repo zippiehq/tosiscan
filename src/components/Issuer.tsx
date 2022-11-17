@@ -7,6 +7,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { ReactComponent as LogoLohko } from '../assets/images/logo-lohko.svg'
+import { ReactComponent as Globe } from '../assets/images/icon-globe.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
@@ -115,6 +116,7 @@ const Issuer = () => {
       )}
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Globe style={{ width: '20px', height: '20px' }} />
         {publisher?.web && (
           <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow">
             {publisher?.webName}
