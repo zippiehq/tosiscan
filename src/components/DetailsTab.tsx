@@ -49,7 +49,7 @@ const DetailsTab = () => {
   const token = TLIDataSet ? TLIDataSet.token : undefined
   const dateValue = TLIDataSet?.token.mintTimestamp as number
   const dateTime = moment.unix(dateValue)
-  const date = dateTime.format('dddd, Do MMM YYYY, h:mm:ss A')
+  const date = dateTime.format('DD MMM YYYY HH:mm:ss [UTC]')
 
   return (
     <>
