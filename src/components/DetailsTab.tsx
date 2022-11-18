@@ -47,8 +47,7 @@ const DetailsTab = () => {
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
   const token = TLIDataSet ? TLIDataSet.token : undefined
-  const dateValue = TLIDataSet?.token.mintTimestamp
-
+  const dateValue = TLIDataSet?.token.mintTimestamp as number
   const dateTime = moment.unix(dateValue)
   const date = dateTime.format('dddd, Do MMM YYYY, h:mm:ss A')
 
