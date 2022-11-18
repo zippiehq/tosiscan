@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 import {
@@ -12,11 +12,11 @@ import {
   Link,
   TableHead,
   Stack,
-  Tooltip,
+  Button,
 } from '@mui/material'
 import { styled } from '@mui/system'
 
-import { useDataSetAssetsContext, StatusType, IVerifications } from '../hooks/useDatachainOutput'
+import { useDataSetAssetsContext, StatusType, IVerifications, IFinalAsset } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
 import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
 
@@ -24,20 +24,48 @@ import Verifications from './Verifications'
 import Issuer from './Issuer'
 import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
+import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
+import { AssetFile } from './AssetFileComponent'
 
 interface IVerificationsErrors {
   verifications: IVerifications[]
 }
 
-const VerificationFiles = ({ datasetId }: { datasetId: string }) => {
+const LastFiles = ({ datasetId }: { datasetId: string }) => {
   const { datasetOutputs } = useDataSetAssetsContext()
 
-  const datasetVerifiedFiles = datasetOutputs ? datasetOutputs[datasetId] : null
+  const dataSetData = datasetOutputs ? datasetOutputs[datasetId] : null
 
-  const assets = datasetVerifiedFiles?.assets || []
-  const lastVerified = datasetVerifiedFiles?.lastVerified || 0
-
+  const assets = dataSetData?.assets || []
+  const navigate = useNavigate()
   return (
+    <Box display="flex" flexDirection="column">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography fontSize="20px" fontWeight={600} color="grey.9900">
+          Latest files
+        </Typography>
+
+        <Button variant="outlined" endIcon={<IconRight />} onClick={() => navigate('files')}>
+          View all
+        </Button>
+      </Box>
+
+      <Box display="flex" flexWrap="wrap" mt={2}>
+        {assets.map((asset, index) => (index > 3 ? null : <AssetFile {...asset} key={asset.assetName} />))}
+      </Box>
+    </Box>
+  )
+}
+
+const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
+  const { datasetOutputs } = useDataSetAssetsContext()
+
+  const dataSetData = datasetOutputs ? datasetOutputs[datasetId] : null
+
+  const assets = dataSetData?.assets || []
+  const lastVerified = dataSetData?.lastVerified || 0
+
+  return assets.length === 0 ? null : (
     <Box>
       <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
         Verified files
@@ -74,7 +102,7 @@ const VerificationFiles = ({ datasetId }: { datasetId: string }) => {
 
             <TableBody>
               {assets.map((asset) => (
-                <TableRow sx={{ borderBottom: '1px solid #eaecf0' }}>
+                <TableRow sx={{ borderBottom: '1px solid #eaecf0' }} key={asset.assetName}>
                   <TableCell
                     sx={{
                       display: 'flex',
@@ -167,8 +195,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
 
   const timeFormat = 'DD MMM YYYY HH:mm:ss [UTC]'
   const timestamp = lastVerificationError?.timestamp ? lastVerificationError.timestamp : ''
-  const trimmedTimestamp =
-    timestamp.toString().split('').length > 9 ? Number(timestamp.toString().slice(0, 10)) : Number(timestamp)
+  const trimmedTimestamp = Number(timestamp) / 1000
   const failedVerificationDate = formatDate(trimmedTimestamp, timeFormat)
 
   return !lastVerificationError ? (
@@ -426,7 +453,9 @@ const OverviewTab = () => {
           <Verification />
         </Box>
 
-        {dataSet?.datasetLinked ? <VerificationFiles datasetId={dataSet?.datasetLinked[0]} /> : ''}
+        {dataSet?.datasetLinked ? <LinkedVerifiedFiles datasetId={dataSet?.datasetLinked[0]} /> : ''}
+
+        {dataSet?.id && dataSet.dataset === 'Nguru Project Satellite Images' && <LastFiles datasetId={dataSet?.id} />}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>

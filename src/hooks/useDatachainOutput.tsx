@@ -49,6 +49,7 @@ export interface IFinalAsset {
   locations: ILocation[]
   status: string
   failedReason: string
+  timestamp: number
 }
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT
