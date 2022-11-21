@@ -1,9 +1,9 @@
 {
   "verifications": [
     {
-      "id": "bafyreihfoldyasfgdbi5ngwgdfo722khzlzke55v5keasg2ffjywcwfknm",
+      "id": "bafyreih3hf6pmm5upydcinluiev675dzyqzheveitgx7ynojby6txlrx7e",
       "dataset": "Lohko Gold",
-      "contract": "bafyreihfo...fjywcwfknm",
+      "contract": "bafyreih3h...by6txlrx7e",
       "type": "Digital Asset",
       "assetClass": "Gold",
       "lastVerified": "an hour ago",
@@ -24,9 +24,9 @@
       }
     },
     {
-      "id": "bafyreiccffzwpigoyg7fhskwxbchby7xtns33rm7rkw6dkb6h4ax2m4vbe",
+      "id": "bafyreiaa2uqk5latkci6vx4mqaebepqvryoonyl4le526zuq2hnt3u4fzi",
       "dataset": "Carbon Credit Futures",
-      "contract": "bafyreiccf...h4ax2m4vbe",
+      "contract": "bafyreiaa2...2hnt3u4fzi",
       "type": "Digital Asset",
       "assetClass": "Carbon Credits",
       "lastVerified": "an hour ago",
@@ -36,7 +36,7 @@
       "status": "",
       "available": true,
       "assetIssued": 12,
-      "datasetLinked": ["bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m"],
+      "datasetLinked": ["bafyreih3hf6pmm5upydcinluiev675dzyqzheveitgx7ynojby6txlrx7e"],
       "publisher": {
         "name": "Lohko Pte Ltd",
         "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
@@ -49,9 +49,9 @@
       }
     },
     {
-      "id": "bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m",
+      "id": "bafyreiak3e3s7obb4tmwi2sq6m4uhowdqsrizcrgnlncym6t25tdhfsjie",
       "dataset": "Nguru Project Satellite Images",
-      "contract": "bafyreidjcn...wucojvuk2m",
+      "contract": "bafyreiak3e...25tdhfsjie",
       "type": "File timestamp",
       "assetClass": "Satellite image",
       "lastVerified": "an hour ago",
