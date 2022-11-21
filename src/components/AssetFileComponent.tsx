@@ -1,17 +1,31 @@
 import { Box, Typography, Tooltip } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
 import { ReactComponent as IconClock } from '../assets/icon-clock.svg'
 import { ReactComponent as IconLocation } from '../assets/images/icon-location-mark.svg'
 import { ReactComponent as IconCheck } from '../assets/images/icon-check.svg'
 import { formatDate } from '../utils/timestapFormater'
 import { IFinalAsset } from '../hooks/useDatachainOutput'
 
-export const AssetFile = ({ assetName, imageUrl, currentLocation, timestamp, status, failedReason }: IFinalAsset) => {
+interface IAssetFile extends IFinalAsset {
+  datasetId?: string
+}
+
+export const AssetFile = ({
+  assetName,
+  imageUrl,
+  currentLocation,
+  timestamp,
+  status,
+  failedReason,
+  datasetId,
+}: IAssetFile) => {
   const timeFormat = 'DD MMM YYYY HH:mm:ss'
   const hovermessage = 'Verified successfully'
 
   const date = formatDate(timestamp / 1000, timeFormat)
   const message = status === 'ok' ? hovermessage : failedReason
-
+  const navigate = useNavigate()
   return (
     <Box
       display="flex"
@@ -22,6 +36,14 @@ export const AssetFile = ({ assetName, imageUrl, currentLocation, timestamp, sta
       flexDirection="column"
       mr={2}
       mb={2}
+      onClick={() => {
+        if (datasetId) {
+          navigate(`/dataset/${datasetId}`)
+        }
+      }}
+      sx={{
+        cursor: datasetId ? 'pointer' : '',
+      }}
     >
       <img src={imageUrl} alt={assetName} height="200px" width="100%" />
       <Box display="flex" flexDirection="column" p={1.5}>

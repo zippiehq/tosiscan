@@ -15,7 +15,7 @@ const FilesView = ({ datasetId }: { datasetId: string }) => {
   return (
     <Box display="flex" flexWrap="wrap">
       {assets.map((asset) => (
-        <AssetFile {...asset} key={asset.assetName} />
+        <AssetFile {...asset} key={asset.assetName} datasetId={datasetId} />
       ))}
     </Box>
   )
