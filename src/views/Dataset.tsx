@@ -15,6 +15,8 @@ import { ReactComponent as IconHome } from '../assets/images/icon-home.svg'
 import OverviewTab from '../components/OverviewTab'
 import AssetTab from '../components/AssetTab'
 import FilesView from '../components/FilesView'
+import VerifiedFiles from './VerifiedFiles'
+
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
 import { customTheme } from '../theme'
@@ -104,7 +106,18 @@ const getDataSetOptions = (dataset: string) => {
           </Routes>
         ),
       }
-
+    case 'Carbon Credit Futures':
+      return {
+        tabs: ['Overview', 'Files', 'Verified files'],
+        routePaths: ['', 'files', 'verified-files'],
+        routes: (
+          <Routes>
+            <Route path="/" element={<OverviewTab />} />
+            <Route path="files" element={<FilesView />} />
+            <Route path="verified-files" element={<VerifiedFiles />} />
+          </Routes>
+        ),
+      }
     default:
       return {
         tabs: ['Overview', 'Assets'],

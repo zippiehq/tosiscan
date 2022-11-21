@@ -1,14 +1,16 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Tooltip } from '@mui/material'
 import { ReactComponent as IconClock } from '../assets/icon-clock.svg'
 import { ReactComponent as IconLocation } from '../assets/images/icon-location-mark.svg'
 import { ReactComponent as IconCheck } from '../assets/images/icon-check.svg'
 import { formatDate } from '../utils/timestapFormater'
 import { IFinalAsset } from '../hooks/useDatachainOutput'
 
-export const AssetFile = ({ assetName, imageUrl, currentLocation, timestamp }: IFinalAsset) => {
+export const AssetFile = ({ assetName, imageUrl, currentLocation, timestamp, status, failedReason }: IFinalAsset) => {
   const timeFormat = 'DD MMM YYYY HH:mm:ss'
+  const hovermessage = 'Verified successfully'
 
   const date = formatDate(timestamp / 1000, timeFormat)
+  const message = status === 'ok' ? hovermessage : failedReason
 
   return (
     <Box
@@ -27,7 +29,9 @@ export const AssetFile = ({ assetName, imageUrl, currentLocation, timestamp }: I
           <Typography color="grey.900" mr={1.5} fontWeight={500}>
             {'>3m forest'}
           </Typography>
-          <IconCheck />
+          <Tooltip title={message} placement="top">
+            <IconCheck />
+          </Tooltip>
         </Box>
 
         <Box display="flex" alignItems="center" mb={0.5}>
