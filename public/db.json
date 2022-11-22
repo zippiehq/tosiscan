@@ -1,74 +1,18 @@
 {
-  "verifications": [
-    {
-      "id": "bafyreih3hf6pmm5upydcinluiev675dzyqzheveitgx7ynojby6txlrx7e",
-      "dataset": "Lohko Gold",
-      "contract": "bafyreih3h...by6txlrx7e",
-      "type": "Digital Asset",
-      "assetClass": "Gold",
-      "lastVerified": "an hour ago",
-      "issuers": "Lohko Pte Ltd",
-      "image": "/assets/lohko-logo.png",
-      "status": "",
-      "available": true,
-      "assetIssued": 28,
-      "publisher": {
-        "name": "Lohko Pte Ltd",
-        "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
-        "twitter": "lohkowallet",
-        "web": "https://app.lohkoinvest.com",
-        "webName": "app.lohkoinvest.com",
-        "opensea": "https://opensea.io/collection/lohkonft",
-        "publisherSince": "May 2022",
-        "logo": "/assets/logo-lohko-publisher.svg"
-      }
-    },
-    {
-      "id": "bafyreiaa2uqk5latkci6vx4mqaebepqvryoonyl4le526zuq2hnt3u4fzi",
-      "dataset": "Carbon Credit Futures",
-      "contract": "bafyreiaa2...2hnt3u4fzi",
-      "type": "Digital Asset",
-      "assetClass": "Carbon Credits",
-      "lastVerified": "an hour ago",
-      "publisherDescription": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
-      "issuers": "Lohko Pte Ltd",
-      "image": "/assets/carbon-credit-logo.png",
-      "status": "",
-      "available": true,
-      "assetIssued": 12,
-      "datasetLinked": ["bafyreih3hf6pmm5upydcinluiev675dzyqzheveitgx7ynojby6txlrx7e"],
-      "publisher": {
-        "name": "Lohko Pte Ltd",
-        "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
-        "twitter": "lohkowallet",
-        "web": "https://app.lohkoinvest.com",
-        "webName": "app.lohkoinvest.com",
-        "opensea": "https://opensea.io/collection/lohkonft",
-        "publisherSince": "May 2022",
-        "logo": "/assets/logo-lohko-publisher.svg"
-      }
-    },
-    {
-      "id": "bafyreiak3e3s7obb4tmwi2sq6m4uhowdqsrizcrgnlncym6t25tdhfsjie",
-      "dataset": "Nguru Project Satellite Images",
-      "contract": "bafyreiak3e...25tdhfsjie",
-      "type": "File timestamp",
-      "assetClass": "Satellite image",
-      "lastVerified": "an hour ago",
-      "publisherDescription": "",
-      "issuers": "AirImpact",
-      "image": "/assets/nguru-logo.png",
-      "status": "",
-      "available": true,
-      "assetIssued": 25,
-      "publisher": {
-        "name": "AirImpact",
-        "description": "We develop solutions to enable transparent value transfer in donations, carbon credits, mobile airtime, and digital coupons.",
-        "web": "https://airimpact.co/",
-        "webName": "https://airimpact.co/",
-        "publisherSince": "May 2022",
-        "logo": "/assets/logo-airimpact-publisher.svg"
-      }
+  "verifications": {
+    "id": "bafyreih3hf6pmm5upydcinluiev675dzyqzheveitgx7ynojby6txlrx7e",
+    "issuers": "Lohko Pte Ltd",
+    "image": "/assets/lohko-logo.png",
+    "available": true,
+    "publisher": {
+      "name": "Lohko Pte Ltd",
+      "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
+      "twitter": "lohkowallet",
+      "web": "https://app.lohkoinvest.com",
+      "webName": "app.lohkoinvest.com",
+      "opensea": "https://opensea.io/collection/lohkonft",
+      "publisherSince": "May 2022",
+      "logo": "/assets/logo-lohko-publisher.svg"
     }
-  ]
+  }
 }
