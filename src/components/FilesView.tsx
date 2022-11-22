@@ -15,7 +15,7 @@ export default () => {
   const assets = dataset?.assets || []
   return dataset ? (
     <Box display="flex" flexWrap="wrap" mt={2} marginBottom="160px">
-      {assets.map((asset, index) => (index > 3 ? null : <AssetFile {...asset} key={asset.assetName} />))}
+      {assets.map((asset, index) => (index > 3 ? null : <AssetFile {...asset} key={asset.assetName} datasetId={id} />))}
     </Box>
   ) : null
 }
