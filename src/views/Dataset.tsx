@@ -108,12 +108,12 @@ const getDataSetOptions = (dataset: string) => {
       }
     case 'Carbon Credit Futures':
       return {
-        tabs: ['Overview', 'Files', 'Verified files'],
-        routePaths: ['', 'files', 'verified-files'],
+        tabs: ['Overview', 'Assets', 'Verified files'],
+        routePaths: ['', 'assets', 'verified-files'],
         routes: (
           <Routes>
             <Route path="/" element={<OverviewTab />} />
-            <Route path="files" element={<FilesView />} />
+            <Route path="files" element={<AssetTab />} />
             <Route path="verified-files" element={<VerifiedFiles />} />
           </Routes>
         ),
