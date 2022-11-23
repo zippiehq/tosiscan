@@ -43,7 +43,6 @@ export default () => {
         })
         .filter((dataset) => dataset.datasetName)
     : []
-
   return (
     <Box display="flex" height="100%" marginBottom="160px">
       <Box display="flex" flexDirection="column" width="240px" pr={3} borderRight="1px solid #EAECF0">
@@ -84,7 +83,7 @@ export default () => {
       </Box>
 
       <Box display="flex" flexDirection="column" pl={3} pr={3}>
-        <FilesView datasetId={selectedLinkedDataset} />
+        <FilesView datasetId={linkedDataset[0].datasetId} />
       </Box>
     </Box>
   )
