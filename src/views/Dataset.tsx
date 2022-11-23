@@ -113,7 +113,7 @@ const getDataSetOptions = (dataset: string) => {
         routes: (
           <Routes>
             <Route path="/" element={<OverviewTab />} />
-            <Route path="files" element={<AssetTab />} />
+            <Route path="assets" element={<AssetTab />} />
             <Route path="verified-files" element={<VerifiedFiles />} />
           </Routes>
         ),
