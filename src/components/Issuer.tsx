@@ -115,7 +115,7 @@ const Issuer = () => {
         </Box>
       )}
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ display: 'flex' }}>
         <Globe style={{ width: '20px', height: '20px' }} />
         {publisher?.web && (
           <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow">
@@ -124,7 +124,7 @@ const Issuer = () => {
         )}
 
         {publisher?.opensea && (
-          <Box>
+          <Box ml="auto">
             <Typography variant="body1" color="grey.500" sx={{ lineHeight: 1.5 }}>
               View in
               <CustomLink href={publisher?.opensea} target="_blank" rel="noreferrer nofollor">
