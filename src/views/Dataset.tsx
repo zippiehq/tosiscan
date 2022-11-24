@@ -17,7 +17,7 @@ import AssetTab from '../components/AssetTab'
 import FilesView from '../components/FilesView'
 import VerifiedFiles from './VerifiedFiles'
 
-import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+import { useDataSetAssetsContext, StatusType } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
 import { customTheme } from '../theme'
 
@@ -134,6 +134,25 @@ const getDataSetOptions = (dataset: string) => {
       break
   }
 }
+const getStatusMessage = (messageType: StatusType) => {
+  switch (messageType) {
+    case StatusType.failure:
+      return {
+        messageColor: customTheme.palette.error[700],
+        statusMessage: 'There is a problem with this dataset',
+        messageBackgroundColor: customTheme.palette.error[50],
+      }
+    case StatusType.warning:
+      return {
+        messageColor: customTheme.palette.warning[700],
+        statusMessage: 'There is a problem with this dataset',
+        messageBackgroundColor: customTheme.palette.warning[50],
+      }
+
+    default:
+      return null
+  }
+}
 
 const Dataset = () => {
   const { id } = useParams()
@@ -143,12 +162,8 @@ const Dataset = () => {
   const asset = getDataSetById(id)
   const [currentTab, setCurrentTab] = useState(0)
   const lastVerified = selectedDataSet?.lastVerified
-  const status = selectedDataSet?.verifications ? selectedDataSet?.verifications[0].status : null
-  const statusMessage = 'There is a problem with this dataset'
-
-  const messageColor = status === 'warning' ? customTheme.palette.warning[700] : customTheme.palette.error[700]
-  const messageBackgroundColor = status === 'warning' ? customTheme.palette.warning[50] : customTheme.palette.error[50]
-
+  const status = selectedDataSet?.verifications[0].status
+  const statusOptions = status ? getStatusMessage(status) : null
   const breadcrumbs = [
     <Typography
       display="flex"
@@ -218,9 +233,12 @@ const Dataset = () => {
             <Box sx={{ display: 'flex' }}>
               {asset?.dataset !== 'Lohko Gold' ? '' : <Badge className="primary">Asset backed</Badge>}
 
-              {status && (
-                <Badge sx={{ backgroundColor: messageBackgroundColor, color: messageColor }} ml={1.25}>
-                  {statusMessage}
+              {statusOptions && (
+                <Badge
+                  sx={{ backgroundColor: statusOptions.messageBackgroundColor, color: statusOptions.messageColor }}
+                  ml={1.25}
+                >
+                  {statusOptions.statusMessage}
                 </Badge>
               )}
 
