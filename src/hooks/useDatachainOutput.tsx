@@ -39,6 +39,7 @@ interface MetaData {
   ['asset-class']: string
   ['main-location']: string
   ['supported-locations']: string[]
+  ['asset-type']: string
 }
 
 export interface IFinalAsset {

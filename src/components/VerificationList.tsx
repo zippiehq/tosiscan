@@ -85,6 +85,10 @@ const VerificationList = () => {
           <TableBody>
             {datasets.map((asset: any) => {
               const lastVerified = isLoading || !datasetOutputs ? 0 : datasetOutputs[asset.id]?.lastVerified
+              const datasetName = datasetOutputs?.[asset.id]?.metadata?.name
+              const datasetContract = datasetOutputs?.[asset.id]?.metadata?.contract
+              const datasetAssetClass = datasetOutputs?.[asset.id]?.metadata?.['asset-class']
+              const datasetType = datasetOutputs?.[asset.id]?.metadata?.['asset-type']
               const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
               const { publisher } = asset
               return (
@@ -101,10 +105,10 @@ const VerificationList = () => {
 
                       <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
-                          {asset.dataset}
+                          {datasetName}
                         </Typography>
                         <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
-                          {asset.contract}
+                          {`${datasetContract?.slice(0, 10)}...${datasetContract?.slice(-10)}`}
                         </Typography>
                         {!asset.available ? (
                           <Typography
@@ -127,8 +131,8 @@ const VerificationList = () => {
                     </Box>
                   </TableBodyCell>
 
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{asset.type}</TableBodyCell>
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{asset.assetClass}</TableBodyCell>
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetType}</TableBodyCell>
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetAssetClass}</TableBodyCell>
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
                     {/* eslint-disable-next-line no-nested-ternary */}
                     {asset.assetClass === 'Satellite image' ? 'N/A' : !isLoading ? date : 'loading...'}
