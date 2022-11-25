@@ -181,11 +181,13 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
 
 const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   const [datasetErrorsOpen, setDatasetErrorsOpen] = useState(false)
-  const lastVerificationError = verifications.find((verification) => verification.status === StatusType.failure)
+  const lastVerificationError = verifications.find(
+    (verification) => verification.status === StatusType.failure || verification.status === StatusType.warning,
+  )
   const colors = {
     [StatusType.warning]: 'warning.700',
     [StatusType.failure]: 'error.600',
-    [StatusType.success]: 'success.2',
+    [StatusType.success]: 'success.600',
   }
   const message = {
     [StatusType.warning]: 'WARNING',
@@ -204,7 +206,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     <>
       <Box display="flex" alignItems="flexStart">
         <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px' }} />
-        <Typography variant="body2" color="error.600" ml={1}>
+        <Typography variant="body2" color={colors[lastVerificationError.status]} ml={1}>
           {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
         </Typography>
       </Box>
