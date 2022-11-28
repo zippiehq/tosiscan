@@ -51,6 +51,8 @@ const DetailsTab = () => {
   const dateTime = moment.unix(dateValue)
   const dateFormat = dateTime.format('DD MMM YYYY HH:mm:ss [UTC]')
   const date = dateValue === null ? '-' : dateFormat
+  const lenthToken = token?.id.length as number
+  const tokenRef = lenthToken > 12 ? `${token?.id.slice(0, 6)}...${token?.id.slice(-4)}` : token?.id
 
   return (
     <>
@@ -97,7 +99,7 @@ const DetailsTab = () => {
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Token Ref.</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.id}</TableValueCell>
+                <TableValueCell>{tokenRef}</TableValueCell>
               </TableRow>
 
               <TableRow>
