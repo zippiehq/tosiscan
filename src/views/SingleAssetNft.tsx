@@ -133,6 +133,8 @@ const SingleAssetNft = () => {
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
   const token = TLIDataSet ? TLIDataSet.token : undefined
+  const lenthToken = token?.id.length as number
+  const tokenRef = lenthToken > 12 ? `${token?.id.slice(0, 6)}...${token?.id.slice(-4)}` : token?.id
 
   return (
     <ContentContainer>
@@ -222,7 +224,7 @@ const SingleAssetNft = () => {
 
             <AssetPropertyWrapper>
               <Typography>Token Ref.</Typography>
-              <Typography>{TLIDataSet?.token.id}</Typography>
+              <Typography>{tokenRef}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
@@ -232,7 +234,7 @@ const SingleAssetNft = () => {
                   ? `${TLIDataSet.token.owner.slice(0, 6)}...${TLIDataSet.token.owner.slice(
                       TLIDataSet.token.owner.length - 4,
                     )}`
-                  : ''}
+                  : '-'}
               </Typography>
             </AssetPropertyWrapper>
           </Stack>
