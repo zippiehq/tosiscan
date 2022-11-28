@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
 import { styled } from '@mui/system'
-import moment from 'moment'
+import { formatDate } from '../utils/timestapFormater'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
@@ -47,9 +47,9 @@ const DetailsTab = () => {
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
   const token = TLIDataSet ? TLIDataSet.token : undefined
-  const dateValue = TLIDataSet?.token.mintTimestamp as number
-  const dateTime = moment.unix(dateValue)
-  const date = dateTime.format('DD MMM YYYY HH:mm:ss [UTC]')
+  const dateValue = token?.mintTimestamp
+  const dateFormat = formatDate(dateValue / 1000)
+  const date = dateValue === null ? 'null' : dateFormat
 
   return (
     <>
