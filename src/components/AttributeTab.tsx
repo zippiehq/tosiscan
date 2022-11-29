@@ -42,8 +42,7 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const AttributeTab = () => {
-  const { assetContract, assetTokenId } = useParams()
-  const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
+  const { TLIDataSet } = useTrustlessIndexingContext()
 
   return (
     <>
@@ -109,7 +108,7 @@ const AttributeTab = () => {
                 <TableNameCell>{TLIDataSet?.token.attributes[9].trait_type}</TableNameCell>
                 <TableValueCell>{TLIDataSet?.token.attributes[9].value}</TableValueCell>
               </TableRow>
-              {/* <TableRow sx={{ backgroundColor: 'grey.50' }}>
+              <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>{TLIDataSet?.token.attributes[10].trait_type}</TableNameCell>
                 <TableValueCell>{TLIDataSet?.token.attributes[10].value}</TableValueCell>
               </TableRow>
@@ -117,10 +116,6 @@ const AttributeTab = () => {
                 <TableNameCell>{TLIDataSet?.token.attributes[11].trait_type}</TableNameCell>
                 <TableValueCell>{TLIDataSet?.token.attributes[11].value}</TableValueCell>
               </TableRow>
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[12].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[12].value}</TableValueCell>
-              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
