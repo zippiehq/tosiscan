@@ -75,6 +75,9 @@ const AssetSearchResult = () => {
   const { assetContract, assetTokenId } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
+  const lenthToken = TLIDataSet?.token.id.length as number
+  const tokenRef =
+    lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
@@ -269,7 +272,7 @@ const AssetSearchResult = () => {
                   </CustomLink>
                 </TableBodyCell>
 
-                <TableBodyCell>{TLIDataSet.token.id}</TableBodyCell>
+                <TableBodyCell>{tokenRef}</TableBodyCell>
 
                 <TableBodyCell>
                   {TLIDataSet.token.owner
