@@ -41,86 +41,38 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderBottomRightRadius: '4px',
 }))
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: '#f9fafb',
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: '#ffffff',
+  },
+}))
+
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
+  const attributes = TLIDataSet?.token.metadata.attributes as unknown as any[]
 
   return (
-    <>
-      {/* <SectionWrapper>
-        <Typography>{}</Typography>
-    //   </SectionWrapper> */}
+    <SectionWrapper>
+      <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
+        Attributes
+      </Typography>
 
-      <SectionWrapper>
-        <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-          Attributes
-        </Typography>
-
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[0].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[0].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[1].trait_type}</TableNameCell>
-                <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>
-                  {TLIDataSet?.token.attributes[1].value}
-                </TableValueCell>
-              </TableRow>
-
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[2].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[2].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[3].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[3].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[4].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[4].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[5].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[5].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[6].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[6].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[7].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[7].value}</TableValueCell>
-              </TableRow>
-
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[8].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[8].value}</TableValueCell>
-              </TableRow>
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[9].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[9].value}</TableValueCell>
-              </TableRow>
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>{TLIDataSet?.token.attributes[10].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[10].value}</TableValueCell>
-              </TableRow>
-              <TableRow>
-                <TableNameCell>{TLIDataSet?.token.attributes[11].trait_type}</TableNameCell>
-                <TableValueCell>{TLIDataSet?.token.attributes[11].value}</TableValueCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </SectionWrapper>
-    </>
+      <TableContainer>
+        <Table>
+          <TableBody>
+            {attributes.map((index: any) => (
+              <StyledTableRow key={index}>
+                <TableNameCell>{index.trait_type}</TableNameCell>
+                <TableValueCell>{index.value}</TableValueCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </SectionWrapper>
   )
 }
 export default () => <AttributeTab />
