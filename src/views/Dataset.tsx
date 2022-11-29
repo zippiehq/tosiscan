@@ -164,6 +164,7 @@ const Dataset = () => {
   const lastVerified = selectedDataSet?.lastVerified
   const status = selectedDataSet?.verifications[0].status
   const statusOptions = status ? getStatusMessage(status) : null
+  const metaData = selectedDataSet?.metadata
   const breadcrumbs = [
     <Typography
       display="flex"
@@ -184,11 +185,11 @@ const Dataset = () => {
       key="3"
       sx={{ fontFamily: 'Inter', fontSize: '14px', fontWeight: 500, lineHeight: 1.43, color: '#07939c' }}
     >
-      {asset ? asset.dataset : 'Lohko Gold'}
+      {asset ? metaData?.name : 'Lohko Gold'}
     </Typography>,
   ]
 
-  const { tabs, routePaths, routes } = getDataSetOptions(asset?.dataset || '')
+  const { tabs, routePaths, routes } = getDataSetOptions(metaData?.name || '')
   const onTabChange = (value: number) => {
     setCurrentTab(value)
     navigate(routePaths[value])
@@ -218,10 +219,10 @@ const Dataset = () => {
                 mb={1.25}
                 sx={{ fontSize: '32px', fontWeight: 600, lineHeight: 1.19, color: '#101828' }}
               >
-                {asset?.dataset}
+                {metaData?.name}
               </Typography>
 
-              {asset?.dataset === 'Carbon Credit Futures' ? (
+              {metaData?.name === 'Carbon Credit Futures' ? (
                 <Badge className="warning" ml={1.25}>
                   DEMO
                 </Badge>
@@ -231,7 +232,7 @@ const Dataset = () => {
             </Box>
 
             <Box sx={{ display: 'flex' }}>
-              {asset?.dataset !== 'Lohko Gold' ? '' : <Badge className="primary">Asset backed</Badge>}
+              {metaData?.name !== 'Lohko Gold' ? '' : <Badge className="primary">Asset backed</Badge>}
 
               {statusOptions && (
                 <Badge
