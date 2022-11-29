@@ -2,6 +2,10 @@ import axios from 'axios'
 import constate from 'constate'
 import { useState, useEffect } from 'react'
 
+export interface IAttribute {
+  trait_type: string
+  value: string
+}
 export interface ITLIDataSet {
   contract: {
     name: string
@@ -18,6 +22,7 @@ export interface ITLIDataSet {
     tokenUri: string
     uri: string
     mintTimestamp: number
+    attributes: IAttribute[]
   }
 }
 
@@ -72,6 +77,7 @@ const useTrustlessIndexing = () => {
         tokenUri: response.tokenData.tokenUri,
         uri: response.tokenData.uri,
         mintTimestamp: response.tokenData.tokenMintTimestamp,
+        attributes: response.tokenData.tokenMetadata.attributes,
       },
     }
     setTLIDataSet(dsItem)

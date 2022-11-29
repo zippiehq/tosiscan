@@ -7,6 +7,7 @@ import TabUnstyled from '@mui/base/TabUnstyled'
 import { styled } from '@mui/system'
 
 import DetailsTab from './DetailsTab'
+import AttributeTab from './AttributeTab'
 
 const TabsList = styled(TabsListUnstyled)(({ theme }) => ({
   display: 'flex',
@@ -46,8 +47,8 @@ const TabsSingleAsset = () => (
   <TabsUnstyled defaultValue={0}>
     <TabsList>
       <Tab>Details</Tab>
-      {/* <Tab>Attributes</Tab>
-      <Tab>Supporting verification</Tab>
+      <Tab>Attributes</Tab>
+      {/* <Tab>Supporting verification</Tab>
       <Tab>History</Tab> */}
     </TabsList>
 
@@ -55,11 +56,11 @@ const TabsSingleAsset = () => (
       <DetailsTab />
     </TabPanelUnstyled>
 
-    {/* <TabPanelUnstyled value={1}>
-      2dsfsdf
+    <TabPanelUnstyled value={1}>
+      <AttributeTab />
     </TabPanelUnstyled>
 
-    <TabPanelUnstyled value={3}>
+    {/* <TabPanelUnstyled value={3}>
       3dsfdsf
     </TabPanelUnstyled>
 
