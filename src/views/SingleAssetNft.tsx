@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 
-import { Container, Box, Typography, Link, Stack, Paper, List, ListItem } from '@mui/material'
+import { Container, Box, Typography, Link, Stack, Paper, List, ListItem, Button } from '@mui/material'
 import { styled } from '@mui/system'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 
 import LogoZippie from '../assets/images/logo-zippie.png'
+import BgCreator from '../assets/images/bg-creator.svg'
+import CreatorAvatar from '../assets/images/creator-avatar.png'
 import LogoPecFriends from '../assets/images/logo-pecfriends.png'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
@@ -130,6 +133,7 @@ const SingleAssetNft = () => {
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
 
   const token = TLIDataSet ? TLIDataSet.token : undefined
+
   return (
     <ContentContainer>
       <Box mt={4} mb={5.25} sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -237,10 +241,164 @@ const SingleAssetNft = () => {
 
       <Box sx={{ display: 'flex', marginBottom: '160px' }}>
         <Box mr={4.5} sx={{ width: { xl: '820px' } }}>
+          <SectionWrapper
+            sx={{
+              display: 'flex',
+              backgroundImage: `url(${BgCreator})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'right bottom',
+            }}
+          >
+            <Box
+              mr={1.75}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '32px',
+                height: '32px',
+                backgroundColor: '#f9ead1',
+                borderRadius: '100%',
+              }}
+            >
+              <ErrorOutlineIcon sx={{ width: '16px', height: '16px', fill: '#bf7828' }} />
+            </Box>
+
+            <Box width="483px" mr={0.5}>
+              <Typography variant="h6" color="grey.900" mb={0.5} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
+                Are you the creator of this asset?
+              </Typography>
+
+              <Typography variant="body2" color="grey.500" sx={{ lineHeight: 1.43 }}>
+                Increase your asset’s reliability by verifying yourself as the issuer.
+              </Typography>
+            </Box>
+
+            <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
+              <Button
+                component={RouterLink}
+                to="/coming-soon"
+                variant="outlined"
+                sx={{
+                  marginRight: 1.5,
+                  paddingY: 1.25,
+                  paddingX: 2,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  lineHeight: 1.43,
+                  color: 'grey.700',
+                  backgroundColor: 'white',
+                }}
+              >
+                Learn more
+              </Button>
+
+              <Button
+                component={RouterLink}
+                to="/coming-soon"
+                variant="contained"
+                sx={{
+                  marginRight: 1.5,
+                  paddingY: 1.25,
+                  paddingX: 2,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  lineHeight: 1.43,
+                }}
+              >
+                Verify now
+              </Button>
+            </Stack>
+          </SectionWrapper>
+
           <TabsSingleAsset />
         </Box>
 
         <Box sx={{ width: { xl: '384px' } }}>
+          <SectionWrapper>
+            <Typography
+              variant="subtitle1"
+              color="grey.900"
+              mb={1.25}
+              sx={{ fontSize: '18px', lineHeight: 1.56, fontWeight: 600 }}
+            >
+              Creator
+            </Typography>
+
+            <Box display="flex" alignItems="center" mb={3}>
+              <img src={CreatorAvatar} width="56" height="56" alt="." style={{ marginRight: '20px' }} />
+
+              <Box>
+                <Typography
+                  variant="subtitle1"
+                  color="grey.900"
+                  mb={0.25}
+                  sx={{ fontSize: '18px', lineHeight: 1.56, fontWeight: 500 }}
+                >
+                  {TLIDataSet
+                    ? `${TLIDataSet.contract.owner?.slice(0, 6)}...${TLIDataSet.contract.owner?.slice(
+                        TLIDataSet.contract.owner.length - 4,
+                      )}`
+                    : ''}
+                </Typography>
+
+                <Typography variant="body2" color="grey.500" sx={{ lineHeight: 1.43 }}>
+                  Unverified
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box p={2.5} sx={{ backgroundColor: 'grey.50', borderRadius: '8px' }}>
+              <Typography
+                variant="subtitle1"
+                color="grey.900"
+                mb={0.5}
+                sx={{ fontSize: '18px', lineHeight: 1.56, fontWeight: 500 }}
+              >
+                Know this creator?
+              </Typography>
+
+              <Typography variant="body2" color="grey.500" mb={2.5} sx={{ lineHeight: 1.43 }}>
+                Help others find this creator and earn TOSI tokens by verifying or adding more information.
+              </Typography>
+
+              <Stack sx={{ display: 'flex', flexDirection: 'row' }}>
+                <Button
+                  component={RouterLink}
+                  to="/coming-soon"
+                  variant="contained"
+                  sx={{
+                    marginRight: 1.5,
+                    paddingY: 1.25,
+                    paddingX: 2,
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: 1.43,
+                  }}
+                >
+                  Add information
+                </Button>
+
+                <Button
+                  component={RouterLink}
+                  to="/coming-soon"
+                  variant="text"
+                  sx={{
+                    paddingY: 1.25,
+                    paddingX: 2,
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: 1.43,
+                    color: 'primary.700',
+                  }}
+                >
+                  I am the creator
+                </Button>
+              </Stack>
+            </Box>
+          </SectionWrapper>
+
           <Publisher />
 
           <SectionWrapper>
