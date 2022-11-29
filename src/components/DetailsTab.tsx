@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
 import { styled } from '@mui/system'
 import moment from 'moment'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
+import IconLocationMark from '../assets/images/icon-location-mark.svg'
+import IconDownload from '../assets/images/icon-download.svg'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
@@ -40,6 +42,13 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderTopRightRadius: '4px',
   borderBottomRightRadius: '4px',
 }))
+
+const CustomLink = styled(Link)(({ theme }) => ({
+  fontSize: '16px',
+  lineHeight: 1.5,
+  color: theme.palette.primary['600'],
+  textDecoration: 'none',
+})) as typeof Link
 
 const DetailsTab = () => {
   const { assetContract, assetTokenId } = useParams()
@@ -138,6 +147,62 @@ const DetailsTab = () => {
           </Table>
         </TableContainer>
       </SectionWrapper>
+
+      {TLIDataSet?.token.metadata.attributes?.map((attribute: any) =>
+        attribute.trait_type === 'Unique VCU Serial ID' ? (
+          <>
+            <Typography variant="h2" color="grey.900" sx={{ fontSize: '20px', lineHeight: 1.5 }}>
+              Supporting verification
+            </Typography>
+
+            <SectionWrapper mt={2}>
+              <Typography variant="body2" color="grey.500" mb={0.25} sx={{ lineHeight: 1.43 }}>
+                Information verifier
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="grey.900"
+                mb={1}
+                sx={{ fontSize: '20px', fontWeight: 500, lineHeight: 1.5 }}
+              >
+                Verra
+              </Typography>
+
+              <Box mb={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <img src={IconLocationMark} width="20" height="20" alt="Address pin" />
+                <Typography variant="body2" color="grey.600" ml={1} sx={{ lineHeight: 1.43 }}>
+                  1 Thomas Cir NW #1050 Washington D, United States of America
+                </Typography>
+              </Box>
+
+              <Typography variant="body1" color="grey.600" mb={2.75} sx={{ lineHeight: 1.5 }}>
+                Verra is a nonprofit organization that operates standards in environmental and social markets, including
+                the world’s leading carbon crediting program, the Verified Carbon Standard (VCS) Program.
+              </Typography>
+
+              <Typography variant="body1" color="grey.600" sx={{ linHeight: 1.5 }}>
+                Verified by
+                <CustomLink
+                  href="https://verra.org/"
+                  target="_blank"
+                  rel="noreferrer nofollow"
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 500,
+                    lineHeight: 1.5,
+                    color: 'primary.600',
+                    textDecoration: 'none',
+                  }}
+                >
+                  &nbsp;Verra
+                </CustomLink>
+              </Typography>
+            </SectionWrapper>
+          </>
+        ) : (
+          ''
+        ),
+      )}
     </>
   )
 }
