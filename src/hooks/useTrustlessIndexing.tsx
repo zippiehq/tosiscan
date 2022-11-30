@@ -13,7 +13,7 @@ export interface ITLIDataSet {
   }
   token: {
     id: string
-    metadata: { [key: string]: any }
+    metadata: { [key: string]: string; attributes: any }
     owner: string
     tokenUri: string
     uri: string
