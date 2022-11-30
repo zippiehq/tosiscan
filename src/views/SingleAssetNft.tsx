@@ -401,8 +401,6 @@ const SingleAssetNft = () => {
             </Box>
           </SectionWrapper>
 
-          <Publisher />
-
           <SectionWrapper>
             <Typography
               variant="subtitle1"
