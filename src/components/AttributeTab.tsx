@@ -53,7 +53,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
   const attributes = TLIDataSet?.token.metadata.attributes as unknown as any[]
-
+  // eslint-disable-next-line no-prototype-builtins
+  const checkattribute = TLIDataSet?.token.metadata.hasOwnProperty('attributes')
+  const falseattribute = [{ trait_type: '', value: '' }]
+  const checkedattribute = checkattribute === true ? attributes : falseattribute
   return (
     <SectionWrapper>
       <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
@@ -63,7 +66,7 @@ const AttributeTab = () => {
       <TableContainer>
         <Table>
           <TableBody>
-            {attributes.map((index: any) => (
+            {checkedattribute.map((index: any) => (
               <StyledTableRow key={index}>
                 <TableNameCell>{index.trait_type}</TableNameCell>
                 <TableValueCell>{index.value}</TableValueCell>
