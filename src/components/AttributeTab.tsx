@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
 import { styled } from '@mui/system'
 
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
@@ -49,10 +49,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: '#ffffff',
   },
 }))
+const CustomLink = styled(Link)(({ theme }) => ({
+  fontSize: '14px',
+  lineHeight: 1.43,
+  color: theme.palette.primary['600'],
+  textDecoration: 'none',
+})) as typeof Link
 
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
   const attributes = TLIDataSet?.token.metadata.attributes as unknown as any[]
+  const isValidUrl = (urlstring: any) => {
+    const res = urlstring.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+    )
+    return res !== null
+  }
 
   return (
     <SectionWrapper>
@@ -66,7 +78,7 @@ const AttributeTab = () => {
             {attributes.map((index: any) => (
               <StyledTableRow key={index}>
                 <TableNameCell>{index.trait_type}</TableNameCell>
-                <TableValueCell>{index.value}</TableValueCell>
+                {/* <TableValueCell>{isValidUrl(index.value) ? (<CustomLink to={`${index.value}`}>{index.value}</CustomLink>) : ({index.value})}</TableValueCell> */}
               </StyledTableRow>
             ))}
           </TableBody>
