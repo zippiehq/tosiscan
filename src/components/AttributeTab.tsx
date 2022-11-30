@@ -5,6 +5,7 @@ import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell 
 import { styled } from '@mui/system'
 
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
+import { isValidUrl } from '../utils/helper'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
@@ -53,14 +54,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
   const attributes = TLIDataSet?.token.metadata.attributes || []
-  const isValidUrl = (urlstring: any) => {
-    // eslint-disable-next-line no-useless-escape
-    const res = urlstring.match(
-      // eslint-disable-next-line no-useless-escape
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
-    )
-    return res !== null
-  }
+
   return (
     <SectionWrapper>
       <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
@@ -70,20 +64,12 @@ const AttributeTab = () => {
       <TableContainer>
         <Table>
           <TableBody>
-            {attributes.map((index: any) => (
-              <StyledTableRow key={index}>
-                <TableNameCell>{index.trait_type}</TableNameCell>
-                {/*  eslint-disable-next-line react/jsx-no-useless-fragment */}
+            {attributes.map((item: any) => (
+              <StyledTableRow key={item}>
+                <TableNameCell>{item.trait_type}</TableNameCell>
+
                 <TableValueCell>
-                  {isValidUrl(index.value) ? (
-                    <>
-                      <Link to={index.value} />
-                      {index.value}
-                    </>
-                  ) : (
-                    // eslint-disable-next-line react/jsx-no-useless-fragment
-                    <>{index.value}</>
-                  )}
+                  {isValidUrl(item.value) ? <Link to={item.value}>{item.value}</Link> : <p>{item.value}</p>}
                 </TableValueCell>
               </StyledTableRow>
             ))}
