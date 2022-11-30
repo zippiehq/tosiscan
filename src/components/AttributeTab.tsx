@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
 import { styled } from '@mui/system'
@@ -53,7 +53,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
   const attributes = TLIDataSet?.token.metadata.attributes || []
-
+  const isValidUrl = (urlstring: any) => {
+    // eslint-disable-next-line no-useless-escape
+    const res = urlstring.match(
+      // eslint-disable-next-line no-useless-escape
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+    )
+    return res !== null
+  }
   return (
     <SectionWrapper>
       <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
@@ -66,7 +73,18 @@ const AttributeTab = () => {
             {attributes.map((index: any) => (
               <StyledTableRow key={index}>
                 <TableNameCell>{index.trait_type}</TableNameCell>
-                <TableValueCell>{index.value}</TableValueCell>
+                {/*  eslint-disable-next-line react/jsx-no-useless-fragment */}
+                <TableValueCell>
+                  {isValidUrl(index.value) ? (
+                    <>
+                      <Link to={index.value} />
+                      {index.value}
+                    </>
+                  ) : (
+                    // eslint-disable-next-line react/jsx-no-useless-fragment
+                    <>{index.value}</>
+                  )}
+                </TableValueCell>
               </StyledTableRow>
             ))}
           </TableBody>
