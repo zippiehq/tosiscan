@@ -69,7 +69,13 @@ const AttributeTab = () => {
                 <TableNameCell>{item.trait_type}</TableNameCell>
 
                 <TableValueCell>
-                  {isValidUrl(item.value) ? <Link to={item.value}>{item.value}</Link> : <p>{item.value}</p>}
+                  {isValidUrl(item.value) ? (
+                    <a href={item.value} target="_blank" rel="noreferrer">
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p>{item.value}</p>
+                  )}
                 </TableValueCell>
               </StyledTableRow>
             ))}
