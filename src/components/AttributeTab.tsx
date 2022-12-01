@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
 import { styled } from '@mui/system'
 
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
@@ -18,6 +18,7 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 
 const TableNameCell = styled(TableCell)(({ theme }) => ({
   width: '266px',
+
   paddingTop: theme.spacing(1.5),
   paddingRight: theme.spacing(2),
   paddingBottom: theme.spacing(1.5),
@@ -43,6 +44,7 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  listStyleType: 'none',
   '&:nth-of-type(odd)': {
     backgroundColor: '#f9fafb',
   },
@@ -50,6 +52,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: '#ffffff',
   },
 }))
+const CustomLink = styled(Link)(({ theme }) => ({
+  fontSize: '16px',
+  lineHeight: 1.5,
+  color: theme.palette.primary['600'],
+  textDecoration: 'none',
+})) as typeof Link
 
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()
@@ -60,21 +68,19 @@ const AttributeTab = () => {
       <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
         Attributes
       </Typography>
-
       <TableContainer>
         <Table>
           <TableBody>
             {attributes.map((item: any) => (
               <StyledTableRow key={item}>
                 <TableNameCell>{item.trait_type}</TableNameCell>
-
                 <TableValueCell>
                   {isValidUrl(item.value) ? (
-                    <a href={item.value} target="_blank" rel="noreferrer">
+                    <CustomLink href={item.value} target="_blank" rel="noreferrer">
                       {item.value}
-                    </a>
+                    </CustomLink>
                   ) : (
-                    <p>{item.value}</p>
+                    <li>{item.value}</li>
                   )}
                 </TableValueCell>
               </StyledTableRow>
