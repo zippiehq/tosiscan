@@ -313,7 +313,7 @@ const OverviewTab = () => {
   const metaData = selectedDataSet?.metadata
   const creationDate = selectedDataSet?.creationDate
   const lastVerified = selectedDataSet?.lastVerified
-  const datasetName = dataSet?.dataset || 'Lohko Gold'
+  const datasetName = metaData?.name || 'Lohko Gold'
   const datasetVerifications = selectedDataSet?.verifications || []
 
   // @ts-ignore

@@ -75,7 +75,7 @@ const SingleAsset = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
   const lastVerified = selectedDataSet?.lastVerified
-
+  const metaData = selectedDataSet?.metadata
   const assets = selectedDataSet?.assets || []
   const asset = assetSerial
     ? assets.find((asset) => asset.assetNumber === assetSerial)
@@ -88,7 +88,7 @@ const SingleAsset = () => {
   const { getDataSetById } = useDataSetContext()
 
   const datasetDetails = getDataSetById(id)
-  const datasetName = datasetDetails?.dataset || 'Lohko Gold'
+  const datasetName = metaData?.name || 'Lohko Gold'
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
