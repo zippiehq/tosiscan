@@ -46,6 +46,21 @@
         "publisherSince": "May 2022",
         "logo": "/assets/logo-airimpact-publisher.svg"
       }
+    },
+    {
+      "id": "bafyreidj2bwhus3qhwkhis24liogt2jagvjtzkcd2uzhx4k6g4axwzwkai",
+      "issuers": "Verra",
+      "image": "/assets/logo-verra-carbon-registry.svg",
+      "available": true,
+      "publisher": {
+        "name": "Verra",
+        "description": "Verra sets the world’s leading standards for climate action and sustainable development.",
+        "web": "http://verra.org/",
+        "webName": "verra.org",
+        "publisherSince": "May 2022",
+        "twitter": "VerraStandards",
+        "logo": "/assets/logo-verra.svg"
+      }
     }
   ]
 }

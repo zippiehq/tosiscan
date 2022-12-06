@@ -48,6 +48,7 @@ export interface IFinalAsset {
   imageUrl: string
   currentLocation?: string
   locations: ILocation[]
+  attributes?: any
   status: string
   failedReason: string
   timestamp: number
