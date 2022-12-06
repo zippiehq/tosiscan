@@ -196,8 +196,15 @@ const SingleAssetNft = () => {
               </Box>
 
               <Typography variant="body2" color="grey.500" mb={1.5}>
-                By
-                <span style={{ color: '#1d2939' }}>&nbsp;2E35A6</span>
+                By:
+                <span style={{ color: '#1d2939' }}>
+                  &nbsp;
+                  {TLIDataSet
+                    ? `${TLIDataSet.contract.owner?.slice(0, 6)}...${TLIDataSet.contract.owner?.slice(
+                        TLIDataSet.contract.owner.length - 4,
+                      )}`
+                    : ''}
+                </span>
               </Typography>
 
               <Typography variant="body2" color="grey.500" mb={1.5}>
