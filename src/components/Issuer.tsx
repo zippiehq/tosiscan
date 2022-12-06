@@ -101,26 +101,30 @@ const Issuer = () => {
         {publisher?.description}
       </Typography>
 
-      {publisher?.twitter && (
-        <Box mb={2.75} sx={{ display: 'flex' }}>
-          <TwitterIcon style={{ fill: '#98a2b3' }} />
-          <CustomLink
-            href={`https://twitter.com/${publisher?.twitter}`}
-            target="_blank"
-            rel="noreferrer nofollow"
-            ml={0.5}
-          >
-            @{publisher?.twitter}
-          </CustomLink>
-        </Box>
-      )}
+      <Box mb={2.75} sx={{ display: 'flex', alignItems: 'center' }}>
+        {publisher?.twitter && (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <TwitterIcon style={{ fill: '#98a2b3' }} />
+            <CustomLink
+              href={`https://twitter.com/${publisher?.twitter}`}
+              target="_blank"
+              rel="noreferrer nofollow"
+              ml={0.5}
+            >
+              @{publisher?.twitter}
+            </CustomLink>
+          </Box>
+        )}
+      </Box>
 
-      <Box sx={{ display: 'flex' }}>
-        <Globe style={{ width: '20px', height: '20px' }} />
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
         {publisher?.web && (
-          <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow">
-            {publisher?.webName}
-          </CustomLink>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Globe style={{ width: '20px', height: '20px' }} />
+            <CustomLink href={publisher?.web} target="_blank" rel="noreferrer nofollow" ml={0.5}>
+              {publisher?.webName}
+            </CustomLink>
+          </Box>
         )}
 
         {publisher?.opensea && (

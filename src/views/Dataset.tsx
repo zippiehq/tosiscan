@@ -91,6 +91,7 @@ const Tab = styled(TabUnstyled)(({ theme }) => ({
     boxShadow: '0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)',
   },
 }))
+
 const getDataSetOptions = (dataset: string) => {
   switch (dataset) {
     case 'Nguru Satellite Image':

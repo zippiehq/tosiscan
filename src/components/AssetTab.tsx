@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'
 
 import {
   Box,
@@ -64,7 +64,11 @@ const CustomLink = styled(Link)(({ theme }) => ({
 })) as typeof Link
 
 const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
-  let uniqueItems: any = new Set(assets.map((asset: IFinalAsset) => asset.assetName))
+  let uniqueItems: any = new Set(
+    assets.map((asset: IFinalAsset) =>
+      asset.currentLocation === 'Verra Registry Database' ? 'Verra Verified Carbon Units' : asset.assetName,
+    ),
+  )
   uniqueItems = Array.from(uniqueItems)
 
   return (
@@ -79,13 +83,17 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
         </TableHead>
 
         <TableBody>
-          {uniqueItems.map((asset: any) => (
-            <TableRow key={asset}>
+          {uniqueItems.map((asset: any, index: any) => (
+            <TableRow key={`${asset} + ${index + 1}`}>
               <TableBodyCellUnique sx={{ textAlign: 'left', fontSize: '16px', lineHeight: 1.5, color: 'grey.700' }}>
                 {asset}
               </TableBodyCellUnique>
               <TableBodyCellUnique>
-                {assets?.filter((item: any) => item.product === asset || item.assetName === asset).length}
+                {
+                  assets?.filter(
+                    (item: any) => item.product === asset || item.assetName === asset || item.currentLocation,
+                  ).length
+                }
               </TableBodyCellUnique>
               <TableBodyCellUnique>0</TableBodyCellUnique>
             </TableRow>
@@ -124,7 +132,112 @@ const IndividualAssetTable = ({
 
   const hovermessage = 'Verified successfully'
 
-  return (
+  const isVerra = assets.find((asset) => asset.currentLocation === 'Verra Registry Database')
+
+  return isVerra ? (
+    <Box>
+      <>
+        <TableContainer>
+          <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+            <TableHead>
+              <TableRow
+                sx={{ backgroundColor: 'grey.50', borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+              >
+                <TableHeadCell sx={{ width: '160px', paddingY: 1.5, paddingX: 3 }}>Serial No.</TableHeadCell>
+                <TableHeadCell sx={{ width: '360px', paddingY: 1.5, paddingX: 3 }}>Asset</TableHeadCell>
+                <TableHeadCell sx={{ width: '92px', paddingY: 1.5, paddingX: 3 }}>Quantity</TableHeadCell>
+                <TableHeadCell sx={{ width: '450px', paddingY: 1.5, paddingX: 3 }}>Project</TableHeadCell>
+                <TableHeadCell sx={{ width: '180px', paddingY: 1.5, paddingX: 3 }}>Location</TableHeadCell>
+                <TableHeadCell sx={{ width: '90px', paddingY: 1.5, paddingX: 3 }}>Status</TableHeadCell>
+                <TableHeadCell sx={{ width: '180px' }}> </TableHeadCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
+                const location = row.locations[0]
+                const assetContract = location?.contract
+                const assetTokenId = location?.tokenId
+                const assetSerial = row.assetNumber
+                const assetName = location?.name
+
+                const onAssetClick = () => navigate(`/single-asset-with-tabs/${id}/${assetSerial}`)
+
+                const message = row.status === 'ok' ? hovermessage : row.failedReason
+                const messageSerial = row.assetNumber ? row.assetNumber : ''
+
+                return (
+                  <TableRow
+                    key={`${assetContract}/${assetTokenId}`}
+                    sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
+                  >
+                    <TableCell sx={{ paddingY: 1.75, paddingX: 3, border: 'none', cursor: 'default' }}>
+                      <Tooltip title={messageSerial} placement="top" arrow>
+                        <Typography>
+                          {row.assetNumber
+                            ? `${row.assetNumber.slice(0, 5)}...${row.assetNumber.slice(row.assetNumber.length - 5)}`
+                            : ''}
+                        </Typography>
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        paddingX: 3,
+                        border: 'none',
+                      }}
+                    >
+                      <Typography variant="body2" color="grey.900">
+                        {assetName}
+                      </Typography>
+                      <CustomLink component={RouterLink} to="/coming-soon" sx={{ cursor: 'pointer' }}>
+                        Verra Registry
+                      </CustomLink>
+                    </TableCell>
+
+                    <TableCell sx={{ paddingY: 1.75, paddingX: 4.5, border: 'none' }}>
+                      {row.attributes?.quantity}
+                    </TableCell>
+
+                    <TableCell sx={{ paddingX: 3, color: 'grey.600', border: 'none' }}>
+                      {row.attributes?.resourceName}
+                    </TableCell>
+
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>{row.attributes?.country}</TableCell>
+
+                    <TableCell sx={{ paddingX: 3, border: 'none', textAlign: 'center' }}>
+                      <Tooltip title={message} placement="top">
+                        <img src={IconCheck} alt="." />
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>
+                      <CustomLink onClick={onAssetClick} sx={{ fontWeight: 500, cursor: 'pointer' }}>
+                        Details
+                      </CustomLink>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={assets.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </>
+    </Box>
+  ) : (
     <Box>
       <>
         <TableContainer>

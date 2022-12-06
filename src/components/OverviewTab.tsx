@@ -21,6 +21,7 @@ import { useDataSetContext } from '../hooks/useDataset'
 import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
 
 import Verifications from './Verifications'
+import DatasetOverview from './DatasetOverview'
 import Issuer from './Issuer'
 import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
@@ -233,41 +234,6 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   )
 }
 
-const OverviewTabHeaderLohko = () => (
-  <Typography>
-    Lohko Gold bars are numbered and stored in a secure vault and owners have a legal right to claim them anytime.
-  </Typography>
-)
-
-const OverviewTabHeaderNguruProjectSatelite = () => (
-  <Typography>
-    The Nguru mountains is a rare rainforest in Eastern Africa which has lost 80% of the forest coverage during the last
-    couple of hundred years. Pilot phase of the project is already ongoing with 300,000 seedlings being planted into
-    Nguru mountains. The total scale of the project is 225 km2 and 15 million trees.
-  </Typography>
-)
-const OverviewTabHeaderCarbon = () => (
-  <Box>
-    <Typography variant="body1" color="grey.600" mb={2} sx={{ lineHeight: 1.5 }}>
-      Lohko carbon credit futures are issued from a high-quality tropical reforestation project that prioritizes
-      original forest growth, biodiversity, and community livelihood.
-    </Typography>
-
-    <Typography variant="body1" color="grey.600" sx={{ lineHeight: 1.5 }}>
-      Each future gives right to 1 carbon credit (1 ton carbon) from the
-      <Link
-        href="https://app.lohkoinvest.com/products/carbon_credit_futures"
-        target="_blank"
-        rel="noreferrer nofollow"
-        sx={{ fontWeight: 500, color: 'primary.600', textDecoration: 'none' }}
-      >
-        &nbsp;Nguru Project
-      </Link>
-      .
-    </Typography>
-  </Box>
-)
-
 const SectionWrapper = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
   padding: theme.spacing(3),
@@ -318,13 +284,8 @@ const OverviewTab = () => {
 
   // @ts-ignore
   const Verification = Verifications[datasetName] || null
-  const Headers = {
-    'Lohko Gold': OverviewTabHeaderLohko,
-    'Carbon Credit Futures': OverviewTabHeaderCarbon,
-    'Nguru Satellite Image': OverviewTabHeaderNguruProjectSatelite,
-  }
   // @ts-ignore
-  const Header = Headers[datasetName] || null
+  const Header = DatasetOverview[datasetName] || null
   return (
     <Box sx={{ display: 'flex', marginBottom: '160px' }}>
       <Box mr={5.25} sx={{ maxWidth: { xl: '820px' } }}>
