@@ -93,7 +93,7 @@ const Tab = styled(TabUnstyled)(({ theme }) => ({
 }))
 const getDataSetOptions = (dataset: string) => {
   switch (dataset) {
-    case 'Nguru Project Satellite Images':
+    case 'Nguru Satellite Image':
       return {
         tabs: ['Overview', 'Files'],
         routePaths: ['', 'files', 'digital-assets'],
@@ -198,7 +198,6 @@ const Dataset = () => {
   useEffect(() => {
     const currentLocation = location.pathname.split(`${id}/` || '')[1]
     const currentPath = routePaths.indexOf(`${currentLocation}`) === -1 ? 0 : routePaths.indexOf(currentLocation)
-    console.log(currentPath)
 
     setCurrentTab(currentPath)
   }, [location.pathname, routePaths])
