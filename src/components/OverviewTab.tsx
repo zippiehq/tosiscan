@@ -321,7 +321,7 @@ const OverviewTab = () => {
   const Headers = {
     'Lohko Gold': OverviewTabHeaderLohko,
     'Carbon Credit Futures': OverviewTabHeaderCarbon,
-    'Nguru Project Satellite Images': OverviewTabHeaderNguruProjectSatelite,
+    'Nguru Satellite Image': OverviewTabHeaderNguruProjectSatelite,
   }
   // @ts-ignore
   const Header = Headers[datasetName] || null
@@ -457,7 +457,7 @@ const OverviewTab = () => {
 
         {dataSet?.datasetLinked ? <LinkedVerifiedFiles datasetId={dataSet?.datasetLinked[0]} /> : ''}
 
-        {dataSet?.id && dataSet.dataset === 'Nguru Project Satellite Images' && <LastFiles datasetId={dataSet?.id} />}
+        {dataSet?.id && datasetName === 'Nguru Satellite Image' && <LastFiles datasetId={dataSet?.id} />}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>
