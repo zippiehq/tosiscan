@@ -36,7 +36,7 @@ export default () => {
           const datasetOutput = datasetOutputs ? datasetOutputs[datasetId] : null
 
           return {
-            datasetName: dataSetDetails?.dataset,
+            datasetName: datasetOutput?.metadata?.name,
             datasetOutput,
             datasetId,
           }

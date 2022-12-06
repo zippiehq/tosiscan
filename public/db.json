@@ -21,6 +21,7 @@
       "issuers": "Lohko Pte Ltd",
       "image": "/assets/carbon-credit-logo.png",
       "available": true,
+      "datasetLinked": ["bafyreiak3e3s7obb4tmwi2sq6m4uhowdqsrizcrgnlncym6t25tdhfsjie"],
       "publisher": {
         "name": "Lohko Pte Ltd",
         "description": "Whether it’s gold, silver, art, or other assets, Lohko digitalises tangible assets and gives investors full control.",
