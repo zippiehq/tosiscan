@@ -330,7 +330,7 @@ const IndividualAssetTable = ({
         </TableContainer>
 
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[6, 10, 25, 100]}
           component="div"
           count={assets.length}
           rowsPerPage={rowsPerPage}
@@ -344,10 +344,14 @@ const IndividualAssetTable = ({
 }
 
 const AssetTab = () => {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
+  const assetArray = selectedDataSet?.assets
+  const lengthAssets = assetArray?.length as number
+  const rowsdisplayed = lengthAssets < 10 ? 6 : 10
+
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(rowsdisplayed)
+
   if (isLoading || !selectedDataSet) {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
