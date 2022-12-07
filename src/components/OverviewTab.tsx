@@ -135,8 +135,8 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                     </Stack>
                   </TableCell>
 
-                  <TableCell sx={{ fontSize: '14px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
-                    {formatTimeStamp(lastVerified)}
+                  <TableCell sx={{ fontSize: '13px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
+                    {`${formatDate(lastVerified)} (${formatTimeLeft(lastVerified)})`}
                   </TableCell>
 
                   <TableCell sx={{ borderBottom: 'none' }}>
@@ -341,7 +341,9 @@ const OverviewTab = () => {
                 <TableRow sx={{ backgroundColor: 'grey.50' }}>
                   <TableNameCell>Creation date</TableNameCell>
                   <TableValueCell>
-                    {isLoading || !creationDate ? 'loading...' : formatTimeStamp(creationDate)}
+                    {isLoading || !creationDate
+                      ? 'loading...'
+                      : `${formatDate(creationDate)} (${formatTimeLeft(creationDate)})`}
                   </TableValueCell>
                 </TableRow>
               </TableBody>
@@ -374,7 +376,9 @@ const OverviewTab = () => {
                 <TableRow>
                   <TableNameCell>Last successful verification</TableNameCell>
                   <TableValueCell>
-                    {isLoading || !lastVerified ? 'loading...' : formatTimeStamp(lastVerified)}
+                    {isLoading || !lastVerified
+                      ? 'loading...'
+                      : `${formatDate(lastVerified)} (${formatTimeLeft(lastVerified)})`}
                   </TableValueCell>
                 </TableRow>
 
