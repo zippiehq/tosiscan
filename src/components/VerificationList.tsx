@@ -105,10 +105,10 @@ const VerificationList = () => {
 
                       <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
-                          {datasetName}
+                          {!isLoading ? datasetName : 'loading...'}
                         </Typography>
                         <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
-                          {`${datasetContract?.slice(0, 10)}...${datasetContract?.slice(-10)}`}
+                          {!isLoading ? `${datasetContract?.slice(0, 10)}...${datasetContract?.slice(-10)}` : ''}
                         </Typography>
                         {!asset.available ? (
                           <Typography
@@ -131,8 +131,12 @@ const VerificationList = () => {
                     </Box>
                   </TableBodyCell>
 
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetType}</TableBodyCell>
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetAssetClass}</TableBodyCell>
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                    {!isLoading ? datasetType : 'loading...'}
+                  </TableBodyCell>
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                    {!isLoading ? datasetAssetClass : 'loading...'}
+                  </TableBodyCell>
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
                     {/* eslint-disable-next-line no-nested-ternary */}
                     {datasetAssetClass === 'Satellite image' ? 'N/A' : !isLoading ? date : 'loading...'}
