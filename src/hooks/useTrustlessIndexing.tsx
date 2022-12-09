@@ -17,7 +17,7 @@ export interface ITLIDataSet {
     owner: string
     tokenUri: string
     uri: string
-    mintTimestamp: number
+    mintTimestamp: any
   }
 }
 
