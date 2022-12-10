@@ -21,6 +21,7 @@ interface ILocation {
   contract?: string
   tokenId: string
   ownerAccount: string
+  currentLocation?: string
 }
 
 export interface DatachainOutputContextT {
@@ -52,6 +53,8 @@ export interface IFinalAsset {
   status: string
   failedReason: string
   timestamp: number
+  serialNumberStart?: string
+  serialNumberEnd?: string
 }
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT

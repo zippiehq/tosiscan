@@ -119,6 +119,33 @@ const AssetSearchResult = () => {
       )
     : []
 
+  const verifiedId = Object.keys(datasetOutputs).find((id) => {
+    const { assets } = datasetOutputs[id]
+
+    return assets.some(
+      (asset) =>
+        asset.currentLocation === 'Verra Registry Database' &&
+        asset.serialNumberStart &&
+        assetTokenId &&
+        asset.serialNumberEnd &&
+        asset.serialNumberStart <= assetTokenId &&
+        asset.serialNumberEnd >= assetTokenId,
+    )
+  })
+
+  const verifiedAssets = verifiedId ? datasetOutputs[verifiedId].assets : []
+  const verified = verifiedAssets
+    ? verifiedAssets.filter(
+        (asset) =>
+          asset.currentLocation === 'Verra Registry Database' &&
+          asset.serialNumberStart &&
+          assetTokenId &&
+          asset.serialNumberEnd &&
+          asset.serialNumberStart <= assetTokenId &&
+          asset.serialNumberEnd >= assetTokenId,
+      )
+    : []
+
   const hovermessage = 'Verified successfully'
 
   return filtered.length === 0 && !TLIDataSet ? (
@@ -297,6 +324,61 @@ const AssetSearchResult = () => {
                 </TableBodyCell>
               </TableRow>
             )}
+            {verified.map((asset: any) => (
+              <TableRow key={asset.serialNumberStart}>
+                <TableBodyCell>
+                  <Link
+                    component={RouterLink}
+                    to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {asset.assetNumber
+                      ? `${asset.assetNumber.slice(0, 4)}...${asset.assetNumber.slice(asset.assetNumber.length - 5)}`
+                      : ''}
+                  </Link>
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900', borderBottom: 'none' }}>
+                  {asset.locations[0].name}
+                </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Tooltip title="Asset verified" placement="top">
+                    <img src={IconCheck} alt="." />
+                  </Tooltip>
+                </TableBodyCell>
+
+                <TableBodyCell>Verra Registry Database</TableBodyCell>
+
+                <TableBodyCell>
+                  {`${asset.locations[0].contract.slice(0, 6)}...${asset.locations[0].contract.slice(
+                    asset.locations[0].contract.length - 4,
+                  )}`}
+                </TableBodyCell>
+
+                <TableBodyCell> - </TableBodyCell>
+
+                <TableBodyCell> - </TableBodyCell>
+
+                <TableBodyCell sx={{ textAlign: 'center' }}>
+                  <Link
+                    component={RouterLink}
+                    to={`/dataset/${verifiedId}`}
+                    sx={{
+                      color: 'primary.600',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    View Dataset
+                  </Link>
+                </TableBodyCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
