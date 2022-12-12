@@ -352,7 +352,7 @@ const AssetTab = () => {
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
   const assetArray = selectedDataSet?.assets
   const lengthAssets = assetArray?.length as number
-  const rowsdisplayed = lengthAssets > 10 ? 10 : 6
+  const rowsdisplayed = lengthAssets < 10 ? lengthAssets : 10
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsdisplayed)
