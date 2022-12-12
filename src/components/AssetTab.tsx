@@ -131,6 +131,20 @@ const IndividualAssetTable = ({
   }
 
   const hovermessage = 'Verified successfully'
+  const pagination =
+    assets.length > 10 ? (
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={assets.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    ) : (
+      ''
+    )
 
   const isVerra = assets.find((asset) => asset.currentLocation === 'Verra Registry Database')
 
@@ -328,16 +342,7 @@ const IndividualAssetTable = ({
             </TableBody>
           </Table>
         </TableContainer>
-
-        <TablePagination
-          rowsPerPageOptions={[6, 10, 25, 100]}
-          component="div"
-          count={assets.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        {pagination}
       </>
     </Box>
   )
@@ -347,7 +352,7 @@ const AssetTab = () => {
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
   const assetArray = selectedDataSet?.assets
   const lengthAssets = assetArray?.length as number
-  const rowsdisplayed = lengthAssets < 10 ? 6 : 10
+  const rowsdisplayed = lengthAssets > 10 ? 10 : 6
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(rowsdisplayed)
