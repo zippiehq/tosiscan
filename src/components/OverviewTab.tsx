@@ -13,6 +13,7 @@ import {
   TableHead,
   Stack,
   Button,
+  Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -26,6 +27,7 @@ import Issuer from './Issuer'
 import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
+import IconAlertTriangle from '../assets/images/alert-triangle.png'
 import { AssetFile } from './AssetFileComponent'
 
 interface IVerificationsErrors {
@@ -206,9 +208,9 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   ) : (
     <>
       <Box display="flex" alignItems="flexStart">
-        <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px' }} />
         <Typography variant="body2" color={colors[lastVerificationError.status]} ml={1}>
-          {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
+          <img src={IconAlertTriangle} alt="" /> {lastVerificationError.message} . {failedVerificationDate} (
+          {formatTimeLeft(trimmedTimestamp)})
         </Typography>
       </Box>
       <Typography
@@ -224,7 +226,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
         {datasetErrorsOpen
           ? verifications.map((verification) => (
               <Typography variant="body2" key={verification.timestamp} color={colors[verification.status]} mt={1}>
-                [{message[verification.status]} - {formatDate(lastVerificationError.timestamp, timeFormat)}]{' '}
+                [{message[verification.status]} - {formatDate(verification.timestamp / 1000, timeFormat)}]{' '}
                 {verification.message}.
               </Typography>
             ))
@@ -366,9 +368,13 @@ const OverviewTab = () => {
                       <Typography color="textPrimary" mr={1}>
                         Weekly
                       </Typography>{' '}
-                      {/* <Tooltip title="Delete">
-                        <IconAlertCircle style={{ flexShrink: 0, marginTop: '2px', cursor: 'pointer' }} />
-                      </Tooltip> */}
+                      <Tooltip title="Some assets could not be verified" placement="top">
+                        <img
+                          src={IconAlertTriangle}
+                          alt=""
+                          style={{ flexShrink: 0, marginTop: '2px', cursor: 'pointer' }}
+                        />
+                      </Tooltip>
                     </Box>
                   </TableValueCell>
                 </TableRow>
