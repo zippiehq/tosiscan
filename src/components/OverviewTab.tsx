@@ -187,6 +187,8 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   const lastVerificationError = verifications.find(
     (verification) => verification.status === StatusType.failure || verification.status === StatusType.warning,
   )
+  const latestTimeVerification = Math.max(...verifications.map((item) => item.timestamp))
+
   const colors = {
     [StatusType.warning]: 'warning.700',
     [StatusType.failure]: 'error.600',
@@ -198,9 +200,9 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     [StatusType.success]: 'SUCCESS',
   }
 
-  const timeFormat = 'DD MMM YYYY HH:mm:ss [UTC]'
-  const timestamp = lastVerificationError?.timestamp ? lastVerificationError.timestamp : ''
-  const trimmedTimestamp = Number(timestamp) / 1000
+  const timeFormat = 'yyyy-MM-DD HH:mm:ss'
+  // const timestamp = lastVerificationError?.timestamp ? lastVerificationError.timestamp : ''
+  const trimmedTimestamp = Number(latestTimeVerification) / 1000
   const failedVerificationDate = formatDate(trimmedTimestamp, timeFormat)
 
   return !lastVerificationError ? (
@@ -368,7 +370,7 @@ const OverviewTab = () => {
                       <Typography color="textPrimary" mr={1}>
                         Weekly
                       </Typography>{' '}
-                      <Tooltip title="Some assets could not be verified" placement="top">
+                      <Tooltip title=" Some assets could not be verified" placement="top">
                         <img
                           src={IconAlertTriangle}
                           alt=""
