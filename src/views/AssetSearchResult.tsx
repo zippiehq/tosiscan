@@ -128,8 +128,8 @@ const AssetSearchResult = () => {
         asset.serialNumberStart &&
         assetTokenId &&
         asset.serialNumberEnd &&
-        asset.serialNumberStart <= assetTokenId &&
-        asset.serialNumberEnd >= assetTokenId,
+        Number(asset.serialNumberStart) <= Number(assetTokenId) &&
+        Number(asset.serialNumberEnd) >= Number(assetTokenId),
     )
   })
 
@@ -141,8 +141,8 @@ const AssetSearchResult = () => {
           asset.serialNumberStart &&
           assetTokenId &&
           asset.serialNumberEnd &&
-          asset.serialNumberStart <= assetTokenId &&
-          asset.serialNumberEnd >= assetTokenId,
+          Number(asset.serialNumberStart) <= Number(assetTokenId) &&
+          Number(asset.serialNumberEnd) >= Number(assetTokenId),
       )
     : []
 
