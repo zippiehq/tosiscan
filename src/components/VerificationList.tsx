@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
-import { Box, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typography } from '@mui/material'
+import {
+  Box,
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Typography,
+  Skeleton,
+} from '@mui/material'
 import { styled } from '@mui/system'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
@@ -47,17 +57,10 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const VerificationList = () => {
-  const [loading, setLoading] = useState(true)
   const { datasets } = useDataSetContext()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
 
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (datasets.length) {
-      setLoading(false)
-    }
-  }, [datasets])
 
   const OnClickToDataset = (available: boolean, id: string) => (available ? navigate(`/dataset/${id}`) : false)
 
@@ -75,11 +78,34 @@ const VerificationList = () => {
           </TableRow>
         </TableHead>
 
-        {loading ? (
+        {isLoading ? (
           <TableBody>
-            <TableRow>
-              <TableBodyCell>loading....</TableBodyCell>
-            </TableRow>
+            {datasets.map((asset: any, index: any) =>
+              index < 3 ? (
+                <TableRow key={asset.id}>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="350px" />
+                  </TableBodyCell>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="110px" />
+                  </TableBodyCell>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="110px" />
+                  </TableBodyCell>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="110px" />
+                  </TableBodyCell>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="110px" />
+                  </TableBodyCell>
+                  <TableBodyCell>
+                    <Skeleton animation="wave" width="190px" />
+                  </TableBodyCell>
+                </TableRow>
+              ) : (
+                ''
+              ),
+            )}
           </TableBody>
         ) : (
           <TableBody>
@@ -91,6 +117,7 @@ const VerificationList = () => {
               const datasetType = datasetOutputs?.[asset.id]?.metadata?.['asset-type']
               const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
               const { publisher } = asset
+
               return (
                 <TableBodyRow
                   key={asset.id}
@@ -105,10 +132,10 @@ const VerificationList = () => {
 
                       <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
-                          {!isLoading ? datasetName : 'loading...'}
+                          {datasetName}
                         </Typography>
                         <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
-                          {!isLoading ? `${datasetContract?.slice(0, 10)}...${datasetContract?.slice(-10)}` : ''}
+                          {`${datasetContract?.slice(0, 10)}...${datasetContract?.slice(-10)}`}
                         </Typography>
                         {!asset.available ? (
                           <Typography
@@ -131,15 +158,11 @@ const VerificationList = () => {
                     </Box>
                   </TableBodyCell>
 
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
-                    {!isLoading ? datasetType : 'loading...'}
-                  </TableBodyCell>
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
-                    {!isLoading ? datasetAssetClass : 'loading...'}
-                  </TableBodyCell>
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
-                    {!isLoading ? date : 'loading...'}
-                  </TableBodyCell>
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetType}</TableBodyCell>
+
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{datasetAssetClass}</TableBodyCell>
+
+                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{date}</TableBodyCell>
 
                   <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
                     {publisher.name}
