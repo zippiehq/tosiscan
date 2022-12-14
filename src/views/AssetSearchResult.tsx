@@ -29,6 +29,8 @@ const EthLocation = {
   'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
 }
 
+const TrustLessIndexingCID = 'bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu'
+
 const ContainerWithoutData = styled(Container)(({ theme }) => ({
   [theme.breakpoints.up('xl')]: {
     maxWidth: '1280px',
@@ -283,7 +285,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell>
                   <Link
                     component={RouterLink}
-                    to={`/single-asset-nft/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                    to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',
@@ -339,7 +341,7 @@ const AssetSearchResult = () => {
                 <TableBodyCell sx={{ textAlign: 'center' }}>
                   <Link
                     component={RouterLink}
-                    to={`/single-asset-nft/bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                    to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
                     sx={{
                       color: 'primary.600',
                       textDecoration: 'none',
