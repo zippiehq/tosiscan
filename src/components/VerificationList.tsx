@@ -18,6 +18,7 @@ import { styled } from '@mui/system'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
 import { useDataSetContext } from '../hooks/useDataset'
+import { useDataSetContextDynamic } from '../hooks/useDatasetDynamic'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 const TableHeadCell = styled(TableCell)(({ theme }) => ({
@@ -58,6 +59,7 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
 
 const VerificationList = () => {
   const { datasets } = useDataSetContext()
+  const { datasetsDynamic } = useDataSetContextDynamic()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
 
   const navigate = useNavigate()
@@ -111,12 +113,30 @@ const VerificationList = () => {
           <TableBody>
             {datasets.map((asset: any) => {
               const lastVerified = isLoading || !datasetOutputs ? 0 : datasetOutputs[asset.id]?.lastVerified
-              const datasetName = datasetOutputs?.[asset.id]?.metadata?.name
-              const datasetContract = datasetOutputs?.[asset.id]?.metadata?.contract
-              const datasetAssetClass = datasetOutputs?.[asset.id]?.metadata?.['asset-class']
-              const datasetType = datasetOutputs?.[asset.id]?.metadata?.['asset-type']
-              const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
+              let datasetName = datasetOutputs?.[asset.id]?.metadata?.name
+              let datasetContract = datasetOutputs?.[asset.id]?.metadata?.contract
+              let datasetAssetClass = datasetOutputs?.[asset.id]?.metadata?.['asset-class']
+              let datasetType = datasetOutputs?.[asset.id]?.metadata?.['asset-type']
+              let date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
               const { publisher } = asset
+
+              switch (datasetName) {
+                case 'Carbon Credit Futures':
+                  datasetName = datasetsDynamic[0].metadata ? datasetsDynamic[0].metadata.name : ''
+                  datasetContract = datasetsDynamic[0].metadata ? datasetsDynamic[0].metadata.contract : ''
+                  datasetType = datasetsDynamic[0].metadata ? datasetsDynamic[0].metadata['asset-type'] : ''
+                  datasetAssetClass = datasetsDynamic[0].metadata ? datasetsDynamic[0].metadata['asset-class'] : ''
+                  date = moment(datasetsDynamic[0].updatedAt).fromNow()
+                  break
+                case 'Nguru Satellite Image':
+                  datasetName = datasetsDynamic[1].metadata ? datasetsDynamic[1].metadata.name : ''
+                  datasetContract = datasetsDynamic[1].metadata ? datasetsDynamic[1].metadata.contract : ''
+                  datasetType = datasetsDynamic[1].metadata ? datasetsDynamic[1].metadata['asset-type'] : ''
+                  datasetAssetClass = datasetsDynamic[1].metadata ? datasetsDynamic[1].metadata['asset-class'] : ''
+                  date = moment(datasetsDynamic[1].updatedAt).fromNow()
+                  break
+                default:
+              }
 
               return (
                 <TableBodyRow
