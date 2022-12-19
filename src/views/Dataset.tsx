@@ -247,6 +247,7 @@ const Dataset = () => {
                   ml={1.25}
                 >
                   <img src={statusOptions?.messageColor === '#a96721' ? IconAlertTriangle : IconAlertCircle} alt="" />
+                  &nbsp;
                   {statusOptions.statusMessage}
                 </Badge>
               )}
