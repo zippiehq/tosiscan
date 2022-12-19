@@ -24,9 +24,10 @@ import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFo
 import Verifications from './Verifications'
 import DatasetOverview from './DatasetOverview'
 import Issuer from './Issuer'
-import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
+
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
+import IconAlertCircle from '../assets/images/info-circle.png'
 import IconAlertTriangle from '../assets/images/alert-triangle.png'
 import { AssetFile } from './AssetFileComponent'
 
@@ -188,6 +189,7 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     (verification) => verification.status === StatusType.failure || verification.status === StatusType.warning,
   )
   const latestTimeVerification = Math.max(...verifications.map((item) => item.timestamp))
+  const latestVerificationObject = verifications.find((obj) => obj.timestamp === latestTimeVerification)
 
   const colors = {
     [StatusType.warning]: 'warning.700',
@@ -201,8 +203,8 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   }
 
   const timeFormat = 'yyyy-MM-DD HH:mm:ss'
-  // const timestamp = lastVerificationError?.timestamp ? lastVerificationError.timestamp : ''
-  const trimmedTimestamp = Number(latestTimeVerification) / 1000
+  const timestamp = latestVerificationObject?.timestamp ? latestVerificationObject.timestamp : ''
+  const trimmedTimestamp = Number(timestamp) / 1000
   const failedVerificationDate = formatDate(trimmedTimestamp, timeFormat)
 
   return !lastVerificationError ? (
@@ -211,8 +213,8 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     <>
       <Box display="flex" alignItems="flexStart">
         <Typography variant="body2" color={colors[lastVerificationError.status]} ml={1}>
-          <img src={IconAlertTriangle} alt="" /> {lastVerificationError.message} . {failedVerificationDate} (
-          {formatTimeLeft(trimmedTimestamp)})
+          <img src={lastVerificationError.status === 'warning' ? IconAlertTriangle : IconAlertCircle} alt="" />
+          {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
         </Typography>
       </Box>
       <Typography
@@ -370,13 +372,13 @@ const OverviewTab = () => {
                       <Typography color="textPrimary" mr={1}>
                         Weekly
                       </Typography>{' '}
-                      <Tooltip title=" Some assets could not be verified" placement="top">
+                      {/* <Tooltip title=" Some assets could not be verified" placement="top">
                         <img
                           src={IconAlertTriangle}
                           alt=""
                           style={{ flexShrink: 0, marginTop: '2px', cursor: 'pointer' }}
                         />
-                      </Tooltip>
+                      </Tooltip> */}
                     </Box>
                   </TableValueCell>
                 </TableRow>
