@@ -11,6 +11,8 @@ import TabsListUnstyled from '@mui/base/TabsListUnstyled'
 import TabPanelUnstyled from '@mui/base/TabPanelUnstyled'
 import TabUnstyled from '@mui/base/TabUnstyled'
 import { ReactComponent as IconHome } from '../assets/images/icon-home.svg'
+import IconAlertCircle from '../assets/images/info-circle.png'
+import IconAlertTriangle from '../assets/images/alert-triangle.png'
 
 import OverviewTab from '../components/OverviewTab'
 import AssetTab from '../components/AssetTab'
@@ -163,9 +165,14 @@ const Dataset = () => {
   const asset = getDataSetById(id)
   const [currentTab, setCurrentTab] = useState(0)
   const lastVerified = selectedDataSet?.lastVerified
-  const status = selectedDataSet?.verifications[0].status
-  const statusOptions = status ? getStatusMessage(status) : null
+  const verif = selectedDataSet?.verifications || []
+
+  const latestTimeVerification = Math.max(...verif.map((item) => item.timestamp))
+  const latestVerificationObject = verif.find((obj) => obj.timestamp === latestTimeVerification)
+  const statusOptions = latestVerificationObject?.status ? getStatusMessage(latestVerificationObject?.status) : null
+
   const metaData = selectedDataSet?.metadata
+
   const breadcrumbs = [
     <Typography
       display="flex"
@@ -239,6 +246,7 @@ const Dataset = () => {
                   sx={{ backgroundColor: statusOptions.messageBackgroundColor, color: statusOptions.messageColor }}
                   ml={1.25}
                 >
+                  <img src={statusOptions?.messageColor === '#a96721' ? IconAlertTriangle : IconAlertCircle} alt="" />
                   {statusOptions.statusMessage}
                 </Badge>
               )}
