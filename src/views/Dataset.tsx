@@ -141,12 +141,14 @@ const getStatusMessage = (messageType: StatusType) => {
   switch (messageType) {
     case StatusType.failure:
       return {
+        Icon: IconAlertCircle,
         messageColor: customTheme.palette.error[700],
         statusMessage: 'There is a problem with this dataset',
         messageBackgroundColor: customTheme.palette.error[50],
       }
     case StatusType.warning:
       return {
+        Icon: IconAlertTriangle,
         messageColor: customTheme.palette.warning[700],
         statusMessage: 'There is a problem with this dataset',
         messageBackgroundColor: customTheme.palette.warning[50],
@@ -243,11 +245,14 @@ const Dataset = () => {
 
               {statusOptions && (
                 <Badge
-                  sx={{ backgroundColor: statusOptions.messageBackgroundColor, color: statusOptions.messageColor }}
+                  sx={{
+                    backgroundColor: statusOptions.messageBackgroundColor,
+                    color: statusOptions.messageColor,
+                    display: 'flex',
+                  }}
                   ml={1.25}
                 >
-                  <img src={statusOptions?.messageColor === '#a96721' ? IconAlertTriangle : IconAlertCircle} alt="" />
-                  &nbsp;
+                  <img src={statusOptions.Icon} alt="" style={{ width: 20, height: 20 }} /> &nbsp;
                   {statusOptions.statusMessage}
                 </Badge>
               )}

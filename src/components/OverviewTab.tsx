@@ -213,7 +213,11 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
     <>
       <Box display="flex" alignItems="flexStart">
         <Typography variant="body2" color={colors[lastVerificationError.status]} ml={1}>
-          <img src={lastVerificationError.status === 'warning' ? IconAlertTriangle : IconAlertCircle} alt="" />
+          <img
+            src={lastVerificationError.status === 'warning' ? IconAlertTriangle : IconAlertCircle}
+            alt=""
+            style={{ width: 15, height: 15 }}
+          />
           &nbsp;
           {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
         </Typography>
