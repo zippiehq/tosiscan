@@ -17,11 +17,10 @@ import {
 import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext, StatusType, IVerifications, IFinalAsset } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
 
-import Verifications from './Verifications'
-import DatasetOverview from './DatasetOverview'
+import { getVerificationComponent } from './Verifications'
+import { getOverviewComponent } from './DatasetOverview'
 import Issuer from './Issuer'
 import { ReactComponent as IconAlertCircle } from '../assets/images/icon-alert-circle.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
@@ -268,24 +267,20 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderTopRightRadius: '4px',
   borderBottomRightRadius: '4px',
 }))
-
 const OverviewTab = () => {
   const { isLoading, selectedDataSet } = useDataSetAssetsContext()
-  const { getDataSetById } = useDataSetContext()
-
-  const { id } = useParams()
-  const dataSet = getDataSetById(id)
 
   const metaData = selectedDataSet?.metadata
   const creationDate = selectedDataSet?.creationDate
   const lastVerified = selectedDataSet?.lastVerified
   const datasetName = metaData?.name || 'Lohko Gold'
   const datasetVerifications = selectedDataSet?.verifications || []
+  const description = metaData ? metaData['asset-description'] : ''
 
   // @ts-ignore
-  const Verification = Verifications[datasetName] || null
+  const Verification = getVerificationComponent(datasetName)
   // @ts-ignore
-  const Header = DatasetOverview[datasetName] || null
+  const Header = getOverviewComponent(datasetName, description)
   return (
     <Box sx={{ display: 'flex', marginBottom: '160px' }}>
       <Box mr={5.25} sx={{ maxWidth: { xl: '820px' } }}>
@@ -420,9 +415,13 @@ const OverviewTab = () => {
           <Verification />
         </Box>
 
-        {dataSet?.datasetLinked ? <LinkedVerifiedFiles datasetId={dataSet?.datasetLinked[0]} /> : ''}
+        {selectedDataSet?.metadata?.datasetLinked ? (
+          <LinkedVerifiedFiles datasetId={selectedDataSet?.metadata?.datasetLinked[0]} />
+        ) : (
+          ''
+        )}
 
-        {dataSet?.id && datasetName === 'Nguru Satellite Image' && <LastFiles datasetId={dataSet?.id} />}
+        {datasetName === 'Nguru Satellite Image' && <LastFiles datasetId={selectedDataSet?.id || ''} />}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>

@@ -48,7 +48,6 @@ const Search = () => {
     if (!searchValue) {
       return
     }
-
     setAssetContract(searchValue.split('/').slice(-2, -1)[0])
     setAssetTokenId(searchValue.substring(searchValue.lastIndexOf('/') + 1))
   }, [searchValue])

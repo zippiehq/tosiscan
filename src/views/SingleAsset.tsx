@@ -23,9 +23,8 @@ import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 
-import Verifications from '../components/Verifications'
+import { getVerificationComponent } from '../components/Verifications'
 import Issuer from '../components/Issuer'
 
 const EthLocation = {
@@ -85,9 +84,6 @@ const SingleAsset = () => {
           asset.locations[0]?.tokenId === assetTokenId,
       )
 
-  const { getDataSetById } = useDataSetContext()
-
-  const datasetDetails = getDataSetById(id)
   const datasetName = metaData?.name || 'Lohko Gold'
   const location = asset?.locations[0]
 
@@ -97,7 +93,7 @@ const SingleAsset = () => {
   // @ts-ignore
   const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
   // @ts-ignore
-  const Verification = Verifications[datasetName] || null
+  const Verification = getVerificationComponent(datasetName)
 
   return !asset ? (
     <ContentContainer sx={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -216,7 +212,7 @@ const SingleAsset = () => {
                   <TableRow sx={{ backgroundColor: 'grey.50' }}>
                     <TableNameCell>Token Ref.</TableNameCell>
                     <TableValueCell>
-                      {location
+                      {location && location.ownerAccount
                         ? `${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
                             location.ownerAccount.length - 4,
                           )}`

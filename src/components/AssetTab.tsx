@@ -326,9 +326,11 @@ const IndividualAssetTable = ({
                     </TableCell>
 
                     <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                      {`${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
-                        location.ownerAccount.length - 4,
-                      )}`}
+                      {location?.ownerAccount
+                        ? `${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
+                            location.ownerAccount.length - 4,
+                          )}`
+                        : ''}
                     </TableCell>
 
                     <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>

@@ -53,12 +53,23 @@ const DatasetOverviewVerra = () => (
     </Typography>
   </>
 )
+const DefaultOverviewVerra = ({ description }: { description?: string }) => (
+  <Typography variant="body1" color="grey.600" mb={2} sx={{ lineHeight: 1.5 }}>
+    {description}
+  </Typography>
+)
 
-const DatasetOverview = {
-  'Lohko Gold': DatasetOverviewLohko,
-  'Carbon Credit Futures': DatasetOverviewCarbon,
-  'Nguru Satellite Image': DatasetOverviewNguru,
-  'Verra Carbon Registry': DatasetOverviewVerra,
+export const getOverviewComponent = (name: string, description?: string) => {
+  switch (name) {
+    case 'Lohko Gold':
+      return DatasetOverviewLohko
+    case 'Carbon Credit Futures':
+      return DatasetOverviewCarbon
+    case 'Nguru Satellite Image':
+      return DatasetOverviewNguru
+    case 'Verra Carbon Registry':
+      return DatasetOverviewVerra
+    default:
+      return () => <DefaultOverviewVerra description={description} />
+  }
 }
-
-export default DatasetOverview

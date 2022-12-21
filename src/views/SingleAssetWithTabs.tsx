@@ -13,8 +13,6 @@ import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verifi
 import LogoVerra from '../assets/images/logo-verra-carbon-registry.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
-
 import OverviewSingleAssetTab from '../components/OverviewSingleAssetTab'
 import AttributesTab from '../components/AttributesTab'
 import Issuer from '../components/Issuer'
@@ -115,18 +113,7 @@ const SingleAssetWithTabs = () => {
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
   const lastVerified = selectedDataSet?.lastVerified
   const metaData = selectedDataSet?.metadata
-  const assets = selectedDataSet?.assets || []
-  const asset = assetSerial
-    ? assets.find((asset) => asset.assetNumber === assetSerial)
-    : assets.find(
-        (asset) =>
-          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-          asset.locations[0]?.tokenId === assetTokenId,
-      )
 
-  const { getDataSetById } = useDataSetContext()
-
-  const datasetDetails = getDataSetById(id)
   const datasetName = metaData?.name || 'Lohko Gold'
 
   const { tabs, routePaths, routes } = getDataSetOptions(metaData?.name || '')

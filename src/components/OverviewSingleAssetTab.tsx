@@ -9,9 +9,8 @@ import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 
-import Verifications from './Verifications'
+import { getVerificationComponent } from './Verifications'
 import Issuer from './Issuer'
 
 const TableNameCell = styled(TableCell)(({ theme }) => ({
@@ -54,17 +53,14 @@ const OverviewSingleAssetTab = () => {
           asset.locations[0]?.tokenId === assetTokenId,
       )
 
-  const { getDataSetById } = useDataSetContext()
-
-  const datasetDetails = getDataSetById(id)
-  const datasetName = metaData?.name || 'Lohko Gold'
+  const datasetName = metaData?.name
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
   const hovermessage = 'Verified successfully'
 
   // @ts-ignore
-  const Verification = Verifications[datasetName] || null
+  const Verification = getVerificationComponent(datasetName)
 
   return (
     <>

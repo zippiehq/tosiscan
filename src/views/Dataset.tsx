@@ -18,7 +18,6 @@ import FilesView from '../components/FilesView'
 import VerifiedFiles from './VerifiedFiles'
 
 import { useDataSetAssetsContext, StatusType } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 import { customTheme } from '../theme'
 
 const ContentContainer = styled(Container)(({ theme }) => ({
@@ -158,9 +157,7 @@ const getStatusMessage = (messageType: StatusType) => {
 const Dataset = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getDataSetById } = useDataSetContext()
   const { isLoading, selectedDataSet } = useDataSetAssetsContext()
-  const asset = getDataSetById(id)
   const [currentTab, setCurrentTab] = useState(0)
   const lastVerified = selectedDataSet?.lastVerified
   const status = selectedDataSet?.verifications[0].status
@@ -186,7 +183,7 @@ const Dataset = () => {
       key="3"
       sx={{ fontFamily: 'Inter', fontSize: '14px', fontWeight: 500, lineHeight: 1.43, color: '#07939c' }}
     >
-      {asset ? metaData?.name : 'Lohko Gold'}
+      {metaData?.name}
     </Typography>,
   ]
 
@@ -210,7 +207,7 @@ const Dataset = () => {
         </Breadcrumbs>
 
         <Box mt={4} mb={6.25} sx={{ display: 'flex' }}>
-          <img src={asset?.image} width="64px" height="64px" alt="." />
+          <img src={selectedDataSet?.metadata?.image} width="64px" height="64px" alt="." />
 
           <Box ml={2.5}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
