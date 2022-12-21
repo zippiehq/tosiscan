@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
@@ -17,8 +17,11 @@ import { styled } from '@mui/system'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
-import { useDataSetContext } from '../hooks/useDataset'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
+
+import Pagination from './Pagination'
+
+const PageSize = 5
 
 const TableHeadCell = styled(TableCell)(({ theme }) => ({
   paddingTop: theme.spacing(1.5),
@@ -57,12 +60,50 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const VerificationList = () => {
-  const { datasets } = useDataSetContext()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
 
   const navigate = useNavigate()
 
   const OnClickToDataset = (available: boolean, id: string) => (available ? navigate(`/dataset/${id}`) : false)
+
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize
+    const lastPageIndex = firstPageIndex + PageSize
+
+    if (!isLoading) {
+      return Object.keys(datasetOutputs).slice(firstPageIndex, lastPageIndex)
+    }
+  }, [isLoading, currentPage])
+
+  const loadingSkeletonRowLength = 3
+  const loadingSkeletonRow = []
+
+  for (let i = 0; i < loadingSkeletonRowLength; i += 1) {
+    loadingSkeletonRow.push(
+      <TableRow key={i}>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="350px" />
+        </TableBodyCell>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="110px" />
+        </TableBodyCell>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="110px" />
+        </TableBodyCell>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="110px" />
+        </TableBodyCell>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="110px" />
+        </TableBodyCell>
+        <TableBodyCell>
+          <Skeleton animation="wave" width="190px" />
+        </TableBodyCell>
+      </TableRow>,
+    )
+  }
 
   return (
     <TableContainer sx={{ mb: '160px' }}>
@@ -80,41 +121,17 @@ const VerificationList = () => {
         </TableHead>
 
         {isLoading ? (
-          <TableBody>
-            {Object.keys(datasets).map((asset: any, index: any) => (
-              <TableRow key={asset.id}>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="350px" />
-                </TableBodyCell>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="110px" />
-                </TableBodyCell>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="110px" />
-                </TableBodyCell>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="110px" />
-                </TableBodyCell>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="110px" />
-                </TableBodyCell>
-                <TableBodyCell>
-                  <Skeleton animation="wave" width="190px" />
-                </TableBodyCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <TableBody>{loadingSkeletonRow}</TableBody>
         ) : (
           <TableBody>
-            {datasetOutputs &&
-              Object.keys(datasetOutputs).map((assetCid: any) => {
+            {currentTableData &&
+              currentTableData.map((assetCid: any) => {
                 const asset = datasetOutputs[assetCid]
                 const lastVerified = isLoading || !datasetOutputs ? 0 : asset.lastVerified
                 const datasetName = asset?.metadata?.name
                 const publisher = asset?.metadata?.publisher
                 const datasetContract = asset?.metadata?.contract
                 const datasetAssetClass = asset?.metadata?.['asset-class']
-                const datasetType = asset?.metadata?.['asset-type']
                 const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
                 return (
                   <TableBodyRow
@@ -162,6 +179,12 @@ const VerificationList = () => {
           </TableBody>
         )}
       </Table>
+      <Pagination
+        currentPage={currentPage}
+        totalCount={Object.keys(datasetOutputs).length}
+        pageSize={PageSize}
+        onPageChange={(page: any) => setCurrentPage(page)}
+      />
     </TableContainer>
   )
 }
