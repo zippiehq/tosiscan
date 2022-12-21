@@ -182,7 +182,21 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
     </Box>
   )
 }
+const getStatusIcon = (iconType: StatusType) => {
+  switch (iconType) {
+    case StatusType.failure:
+      return {
+        Icon: IconAlertCircle,
+      }
+    case StatusType.warning:
+      return {
+        Icon: IconAlertTriangle,
+      }
 
+    default:
+      return null
+  }
+}
 const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   const [datasetErrorsOpen, setDatasetErrorsOpen] = useState(false)
   const lastVerificationError = verifications.find(
@@ -207,19 +221,17 @@ const VerificationsErrors = ({ verifications }: IVerificationsErrors) => {
   const trimmedTimestamp = Number(timestamp) / 1000
   const failedVerificationDate = formatDate(trimmedTimestamp, timeFormat)
 
+  const IconOptions = latestVerificationObject?.status ? getStatusIcon(latestVerificationObject?.status) : null
+
   return !lastVerificationError ? (
     <Typography>&mdash;</Typography>
   ) : (
     <>
       <Box display="flex" alignItems="flexStart">
         <Typography variant="body2" color={colors[lastVerificationError.status]} ml={1}>
-          <img
-            src={lastVerificationError.status === 'warning' ? IconAlertTriangle : IconAlertCircle}
-            alt=""
-            style={{ width: 15, height: 15 }}
-          />
+          <img src={IconOptions?.Icon} alt="" style={{ width: 15, height: 15 }} />
           &nbsp;
-          {lastVerificationError.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
+          {latestVerificationObject?.message} . {failedVerificationDate} ({formatTimeLeft(trimmedTimestamp)})
         </Typography>
       </Box>
       <Typography
