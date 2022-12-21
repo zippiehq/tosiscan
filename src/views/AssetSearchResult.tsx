@@ -17,7 +17,6 @@ import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
-import { useDataSetContext } from '../hooks/useDataset'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
@@ -74,7 +73,6 @@ const CustomLink = styled(Link)(({ theme }) => ({
 
 const AssetSearchResult = () => {
   const { assetContract, assetTokenId } = useParams()
-  const { datasets } = useDataSetContext()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
   const lenthToken = TLIDataSet?.token.id.length as number
@@ -101,10 +99,6 @@ const AssetSearchResult = () => {
         locations[0].tokenId === assetTokenId,
     )
   })
-
-  const datasetIndex: any = Object.keys(datasets).find((item: any) =>
-    datasets[item].id === datasetId ? datasets[item].id : '',
-  )
 
   if (!assetContract || !assetTokenId || (!datasetId && !TLIDataSet)) {
     return (

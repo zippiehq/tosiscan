@@ -70,22 +70,8 @@ const VerificationLohko = () => (
     </Typography>
   </SectionWrapper>
 )
-const VerificationCarbon = () => (
-  <Box mt={4} mb={6}>
-    <Typography variant="body2" mb={2} sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
-      This dataset does not have additional verifications.
-    </Typography>
 
-    <Typography variant="body2" sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
-      Are you the owner of this dataset? <br />
-      Increase your asset’s reliability by adding supporting verifications.
-      <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 600 }}>
-        &nbsp;Learn more
-      </CustomLink>
-    </Typography>
-  </Box>
-)
-const VerificationVerra = () => (
+const DefaultVerification = () => (
   <SectionWrapper mt={4} py={5.25}>
     <Typography variant="body2" mb={2} sx={{ fontSize: '16px', lineHeight: 1.5, color: '#667085' }}>
       This dataset does not have additional verifications.
@@ -100,12 +86,12 @@ const VerificationVerra = () => (
     </Typography>
   </SectionWrapper>
 )
+export const getVerificationComponent = (name: string) => {
+  switch (name) {
+    case 'Lohko Gold':
+      return VerificationLohko
 
-const Verifications = {
-  'Lohko Gold': VerificationLohko,
-  'Carbon Credit Futures': VerificationCarbon,
-  'Nguru Satellite Image': VerificationCarbon,
-  'Verra Carbon Registry': VerificationVerra,
+    default:
+      return DefaultVerification
+  }
 }
-
-export default Verifications

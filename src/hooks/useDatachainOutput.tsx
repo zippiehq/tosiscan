@@ -24,23 +24,38 @@ interface ILocation {
   currentLocation?: string
 }
 
+interface IMetadata {
+  name: string
+  image: string
+  status: string
+  contract: string
+  ['asset-type']: string
+  ['asset-class']: string
+  ['main-location']: string
+  ['asset-description']: string
+  ['supported-locations']: string[]
+  datasetLinked?: string[]
+  publisher: string
+}
+
+export interface IDatasetDynamic {
+  id: string
+  type: string
+  reqId: string
+  cid: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  metadata?: IMetadata
+}
+
 export interface DatachainOutputContextT {
   assets: IFinalAsset[]
-  metadata?: MetaData
+  metadata?: IMetadata
   id: string
-  timestamps: number[]
   creationDate: number
   lastVerified: number
   verifications: IVerifications[]
-}
-interface MetaData {
-  contract: string
-  name: string
-  ['asset-description']: string
-  ['asset-class']: string
-  ['main-location']: string
-  ['supported-locations']: string[]
-  ['asset-type']: string
 }
 
 export interface IFinalAsset {
@@ -59,28 +74,54 @@ export interface IFinalAsset {
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT
 }
+const DynamicDatasetUrl = 'https://api.test.zippie.com/dataset-issuance/api/dataset'
 
-export const fetchDataSet = async (id: string) => {
+const fetchDataDynamic = async () => {
+  try {
+    const response = await get(`${DynamicDatasetUrl}/?metadataField=status&metadataValue=active`, 'json')
+    return response.data.data.datasets
+  } catch (error) {
+    console.log(error)
+  }
+}
+interface IAdditionalData {
+  image: string
+  publisher: string
+}
+export const fetchDataSet = async (id: string, additionalMetadata: any = {}) => {
   const sealResponse = await get(`/tosi/api/v1/query-seal/${id}`, 'json')
   const path = sealResponse.data.status
-  const { data } = await get(`/tosi/api/v0/ipfs/get/${path}/output.zip`, 'blob')
-  const [assets, metadata, verifications] = await Promise.all([
-    unzip(data, 'assets.json'),
-    unzip(data, 'metadata.json'),
-    unzip(data, 'verifications.json'),
+  const [output] = await Promise.all([
+    get(`/tosi/api/v0/ipfs/get/${path}/output.zip`, 'blob'),
+    // get(`/tosi/api/v1/query-claims/${id}`, 'json'),
   ])
-  const { data: claimsData } = await get(`/tosi/api/v1/query-claims/${id}`, 'json')
-  const timestamps = claimsData.map((item: any) => item.timestamp)
+  const [assets, metadata, verifications] = await Promise.all([
+    unzip(output.data, 'assets.json'),
+    unzip(output.data, 'metadata.json'),
+    unzip(output.data, 'verifications.json'),
+  ])
+  // @ts-ignore
+  const timestamps = verifications.map((item: any) => item.timestamp / 1000)
   const creationDate = Math.min(...timestamps)
   const lastVerified = Math.max(...timestamps)
   const formattedAssets = assets ? Array.from(assets) : []
-
-  return { assets: formattedAssets, metadata, timestamps, creationDate, lastVerified, verifications, id }
+  return {
+    assets: formattedAssets,
+    metadata: {
+      ...additionalMetadata,
+      // @ts-ignore
+      ...metadata,
+    },
+    verifications,
+    id,
+    creationDate,
+    lastVerified,
+  }
 }
 
 function useDataSetAssets() {
   const [isLoading, setLoading] = useState<boolean>(true)
-  const [datasetOutputs, setDataSetOutputs] = useState<IDataSetOutputs>()
+  const [datasetOutputs, setDataSetOutputs] = useState<IDataSetOutputs>({})
   const [selectedDataSet, setSelectedDataSet] = useState<DatachainOutputContextT>()
   const { id } = useParams()
   const { datasets } = useDataSetContext()
@@ -88,11 +129,13 @@ function useDataSetAssets() {
   const fetchAssets = async () => {
     setLoading(true)
     const assets = await Promise.all(
-      datasets.filter((dataset) => dataset.available).map((dataset) => fetchDataSet(dataset.id)),
+      datasets.filter((dataset) => dataset.available).map((dataset) => fetchDataSet(dataset.id, dataset)),
     )
-
+    const dynamic = await fetchDataDynamic()
+    const assetsDynamic = await Promise.all(dynamic.map((dataset: any) => fetchDataSet(dataset.cid)))
     const finalAssets = assets.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
-    setDataSetOutputs(finalAssets)
+    const finalAssetsDyanmic = assetsDynamic.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
+    setDataSetOutputs({ ...finalAssets, ...finalAssetsDyanmic })
     setLoading(false)
   }
 

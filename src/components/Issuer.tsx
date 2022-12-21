@@ -11,6 +11,7 @@ import { ReactComponent as Globe } from '../assets/images/icon-globe.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
+import Publishers from '../constants/Publishers.json'
 
 const CustomLink = styled(Link)(({ theme }) => ({
   fontSize: '16px',
@@ -34,7 +35,8 @@ const Issuer = () => {
   const { id } = useParams()
   const dataSet = getDataSetById(id)
   const assets = selectedDataSet?.assets
-  const publisher = dataSet?.publisher
+  // @ts-ignore
+  const publisher = Publishers[selectedDataSet?.metadata?.publisher] || {}
   return (
     <SectionWrapper>
       <Typography

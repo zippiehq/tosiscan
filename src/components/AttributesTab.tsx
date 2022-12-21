@@ -6,7 +6,6 @@ import { Box, Link, Table, TableBody, TableCell, TableContainer, TableRow, Toolt
 import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-import { useDataSetContext } from '../hooks/useDataset'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
@@ -51,9 +50,6 @@ const AttributesTab = () => {
           asset.locations[0]?.tokenId === assetTokenId,
       )
 
-  const { getDataSetById } = useDataSetContext()
-
-  const datasetDetails = getDataSetById(id)
   const datasetName = metaData?.name || 'Lohko Gold'
   const location = asset?.locations[0]
 
