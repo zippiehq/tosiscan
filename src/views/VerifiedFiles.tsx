@@ -1,7 +1,9 @@
 import { Box, Typography } from '@mui/material'
-
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
+import { useDataSetContext } from '../hooks/useDataset'
 import { AssetFile } from '../components/AssetFileComponent'
 
 const FilesView = ({ datasetId }: { datasetId: string }) => {
@@ -20,18 +22,17 @@ const FilesView = ({ datasetId }: { datasetId: string }) => {
 }
 
 export default () => {
-  const { datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
-  const datasetLinked = Object.keys(datasetOutputs).filter((datasetId) => {
-    const metadata = datasetOutputs[datasetId]?.metadata
-    const datasetLinked = metadata?.datasetLinked
-    if (!datasetLinked?.length) {
-      return false
-    }
-    return datasetLinked.find((datasetId) => datasetId === selectedDataSet?.id)
-  })
-  const linkedDataset = datasetLinked.length
-    ? datasetLinked
+  const [selectedLinkedDataset, setSelectedLikedDataset] = useState(
+    'bafyreidjcney3xvcuyutfjtkykxpfsn3544du2t3mxlj6xt3wucojvuk2m',
+  )
+  const { datasets, getDataSetById } = useDataSetContext()
+  const { datasetOutputs } = useDataSetAssetsContext()
+  const { id } = useParams()
+  const dataSet = getDataSetById(id)
+  const linkedDataset = dataSet?.datasetLinked
+    ? dataSet?.datasetLinked
         .map((datasetId) => {
+          const dataSetDetails = datasets.find((dataset) => dataset.id === datasetId)
           const datasetOutput = datasetOutputs ? datasetOutputs[datasetId] : null
 
           return {
@@ -42,7 +43,7 @@ export default () => {
         })
         .filter((dataset) => dataset.datasetName)
     : []
-  return linkedDataset.length ? (
+  return (
     <Box display="flex" height="100%" marginBottom="160px">
       <Box display="flex" flexDirection="column" width="240px" pr={3} borderRight="1px solid #EAECF0">
         <Typography color="grey.900" fontSize="18px" fontWeight={500} mb={2}>
@@ -85,7 +86,5 @@ export default () => {
         <FilesView datasetId={linkedDataset[0].datasetId} />
       </Box>
     </Box>
-  ) : (
-    <>Not found</>
   )
 }
