@@ -88,13 +88,7 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
               <TableBodyCellUnique sx={{ textAlign: 'left', fontSize: '16px', lineHeight: 1.5, color: 'grey.700' }}>
                 {asset}
               </TableBodyCellUnique>
-              <TableBodyCellUnique>
-                {
-                  assets?.filter(
-                    (item: any) => item.product === asset || item.assetName === asset || item.currentLocation,
-                  ).length
-                }
-              </TableBodyCellUnique>
+              <TableBodyCellUnique>{assets?.filter((item) => item.assetName === asset).length}</TableBodyCellUnique>
               <TableBodyCellUnique>0</TableBodyCellUnique>
             </TableRow>
           ))}
