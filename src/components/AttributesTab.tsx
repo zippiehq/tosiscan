@@ -1,14 +1,10 @@
 import React from 'react'
-import { Link as RouterLink, useParams } from 'react-router-dom'
-import moment from 'moment'
+import { useParams } from 'react-router-dom'
 
-import { Box, Link, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Typography } from '@mui/material'
+import { Box, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-
-import IconCheck from '../assets/images/icon-check.svg'
-import IconInfo from '../assets/images/icon-info.svg'
 
 const TableNameCell = styled(TableCell)(({ theme }) => ({
   width: '266px',
@@ -37,10 +33,8 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const AttributesTab = () => {
-  const { assetContract, assetTokenId, assetSerial, id } = useParams()
-  const { selectedDataSet, isLoading } = useDataSetAssetsContext()
-  const lastVerified = selectedDataSet?.lastVerified
-  const metaData = selectedDataSet?.metadata
+  const { assetContract, assetTokenId, assetSerial } = useParams()
+  const { selectedDataSet } = useDataSetAssetsContext()
   const assets = selectedDataSet?.assets || []
   const asset = assetSerial
     ? assets.find((asset) => asset.assetNumber === assetSerial)
@@ -49,12 +43,6 @@ const AttributesTab = () => {
           asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
           asset.locations[0]?.tokenId === assetTokenId,
       )
-
-  const datasetName = metaData?.name || 'Lohko Gold'
-  const location = asset?.locations[0]
-
-  const tokenId = location?.tokenId
-  const hovermessage = 'Verified successfully'
 
   const attribute = asset?.attributes
 
@@ -88,87 +76,87 @@ const AttributesTab = () => {
 
             <TableRow>
               <TableNameCell>Country</TableNameCell>
-              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>{attribute.country}</TableValueCell>
+              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>{attribute?.country}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Holding Identifier</TableNameCell>
-              <TableValueCell>{attribute.holdingIdentifier}</TableValueCell>
+              <TableValueCell>{attribute?.holdingIdentifier}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Instrument Type</TableNameCell>
-              <TableValueCell>{attribute.instrumentType}</TableValueCell>
+              <TableValueCell>{attribute?.instrumentType}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Issuance Date</TableNameCell>
-              <TableValueCell>{attribute.issuanceDate}</TableValueCell>
+              <TableValueCell>{attribute?.issuanceDate}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Protocol</TableNameCell>
-              <TableValueCell>{attribute.protocol}</TableValueCell>
+              <TableValueCell>{attribute?.protocol}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Protocol Category</TableNameCell>
-              <TableValueCell>{attribute.protocolCategory}</TableValueCell>
+              <TableValueCell>{attribute?.protocolCategory}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Quantity</TableNameCell>
-              <TableValueCell>{attribute.quantity}</TableValueCell>
+              <TableValueCell>{attribute?.quantity}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Region</TableNameCell>
-              <TableValueCell>{attribute.region}</TableValueCell>
+              <TableValueCell>{attribute?.region}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Reporting Period End</TableNameCell>
-              <TableValueCell>{attribute.reportingPeriodEnd}</TableValueCell>
+              <TableValueCell>{attribute?.reportingPeriodEnd}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Reporting Period Start</TableNameCell>
-              <TableValueCell>{attribute.reportingPeriodStart}</TableValueCell>
+              <TableValueCell>{attribute?.reportingPeriodStart}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Resource identifier</TableNameCell>
-              <TableValueCell>{attribute.resourceIdentifier}</TableValueCell>
+              <TableValueCell>{attribute?.resourceIdentifier}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Resource name</TableNameCell>
-              <TableValueCell>{attribute.resourceName}</TableValueCell>
+              <TableValueCell>{attribute?.resourceName}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Retired Cancelled</TableNameCell>
-              <TableValueCell>{attribute.retiredCancelled === true ? 'true' : 'false'}</TableValueCell>
+              <TableValueCell>{attribute?.retiredCancelled === true ? 'true' : 'false'}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Serial Numbers</TableNameCell>
-              <TableValueCell>{attribute.serialNumbers}</TableValueCell>
+              <TableValueCell>{attribute?.serialNumbers}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Total vintage quantity</TableNameCell>
-              <TableValueCell>{attribute.totalVintageQuantity}</TableValueCell>
+              <TableValueCell>{attribute?.totalVintageQuantity}</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Vintage End</TableNameCell>
-              <TableValueCell>{attribute.vintageEnd}</TableValueCell>
+              <TableValueCell>{attribute?.vintageEnd}</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Vintage Start</TableNameCell>
-              <TableValueCell>{attribute.vintageStart}</TableValueCell>
+              <TableValueCell>{attribute?.vintageStart}</TableValueCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -17,12 +17,6 @@ import OverviewSingleAssetTab from '../components/OverviewSingleAssetTab'
 import AttributesTab from '../components/AttributesTab'
 import Issuer from '../components/Issuer'
 
-const EthLocation = {
-  Ethereum: 'https://opensea.io/assets/ethereum',
-  ethereum: 'https://opensea.io/assets/ethereum',
-  'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
-}
-
 const ContentContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.up('xl')]: {
     maxWidth: '1280px',
@@ -108,10 +102,9 @@ const getDataSetOptions = (dataset: string) => {
 const SingleAssetWithTabs = () => {
   const [currentTab, setCurrentTab] = useState(0)
 
-  const { assetContract, assetTokenId, assetSerial, id } = useParams()
+  const { assetSerial, id } = useParams()
   const navigate = useNavigate()
-  const { selectedDataSet, isLoading } = useDataSetAssetsContext()
-  const lastVerified = selectedDataSet?.lastVerified
+  const { selectedDataSet } = useDataSetAssetsContext()
   const metaData = selectedDataSet?.metadata
 
   const datasetName = metaData?.name || 'Lohko Gold'
@@ -126,9 +119,8 @@ const SingleAssetWithTabs = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const currentLocation = location.pathname.split(`${id}/` || '')[1]
+    const currentLocation = location.pathname.split(`${id}/${assetSerial}/` || '')[1]
     const currentPath = routePaths.indexOf(`${currentLocation}`) === -1 ? 0 : routePaths.indexOf(currentLocation)
-
     setCurrentTab(currentPath)
   }, [location.pathname, routePaths])
 

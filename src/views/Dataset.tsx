@@ -8,7 +8,6 @@ import { styled } from '@mui/system'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import TabsUnstyled from '@mui/base/TabsUnstyled'
 import TabsListUnstyled from '@mui/base/TabsListUnstyled'
-import TabPanelUnstyled from '@mui/base/TabPanelUnstyled'
 import TabUnstyled from '@mui/base/TabUnstyled'
 import { ReactComponent as IconHome } from '../assets/images/icon-home.svg'
 import IconAlertCircle from '../assets/images/info-circle.png'
@@ -132,8 +131,6 @@ const getDataSetOptions = (dataset: string) => {
           </Routes>
         ),
       }
-
-      break
   }
 }
 const getStatusMessage = (messageType: StatusType) => {
