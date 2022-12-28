@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
@@ -68,12 +68,18 @@ const VerificationList = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
 
-  const currentTableData = useMemo(() => {
+  const slicedDatasets = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
 
+    const datasets = Object.keys(datasetOutputs).map((assetCid: any) => datasetOutputs[assetCid])
+
+    const sortedByDateDescending = datasets.sort(
+      (previousAsset: any, nextAsset: any) => nextAsset.lastVerified - previousAsset.lastVerified,
+    )
+
     if (!isLoading) {
-      return Object.keys(datasetOutputs).slice(firstPageIndex, lastPageIndex)
+      return sortedByDateDescending.slice(firstPageIndex, lastPageIndex)
     }
   }, [isLoading, currentPage])
 
@@ -124,9 +130,8 @@ const VerificationList = () => {
           <TableBody>{loadingSkeletonRow}</TableBody>
         ) : (
           <TableBody>
-            {currentTableData &&
-              currentTableData.map((assetCid: any) => {
-                const asset = datasetOutputs[assetCid]
+            {slicedDatasets &&
+              slicedDatasets.map((asset: any) => {
                 const lastVerified = isLoading || !datasetOutputs ? 0 : asset.lastVerified
                 const datasetName = asset?.metadata?.name
                 const publisher = asset?.metadata?.publisher
