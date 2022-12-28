@@ -129,10 +129,10 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         variant="body2"
                         sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
                       >
-                        {`${asset.locations[0].ownerAccount.substring(
+                        {`${asset.locations[0].ownerAccount?.substring(
                           0,
                           4,
-                        )}...${asset.locations[0].ownerAccount.substring(10, 30)}`}
+                        )}...${asset.locations[0].ownerAccount?.substring(10, 30)}`}
                       </Typography>
                     </Stack>
                   </TableCell>
