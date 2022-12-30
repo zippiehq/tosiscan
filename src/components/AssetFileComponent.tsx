@@ -23,7 +23,6 @@ import { ReactComponent as IconClock } from '../assets/icon-clock.svg'
 import { ReactComponent as IconLocation } from '../assets/images/icon-location-mark.svg'
 import { ReactComponent as IconCheck } from '../assets/images/icon-check.svg'
 import { ReactComponent as MenuIcon } from '../assets/menu-icon.svg'
-import { ReactComponent as CopyIcon } from '../assets/copy-icon.svg'
 import { ReactComponent as LinkIcon } from '../assets/link-icon.svg'
 import { ReactComponent as SearchIcon } from '../assets/search-icon.svg'
 import { ReactComponent as CloseIcon } from '../assets/x-icon.svg'
@@ -286,12 +285,6 @@ export const AssetFile = (props: IAssetFile) => {
                   <ListItemText>Go to datasets</ListItemText>
                 </MenuItem>
               )}
-              <MenuItem onClick={onCopyToClipboard}>
-                <ListItemIcon>
-                  <CopyIcon />
-                </ListItemIcon>
-                <ListItemText>Copy asset ID</ListItemText>
-              </MenuItem>
             </Menu>
           </Box>
 
