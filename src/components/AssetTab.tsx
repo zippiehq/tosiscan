@@ -167,7 +167,7 @@ const IndividualAssetTable = ({
                 const assetContract = location?.contract
                 const assetTokenId = location?.tokenId
                 const assetSerial = row.assetNumber
-                const assetName = location?.name
+                const assetName = row.attributes.instrumentType
 
                 const onAssetClick = () => navigate(`/single-asset-with-tabs/${id}/${assetSerial}`)
 
