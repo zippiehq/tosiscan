@@ -78,6 +78,7 @@ const AssetSearchResult = () => {
   const lenthToken = TLIDataSet?.token.id.length as number
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
+  const dataL = Object.keys(datasetOutputs).find((asset: any) => asset.metadata.name === 'Lohko Gold')
 
   useEffect(
     () => setTLIQuery({ assetContract, assetTokenId, assetName }),
@@ -98,9 +99,8 @@ const AssetSearchResult = () => {
     const { assets } = datasetOutputs[id]
     return assets.some(
       ({ locations }) =>
-        (locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-          locations[0].tokenId === assetTokenId) ||
-        locations[0].name?.toLocaleLowerCase() === assetName?.toLocaleLowerCase(),
+        locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+        locations[0].tokenId === assetTokenId,
     )
   })
 
@@ -118,9 +118,8 @@ const AssetSearchResult = () => {
   const filtered = assets
     ? assets.filter(
         ({ locations }) =>
-          (locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
-            locations[0].tokenId === assetTokenId) ||
-          locations[0].name?.toLocaleLowerCase() === assetName?.toLocaleLowerCase(),
+          locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
+          locations[0].tokenId === assetTokenId,
       )
     : []
 

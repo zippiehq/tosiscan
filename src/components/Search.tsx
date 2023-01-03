@@ -43,7 +43,7 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState('')
   const [assetTokenId, setAssetTokenId] = useState('')
   const [assetContract, setAssetContract] = useState('')
-  const [datasetName, setDatasetName] = useState('')
+  const [assetName, setDatasetName] = useState('')
 
   useEffect(() => {
     if (!searchValue) {
@@ -56,7 +56,7 @@ const Search = () => {
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      navigate(datasetName ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${datasetName}`)
+      navigate(assetName ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${assetName}`)
     }
   }
 
