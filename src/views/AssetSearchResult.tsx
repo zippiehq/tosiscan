@@ -72,14 +72,17 @@ const CustomLink = styled(Link)(({ theme }) => ({
 })) as typeof Link
 
 const AssetSearchResult = () => {
-  const { assetContract, assetTokenId } = useParams()
+  const { assetContract, assetTokenId, assetName } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
   const lenthToken = TLIDataSet?.token.id.length as number
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
 
-  useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
+  useEffect(
+    () => setTLIQuery({ assetContract, assetTokenId, assetName }),
+    [assetContract, assetName, assetTokenId, setTLIQuery],
+  )
 
   if (!datasetOutputs || isLoading) {
     return (
@@ -95,8 +98,9 @@ const AssetSearchResult = () => {
     const { assets } = datasetOutputs[id]
     return assets.some(
       ({ locations }) =>
-        locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-        locations[0].tokenId === assetTokenId,
+        (locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+          locations[0].tokenId === assetTokenId) ||
+        locations[0].name?.toLocaleLowerCase() === assetName?.toLocaleLowerCase(),
     )
   })
 
@@ -114,8 +118,9 @@ const AssetSearchResult = () => {
   const filtered = assets
     ? assets.filter(
         ({ locations }) =>
-          locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
-          locations[0].tokenId === assetTokenId,
+          (locations[0].contract?.toLocaleLowerCase() === assetContract.toLocaleLowerCase() &&
+            locations[0].tokenId === assetTokenId) ||
+          locations[0].name?.toLocaleLowerCase() === assetName?.toLocaleLowerCase(),
       )
     : []
 
