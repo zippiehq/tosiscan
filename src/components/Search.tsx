@@ -43,7 +43,7 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState('')
   const [assetTokenId, setAssetTokenId] = useState('')
   const [assetContract, setAssetContract] = useState('')
-  const [assetName, setAssetName] = useState('')
+  const [datasetName, setDatasetName] = useState('')
 
   useEffect(() => {
     if (!searchValue) {
@@ -51,12 +51,12 @@ const Search = () => {
     }
     setAssetContract(searchValue.split('/').slice(-2, -1)[0])
     setAssetTokenId(searchValue.substring(searchValue.lastIndexOf('/') + 1))
-    setAssetName(searchValue)
+    setDatasetName(searchValue)
   }, [searchValue])
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      navigate(searchValue.includes('/') ? `/search-asset/${assetContract}/${assetTokenId}` : `${assetName}`)
+      navigate(datasetName ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${datasetName}`)
     }
   }
 
