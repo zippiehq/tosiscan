@@ -5,6 +5,9 @@ import { Box, TextField } from '@mui/material'
 import { styled } from '@mui/system'
 
 import SearchIcon from '@mui/icons-material/Search'
+import { AssessmentTwoTone } from '@mui/icons-material'
+import { isValidUrl } from '../utils/helper'
+import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 const SearchField = styled(TextField)(({ theme }) => ({
   position: 'relative',
@@ -38,12 +41,12 @@ const SearchField = styled(TextField)(({ theme }) => ({
 }))
 
 const Search = () => {
+  const { datasetOutputs } = useDataSetAssetsContext()
   const navigate = useNavigate()
 
   const [searchValue, setSearchValue] = useState('')
   const [assetTokenId, setAssetTokenId] = useState('')
   const [assetContract, setAssetContract] = useState('')
-  const [assetName, setDatasetName] = useState('')
 
   useEffect(() => {
     if (!searchValue) {
@@ -51,12 +54,19 @@ const Search = () => {
     }
     setAssetContract(searchValue.split('/').slice(-2, -1)[0])
     setAssetTokenId(searchValue.substring(searchValue.lastIndexOf('/') + 1))
-    setDatasetName(searchValue)
   }, [searchValue])
+
+  const Datasets = Object.values(datasetOutputs)
+  const dataset = Datasets.filter((object) => object.metadata?.name === searchValue)
+  const [obj] = dataset
+
+  const assetName = obj?.metadata?.name
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      navigate(assetName ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${assetName}`)
+      navigate(
+        isValidUrl(searchValue) ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${assetName}`,
+      )
     }
   }
 

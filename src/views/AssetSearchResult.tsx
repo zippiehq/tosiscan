@@ -78,7 +78,7 @@ const AssetSearchResult = () => {
   const lenthToken = TLIDataSet?.token.id.length as number
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
-  const dataL = Object.keys(datasetOutputs).find((asset: any) => asset.metadata.name === 'Lohko Gold')
+  // const dataL = Object.keys(datasetOutputs).find((asset: any) => asset.metadata.name === 'Lohko Gold')
 
   useEffect(
     () => setTLIQuery({ assetContract, assetTokenId, assetName }),
