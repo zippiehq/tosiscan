@@ -42,7 +42,11 @@ function App() {
                 <Route path="/" element={<Layout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/dataset/:id/*" element={<Dataset />} />
-                  <Route path="/search-asset/:assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                  <Route path="/search-asset/">
+                    <Route path=":assetName/*" element={<Dataset />} />
+                    <Route path=":assetContract/:assetTokenId" element={<AssetSearchResult />} />
+                  </Route>
+
                   <Route path="/single-asset/:id">
                     <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
                     <Route path=":assetSerial" element={<SingleAsset />} />
