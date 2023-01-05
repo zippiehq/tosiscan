@@ -59,13 +59,12 @@ const Search = () => {
   const Datasets = Object.values(datasetOutputs)
   const dataset = Datasets.filter((object) => object.metadata?.name === searchValue)
   const [obj] = dataset
-
-  const assetName = obj?.metadata?.name
+  const datasetName = obj?.metadata?.name
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       navigate(
-        isValidUrl(searchValue) ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${assetName}`,
+        isValidUrl(searchValue) ? `/search-asset/${assetContract}/${assetTokenId}` : `/search-asset/${datasetName}`,
       )
     }
   }

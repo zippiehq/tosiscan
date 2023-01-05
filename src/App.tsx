@@ -43,10 +43,9 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/dataset/:id/*" element={<Dataset />} />
                   <Route path="/search-asset/">
-                    <Route path=":assetName/*" element={<Dataset />} />
+                    <Route path=":datasetName/*" element={<Dataset />} />
                     <Route path=":assetContract/:assetTokenId" element={<AssetSearchResult />} />
                   </Route>
-
                   <Route path="/single-asset/:id">
                     <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
                     <Route path=":assetSerial" element={<SingleAsset />} />
