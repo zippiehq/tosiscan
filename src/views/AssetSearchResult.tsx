@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, Link as RouterLink } from 'react-router-dom'
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import {
   Container,
@@ -12,6 +12,7 @@ import {
   TableBody,
   Link,
   Tooltip,
+  Box,
 } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -20,6 +21,8 @@ import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
+import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
+import { formatTimeStamp } from '../utils/timestapFormater'
 
 const EthLocation = {
   'Ethereum Mainet': 'https://opensea.io/assets/ethereum',
@@ -63,6 +66,15 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.grey['600'],
   border: 'none',
 }))
+const TableBodyRow = styled(TableRow)(() => ({
+  cursor: 'pointer',
+
+  '&.disabled': {
+    backgroundColor: '#fdfdfd',
+    opacity: 0.75,
+    cursor: 'default !important',
+  },
+}))
 
 const CustomLink = styled(Link)(({ theme }) => ({
   fontSize: '14px',
@@ -79,6 +91,11 @@ const AssetSearchResult = () => {
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
   // const dataL = Object.keys(datasetOutputs).find((asset: any) => asset.metadata.name === 'Lohko Gold')
+  const navigate = useNavigate()
+  const OnClickToDataset = (available: boolean, id: string) => (available ? navigate(`/dataset/${id}`) : false)
+  const Datasets = Object.values(datasetOutputs)
+  const dataset = Datasets.filter((object) => object.metadata?.name === 'Lohko Gold')
+  const [obj] = dataset
 
   useEffect(
     () => setTLIQuery({ assetContract, assetTokenId, assetName }),
@@ -420,6 +437,68 @@ const AssetSearchResult = () => {
                 </TableBodyCell>
               </TableRow>
             ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TableContainer sx={{ mb: '160px' }}>
+        <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+          <TableHead sx={{ backgroundColor: 'grey.50' }}>
+            <TableRow>
+              <TableHeadCell>Dataset</TableHeadCell>
+              <TableHeadCell>Asset Class</TableHeadCell>
+              <TableHeadCell>Assets issued</TableHeadCell>
+
+              <TableHeadCell>Last verified</TableHeadCell>
+              <TableHeadCell>Publisher</TableHeadCell>
+              <TableHeadCell>Issuer/s</TableHeadCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            <TableBodyRow
+              key={obj?.id}
+              onClick={() => {
+                OnClickToDataset(true, obj?.id)
+              }}
+            >
+              <TableBodyCell>
+                <Box sx={{ display: 'flex' }}>
+                  <img src={obj?.metadata?.image} width="40" height="40" alt="." />
+
+                  <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
+                      {obj?.metadata?.name}
+                    </Typography>
+                    <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
+                      {`${obj?.metadata?.contract?.slice(0, 10)}...${obj?.metadata?.contract?.slice(-10)}`}
+                    </Typography>
+                  </Box>
+                </Box>
+              </TableBodyCell>
+
+              <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                {obj?.metadata?.['asset-class']}
+              </TableBodyCell>
+              <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{obj?.assets.length}</TableBodyCell>
+
+              <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                {formatTimeStamp(obj?.lastVerified)}
+              </TableBodyCell>
+
+              <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
+                {obj?.metadata?.publisher || '-'}
+                {obj?.metadata?.publisher && (
+                  <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
+                )}{' '}
+              </TableBodyCell>
+
+              <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
+                {obj?.metadata?.publisher || '-'}
+                {obj?.metadata?.publisher && (
+                  <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
+                )}{' '}
+              </TableBodyCell>
+            </TableBodyRow>
           </TableBody>
         </Table>
       </TableContainer>
