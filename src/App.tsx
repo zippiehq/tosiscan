@@ -16,7 +16,6 @@ import AssetSearchResult from './views/AssetSearchResult'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
 
-import { SearchContext } from './context/SearchContext'
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
 import { TrustlessIndexingProvider } from './hooks/useTrustlessIndexing'
@@ -35,31 +34,26 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <SearchContext.Provider value={{ value, setValue }}>
-          <DataSetProvider>
-            <TrustlessIndexingProvider>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/dataset/:id/*" element={<Dataset />} />
-                  <Route path="/search-asset/">
-                    <Route path=":datasetName/*" element={<Dataset />} />
-                    <Route path=":assetContract/:assetTokenId" element={<AssetSearchResult />} />
-                  </Route>
-                  <Route path="/single-asset/:id">
-                    <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
-                    <Route path=":assetSerial" element={<SingleAsset />} />
-                  </Route>
-                  <Route path="/single-asset-with-tabs/:id/:assetSerial/*" element={<SingleAssetWithTabs />} />
-                  <Route path="/single-asset-nft/:id">
-                    <Route path=":assetContract/:assetTokenId" element={<SingleAssetNft />} />
-                  </Route>
+        <DataSetProvider>
+          <TrustlessIndexingProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/dataset/:id/*" element={<Dataset />} />
+                <Route path="/search-asset/:searchValue" element={<AssetSearchResult />} />
+                <Route path="/single-asset/:id">
+                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
+                  <Route path=":assetSerial" element={<SingleAsset />} />
                 </Route>
-                <Route path="/coming-soon" element={<ComingSoon />} />
-              </Routes>
-            </TrustlessIndexingProvider>
-          </DataSetProvider>
-        </SearchContext.Provider>
+                <Route path="/single-asset-with-tabs/:id/:assetSerial/*" element={<SingleAssetWithTabs />} />
+                <Route path="/single-asset-nft/:id">
+                  <Route path=":assetContract/:assetTokenId" element={<SingleAssetNft />} />
+                </Route>
+              </Route>
+              <Route path="/coming-soon" element={<ComingSoon />} />
+            </Routes>
+          </TrustlessIndexingProvider>
+        </DataSetProvider>
       </div>
     </ThemeProvider>
   )
