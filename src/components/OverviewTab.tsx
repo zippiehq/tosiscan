@@ -67,6 +67,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
 
   const assets = dataSetData?.assets || []
   const lastVerified = dataSetData?.lastVerified || 0
+  const publisher = dataSetData?.metadata?.publisher
 
   return assets.length === 0 ? null : (
     <Box>
@@ -152,7 +153,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         color: '101828',
                       }}
                     >
-                      Airimpact
+                      {publisher}
                       <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
                     </Stack>
                   </TableCell>
@@ -168,7 +169,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         color: '101828',
                       }}
                     >
-                      Airimpact
+                      {publisher}
                       <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
                     </Stack>
                   </TableCell>
