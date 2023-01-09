@@ -47,7 +47,7 @@ const TrustlessIndexingURLs = {
 }
 
 const useTrustlessIndexing = () => {
-  const [TLIQuery, setTLIQuery] = useState<{ assetContract?: string; assetTokenId?: string; assetName?: string }>()
+  const [TLIQuery, setTLIQuery] = useState<{ assetContract?: string; assetTokenId?: string }>()
   const [isTLILoading, setIsTLILoading] = useState<boolean>(true)
   const [TLIDataSet, setTLIDataSet] = useState<ITLIDataSet>()
 
