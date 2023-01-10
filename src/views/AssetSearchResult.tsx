@@ -87,11 +87,14 @@ const CustomLink = styled(Link)(({ theme }) => ({
 // TO BE refactored!!!
 
 const AssetSearchResult = () => {
-  const { searchValue } = useParams()
+  const { encoded } = useParams()
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
   const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
   const navigate = useNavigate()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const searchValue = decodeURIComponent(encoded!)
+
   const assetContract = searchValue?.split('/').slice(-2, -1)[0]
   // eslint-disable-next-line no-unsafe-optional-chaining
   const assetTokenId = searchValue?.substring(searchValue?.lastIndexOf('/') + 1)

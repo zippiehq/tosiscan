@@ -40,10 +40,10 @@ const SearchField = styled(TextField)(({ theme }) => ({
 const Search = () => {
   const [searchValue, setSearchValue] = useState('')
   const navigate = useNavigate()
-
+  const encoded = encodeURIComponent(searchValue)
   const handleKeyDown = (e: any) => {
-    if (e.key === 'Enter' && searchValue) {
-      navigate(`/search-asset/${searchValue}`)
+    if (e.key === 'Enter' && encoded) {
+      navigate(`/search-asset/${encoded}`)
       setSearchValue('')
     }
   }
