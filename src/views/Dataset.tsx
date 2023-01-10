@@ -94,7 +94,7 @@ const Tab = styled(TabUnstyled)(({ theme }) => ({
 
 const getDataSetOptions = (dataset: string) => {
   switch (dataset) {
-    case 'Nguru Satellite Image':
+    case 'Satellite image':
       return {
         tabs: ['Overview', 'Files'],
         routePaths: ['', 'files', 'digital-assets'],
@@ -107,7 +107,7 @@ const getDataSetOptions = (dataset: string) => {
           </Routes>
         ),
       }
-    case 'Carbon Credit Futures':
+    case 'Carbon Credits':
       return {
         tabs: ['Overview', 'Assets', 'Verified files'],
         routePaths: ['', 'assets', 'verified-files'],
@@ -192,8 +192,7 @@ const Dataset = () => {
       {metaData?.name}
     </Typography>,
   ]
-
-  const { tabs, routePaths, routes } = getDataSetOptions(metaData?.name || '')
+  const { tabs, routePaths, routes } = getDataSetOptions(metaData?.['asset-class'] || '')
   const onTabChange = (value: number) => {
     setCurrentTab(value)
     navigate(routePaths[value])

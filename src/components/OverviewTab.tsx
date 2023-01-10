@@ -42,7 +42,7 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
   const assets = dataSetData?.assets || []
   const navigate = useNavigate()
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" mt={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography fontSize="20px" fontWeight={600} color="grey.9900">
           Latest files
@@ -126,15 +126,27 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         {asset.assetName}
                       </Typography>
 
-                      <Typography
-                        variant="body2"
-                        sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
-                      >
-                        {`${asset.locations[0].ownerAccount?.substring(
-                          0,
-                          4,
-                        )}...${asset.locations[0].ownerAccount?.substring(10, 30)}`}
-                      </Typography>
+                      {asset.locations[0].ownerAccount ? (
+                        <Typography
+                          variant="body2"
+                          sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
+                        >
+                          {`${asset.locations[0].ownerAccount?.substring(
+                            0,
+                            4,
+                          )}...${asset.locations[0].ownerAccount?.substring(10, 30)}`}
+                        </Typography>
+                      ) : (
+                        <Typography
+                          variant="body2"
+                          sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
+                        >
+                          {`${asset.locations[0].contract?.substring(0, 4)}...${asset.locations[0].contract?.substring(
+                            10,
+                            30,
+                          )}`}
+                        </Typography>
+                      )}
                     </Stack>
                   </TableCell>
 
@@ -449,7 +461,7 @@ const OverviewTab = () => {
           ''
         )}
 
-        {datasetName === 'Nguru Satellite Image' && <LastFiles datasetId={selectedDataSet?.id || ''} />}
+        {metaData?.['asset-class'] === 'Satellite image' && <LastFiles datasetId={selectedDataSet?.id || ''} />}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>
