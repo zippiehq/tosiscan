@@ -111,6 +111,8 @@ export const fetchDataSet = async (id: string, additionalMetadata: any = {}) => 
       ...additionalMetadata,
       // @ts-ignore
       ...metadata,
+      // @ts-ignore
+      image: metadata.image || additionalMetadata.image,
     },
     verifications,
     id,
@@ -132,7 +134,7 @@ function useDataSetAssets() {
       datasets.filter((dataset) => dataset.available).map((dataset) => fetchDataSet(dataset.id, dataset)),
     )
     const dynamic = await fetchDataDynamic()
-    const assetsDynamic = await Promise.all(dynamic.map((dataset: any) => fetchDataSet(dataset.cid)))
+    const assetsDynamic = await Promise.all(dynamic.map((dataset: any) => fetchDataSet(dataset.cid, dataset.metadata)))
     const finalAssets = assets.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
     const finalAssetsDyanmic = assetsDynamic.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
     setDataSetOutputs({ ...finalAssets, ...finalAssetsDyanmic })
