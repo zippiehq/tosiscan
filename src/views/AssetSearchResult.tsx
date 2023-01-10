@@ -100,7 +100,9 @@ const AssetSearchResult = () => {
   // search by name and find the dataset
   const onClickToDataset = (id: string) => navigate(`/dataset/${id}`)
   const Datasets = Object.values(datasetOutputs)
-  const dataset = Datasets.filter((object) => object.metadata?.name.toLowerCase() === searchValue?.toLowerCase())
+  const dataset = Datasets.filter((object) =>
+    object.metadata?.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+  )
   const [obj] = dataset
 
   // search by url
