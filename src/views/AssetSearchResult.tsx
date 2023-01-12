@@ -126,7 +126,7 @@ const AssetSearchResult = () => {
     )
   })
 
-  if (!assetContract && !assetTokenId && !datasetId && !TLIDataSet && !datasets) {
+  if ((!assetContract || !assetTokenId) && !datasetId && !TLIDataSet && !datasets.length) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
