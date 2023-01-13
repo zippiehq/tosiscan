@@ -19,15 +19,20 @@ import Footer from './components/Footer'
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
 import { TrustlessIndexingProvider } from './hooks/useTrustlessIndexing'
+import SmallHero from './components/SmallHero'
 
-// const location = useLocation()
-const Layout = () => (
-  <DataSetAssetsProvider>
-    <Hero />
-    <Outlet />
-    <Footer />
-  </DataSetAssetsProvider>
-)
+const Layout = () => {
+  const { pathname } = useLocation()
+  return (
+    <DataSetAssetsProvider>
+      {pathname === '/' ? <SmallHero /> : <Hero />}
+      <Outlet />
+      <Footer />
+    </DataSetAssetsProvider>
+  )
+
+  console.log(pathname)
+}
 
 function App() {
   const [value, setValue] = useState<any>({ term: '', filter: 'all' })
