@@ -456,21 +456,21 @@ const AssetSearchResult = () => {
         ))}
       {datasets && (
         <TableContainer sx={{ mb: '160px' }}>
-          {datasets.map((dataset: any) => (
-            <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-              <TableHead sx={{ backgroundColor: 'grey.50' }}>
-                <TableRow>
-                  <TableHeadCell>Dataset</TableHeadCell>
-                  <TableHeadCell>Asset Class</TableHeadCell>
-                  <TableHeadCell>Assets issued</TableHeadCell>
+          <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+            <TableHead sx={{ backgroundColor: 'grey.50' }}>
+              <TableRow>
+                <TableHeadCell>Dataset</TableHeadCell>
+                <TableHeadCell>Asset Class</TableHeadCell>
+                <TableHeadCell>Assets issued</TableHeadCell>
 
-                  <TableHeadCell>Last verified</TableHeadCell>
-                  <TableHeadCell>Publisher</TableHeadCell>
-                  <TableHeadCell>Issuer/s</TableHeadCell>
-                </TableRow>
-              </TableHead>
+                <TableHeadCell>Last verified</TableHeadCell>
+                <TableHeadCell>Publisher</TableHeadCell>
+                <TableHeadCell>Issuer/s</TableHeadCell>
+              </TableRow>
+            </TableHead>
 
-              <TableBody>
+            <TableBody>
+              {datasets.map((dataset: any) => (
                 <TableBodyRow
                   key={dataset?.id}
                   onClick={() => {
@@ -515,9 +515,9 @@ const AssetSearchResult = () => {
                     )}{' '}
                   </TableBodyCell>
                 </TableBodyRow>
-              </TableBody>
-            </Table>
-          ))}
+              ))}
+            </TableBody>
+          </Table>
         </TableContainer>
       )}
     </Container>
