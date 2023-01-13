@@ -9,7 +9,8 @@ import SearchIcon from '@mui/icons-material/Search'
 const SearchField = styled(TextField)(({ theme }) => ({
   position: 'relative',
   width: '100%',
-
+  height: '52px',
+  paddingTop: '16px',
   '& .MuiInputBase-root input': {
     boxSizing: 'border-box',
     width: '100%',
@@ -49,12 +50,12 @@ const Search = () => {
   }
 
   return (
-    <Box sx={{ position: 'relative', width: '640px', margin: '0 auto' }}>
+    <Box sx={{ position: 'relative', width: '1122px', margin: '0 auto' }}>
       <SearchIcon
         style={{
           position: 'absolute',
           zIndex: 10,
-          top: '50%',
+          top: '80%',
           left: '16px',
           transform: 'translateY(-50%)',
           fill: '#667085',

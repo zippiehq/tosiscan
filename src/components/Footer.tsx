@@ -79,7 +79,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="body1" color="grey.300">
-            Copyrighted by TOSI Foundation 2022
+            Copyrighted by TOSI Foundation 2023
           </Typography>
 
           <Box>
