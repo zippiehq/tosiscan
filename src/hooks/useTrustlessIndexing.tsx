@@ -41,9 +41,9 @@ export interface ITLIDataSet2 {
 }
 
 const TrustlessIndexingURLs = {
-  dev: 'https://api.dev.zippie.com/trustless-indexing',
+  dev: 'https://api.test.zippie.com/trustless-indexing',
   test: 'https://api.test.zippie.com/trustless-indexing',
-  prod: 'https://api.dev.zippie.com/trustless-indexing',
+  prod: 'https://api.test.zippie.com/trustless-indexing',
 }
 
 const useTrustlessIndexing = () => {
