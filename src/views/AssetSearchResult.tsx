@@ -23,6 +23,7 @@ import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { formatTimeStamp } from '../utils/timestapFormater'
+import { isValidUrl } from '../utils/helper'
 
 const EthLocation = {
   'Ethereum Mainet': 'https://opensea.io/assets/ethereum',
@@ -64,7 +65,9 @@ const TableBodyCell = styled(TableCell)(({ theme }) => ({
   lineHeight: 1.43,
   textAlign: 'left',
   color: theme.palette.grey['600'],
-  border: 'none',
+  borderBottomWidth: '1px',
+  borderBottomStyle: 'solid',
+  borderBottomColor: 'grey.200',
 }))
 const TableBodyRow = styled(TableRow)(() => ({
   cursor: 'pointer',
@@ -195,330 +198,342 @@ const AssetSearchResult = () => {
       <Typography variant="h6" color="grey.900" mt={5.5} mb={4} sx={{ fontWeight: 600 }}>
         Search Results
       </Typography>
+      {isValidUrl(searchValue) === true ? (
+        <Box>
+          {' '}
+          {filtered.length > 0 ||
+            (TLIDataSet && (
+              <TableContainer sx={{ mb: '160px' }}>
+                <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+                  <TableHead sx={{ backgroundColor: 'grey.50' }}>
+                    <TableRow sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+                      <TableHeadCell sx={{ width: '140px' }}>Serial No.</TableHeadCell>
+                      <TableHeadCell sx={{ width: '300px' }}>Asset</TableHeadCell>
+                      <TableHeadCell sx={{ textAlign: 'center' }}>Status</TableHeadCell>
+                      <TableHeadCell>Blockchain</TableHeadCell>
+                      <TableHeadCell>Contract</TableHeadCell>
+                      <TableHeadCell>Token Ref.</TableHeadCell>
+                      <TableHeadCell>Owner Address</TableHeadCell>
+                      <TableHeadCell sx={{ width: '197px' }}>Dataset</TableHeadCell>
+                      <TableHeadCell sx={{ width: '82px' }}> </TableHeadCell>
+                    </TableRow>
+                  </TableHead>
 
-      {filtered.length > 0 ||
-        (TLIDataSet && (
-          <TableContainer sx={{ mb: '160px' }}>
-            <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-              <TableHead sx={{ backgroundColor: 'grey.50' }}>
-                <TableRow sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-                  <TableHeadCell sx={{ width: '140px' }}>Serial No.</TableHeadCell>
-                  <TableHeadCell sx={{ width: '300px' }}>Asset</TableHeadCell>
-                  <TableHeadCell sx={{ textAlign: 'center' }}>Status</TableHeadCell>
-                  <TableHeadCell>Blockchain</TableHeadCell>
-                  <TableHeadCell>Contract</TableHeadCell>
-                  <TableHeadCell>Token Ref.</TableHeadCell>
-                  <TableHeadCell>Owner Address</TableHeadCell>
-                  <TableHeadCell sx={{ width: '197px' }}>Dataset</TableHeadCell>
-                  <TableHeadCell sx={{ width: '82px' }}> </TableHeadCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {filtered.map((asset: any) => (
-                  <TableRow
-                    key={asset.assetNumber}
-                    sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                  >
-                    <TableBodyCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
+                  <TableBody>
+                    {filtered.map((asset: any) => (
+                      <TableRow
+                        key={asset.assetNumber}
+                        sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
                       >
-                        {asset.assetNumber}
-                      </Link>
-                    </TableBodyCell>
+                        <TableBodyCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {asset.assetNumber}
+                          </Link>
+                        </TableBodyCell>
 
-                    <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
-                      <img
-                        src={asset.imageUrl}
-                        style={{ width: '32px', height: '32px', marginRight: '12px' }}
-                        alt="."
-                      />
-                      {asset.assetName}
-                    </TableBodyCell>
+                        <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
+                          <img
+                            src={asset.imageUrl}
+                            style={{ width: '32px', height: '32px', marginRight: '12px' }}
+                            alt="."
+                          />
+                          {asset.assetName}
+                        </TableBodyCell>
 
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
-                        <img src={asset.status ? IconCheck : IconInfo} alt="." />
-                      </Tooltip>
-                    </TableBodyCell>
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Tooltip title={asset.status === 'ok' ? hovermessage : asset.failedReason} placement="top">
+                            <img src={asset.status ? IconCheck : IconInfo} alt="." />
+                          </Tooltip>
+                        </TableBodyCell>
 
-                    <TableBodyCell>{asset.locations[0].name}</TableBodyCell>
+                        <TableBodyCell>{asset.locations[0].name}</TableBodyCell>
 
-                    <TableBodyCell>
-                      <CustomLink
-                        // @ts-ignore
-                        href={`${EthLocation[asset.locations[0].name]}/${asset.locations[0].contract}/${
-                          asset.locations[0].tokenId || asset.locations[0].tokenId
-                        }`}
-                        target="_blank"
-                        rel="noreferrer nofollow"
+                        <TableBodyCell>
+                          <CustomLink
+                            // @ts-ignore
+                            href={`${EthLocation[asset.locations[0].name]}/${asset.locations[0].contract}/${
+                              asset.locations[0].tokenId || asset.locations[0].tokenId
+                            }`}
+                            target="_blank"
+                            rel="noreferrer nofollow"
+                          >
+                            {`${asset.locations[0].contract?.slice(0, 6)}...${asset.locations[0].contract?.slice(
+                              asset.locations[0].contract.length - 4,
+                            )}`}
+                          </CustomLink>
+                        </TableBodyCell>
+
+                        <TableBodyCell>{asset?.locations[0].tokenId}</TableBodyCell>
+
+                        <TableBodyCell>
+                          {`${asset.locations[0].ownerAccount.slice(0, 6)}...${asset.locations[0].ownerAccount.slice(
+                            asset.locations[0].ownerAccount.length - 4,
+                          )}`}
+                        </TableBodyCell>
+
+                        <TableBodyCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/dataset/${datasetId}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {datasetId ? datasetOutputs[datasetId].metadata?.name : ''}
+                          </Link>
+                        </TableBodyCell>
+
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Details
+                          </Link>
+                        </TableBodyCell>
+                      </TableRow>
+                    ))}
+                    {TLIDataSet && (
+                      <TableRow
+                        key={TLIDataSet.token.id}
+                        sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
                       >
-                        {`${asset.locations[0].contract?.slice(0, 6)}...${asset.locations[0].contract?.slice(
-                          asset.locations[0].contract.length - 4,
-                        )}`}
-                      </CustomLink>
-                    </TableBodyCell>
+                        <TableBodyCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            1
+                          </Link>
+                        </TableBodyCell>
 
-                    <TableBodyCell>{asset?.locations[0].tokenId}</TableBodyCell>
+                        <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
+                          <img
+                            src={TLIDataSet.token.metadata.image}
+                            style={{ width: '32px', height: '32px', marginRight: '12px' }}
+                            alt="."
+                          />
+                          {TLIDataSet.token.metadata.name}
+                        </TableBodyCell>
 
-                    <TableBodyCell>
-                      {`${asset.locations[0].ownerAccount.slice(0, 6)}...${asset.locations[0].ownerAccount.slice(
-                        asset.locations[0].ownerAccount.length - 4,
-                      )}`}
-                    </TableBodyCell>
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Tooltip title="Asset not verified" placement="top">
+                            <img src={IconInfo} alt="." />
+                          </Tooltip>
+                        </TableBodyCell>
 
-                    <TableBodyCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/dataset/${datasetId}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {datasetId ? datasetOutputs[datasetId].metadata?.name : ''}
-                      </Link>
-                    </TableBodyCell>
+                        <TableBodyCell>Ethereum Mainnet</TableBodyCell>
 
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset/${datasetId}/${assetContract}/${assetTokenId}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Details
-                      </Link>
-                    </TableBodyCell>
+                        <TableBodyCell>
+                          <CustomLink
+                            // @ts-ignore
+                            href={`${EthLocation['Ethereum Mainet']}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                            target="_blank"
+                            rel="noreferrer nofollow"
+                          >
+                            {`${TLIDataSet.contract.address.slice(0, 6)}...${TLIDataSet.contract.address.slice(
+                              TLIDataSet.contract.address.length - 4,
+                            )}`}
+                          </CustomLink>
+                        </TableBodyCell>
+
+                        <TableBodyCell>{tokenRef}</TableBodyCell>
+
+                        <TableBodyCell>
+                          {TLIDataSet.token.owner
+                            ? `${TLIDataSet.token.owner.slice(0, 6)}...${TLIDataSet.token.owner.slice(
+                                TLIDataSet.token.owner.length - 4,
+                              )}`
+                            : '-'}
+                        </TableBodyCell>
+
+                        <TableBodyCell>Trustless Ethereum NFT</TableBodyCell>
+
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Details
+                          </Link>
+                        </TableBodyCell>
+                      </TableRow>
+                    )}
+                    {verified.map((asset: any) => (
+                      <TableRow key={asset.serialNumberStart}>
+                        <TableBodyCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {asset.assetNumber
+                              ? `${asset.assetNumber.slice(0, 4)}...${asset.assetNumber.slice(
+                                  asset.assetNumber.length - 5,
+                                )}`
+                              : ''}
+                          </Link>
+                        </TableBodyCell>
+
+                        <TableBodyCell sx={{ color: 'grey.900', borderBottom: 'none' }}>
+                          {asset.locations[0].name}
+                        </TableBodyCell>
+
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Tooltip title="Asset verified" placement="top">
+                            <img src={IconCheck} alt="." />
+                          </Tooltip>
+                        </TableBodyCell>
+
+                        <TableBodyCell>Verra Registry Database</TableBodyCell>
+
+                        <TableBodyCell>
+                          {`${asset.locations[0].contract.slice(0, 6)}...${asset.locations[0].contract.slice(
+                            asset.locations[0].contract.length - 4,
+                          )}`}
+                        </TableBodyCell>
+
+                        <TableBodyCell> - </TableBodyCell>
+
+                        <TableBodyCell> - </TableBodyCell>
+
+                        <TableBodyCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/dataset/${verifiedId}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Verra Carbon Registry
+                          </Link>
+                        </TableBodyCell>
+
+                        <TableBodyCell sx={{ textAlign: 'center' }}>
+                          <Link
+                            component={RouterLink}
+                            to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
+                            sx={{
+                              color: 'primary.600',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Details
+                          </Link>
+                        </TableBodyCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ))}
+        </Box>
+      ) : (
+        <Box>
+          {' '}
+          {datasets && (
+            <TableContainer sx={{ mb: '160px' }}>
+              <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
+                <TableHead sx={{ backgroundColor: 'grey.50' }}>
+                  <TableRow>
+                    <TableHeadCell>Dataset</TableHeadCell>
+                    <TableHeadCell>Asset Class</TableHeadCell>
+                    <TableHeadCell>Assets issued</TableHeadCell>
+
+                    <TableHeadCell>Last verified</TableHeadCell>
+                    <TableHeadCell>Publisher</TableHeadCell>
+                    <TableHeadCell>Issuer/s</TableHeadCell>
                   </TableRow>
-                ))}
-                {TLIDataSet && (
-                  <TableRow
-                    key={TLIDataSet.token.id}
-                    sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
-                  >
-                    <TableBodyCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        1
-                      </Link>
-                    </TableBodyCell>
+                </TableHead>
 
-                    <TableBodyCell sx={{ display: 'flex', alignItems: 'center', color: 'grey.900' }}>
-                      <img
-                        src={TLIDataSet.token.metadata.image}
-                        style={{ width: '32px', height: '32px', marginRight: '12px' }}
-                        alt="."
-                      />
-                      {TLIDataSet.token.metadata.name}
-                    </TableBodyCell>
+                <TableBody>
+                  {datasets.map((dataset: any) => (
+                    <TableBodyRow
+                      key={dataset?.id}
+                      onClick={() => {
+                        onClickToDataset(dataset?.id)
+                      }}
+                    >
+                      <TableBodyCell>
+                        <Box sx={{ display: 'flex' }}>
+                          <img src={dataset?.metadata?.image} width="40" height="40" alt="." />
 
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Tooltip title="Asset not verified" placement="top">
-                        <img src={IconInfo} alt="." />
-                      </Tooltip>
-                    </TableBodyCell>
+                          <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
+                              {dataset?.metadata?.name}
+                            </Typography>
+                            <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
+                              {`${dataset?.metadata?.contract?.slice(0, 10)}...${dataset?.metadata?.contract?.slice(
+                                -10,
+                              )}`}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </TableBodyCell>
 
-                    <TableBodyCell>Ethereum Mainnet</TableBodyCell>
+                      <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                        {dataset?.metadata?.['asset-class']}
+                      </TableBodyCell>
+                      <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                        {dataset?.assets.length}
+                      </TableBodyCell>
 
-                    <TableBodyCell>
-                      <CustomLink
-                        // @ts-ignore
-                        href={`${EthLocation['Ethereum Mainet']}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
-                        target="_blank"
-                        rel="noreferrer nofollow"
-                      >
-                        {`${TLIDataSet.contract.address.slice(0, 6)}...${TLIDataSet.contract.address.slice(
-                          TLIDataSet.contract.address.length - 4,
-                        )}`}
-                      </CustomLink>
-                    </TableBodyCell>
+                      <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
+                        {formatTimeStamp(dataset?.lastVerified)}
+                      </TableBodyCell>
 
-                    <TableBodyCell>{tokenRef}</TableBodyCell>
+                      <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
+                        {dataset?.metadata?.publisher || '-'}
+                        {dataset?.metadata?.publisher && (
+                          <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
+                        )}{' '}
+                      </TableBodyCell>
 
-                    <TableBodyCell>
-                      {TLIDataSet.token.owner
-                        ? `${TLIDataSet.token.owner.slice(0, 6)}...${TLIDataSet.token.owner.slice(
-                            TLIDataSet.token.owner.length - 4,
-                          )}`
-                        : '-'}
-                    </TableBodyCell>
-
-                    <TableBodyCell>Trustless Ethereum NFT</TableBodyCell>
-
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset-nft/${TrustLessIndexingCID}/${TLIDataSet.contract.address}/${TLIDataSet.token.id}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Details
-                      </Link>
-                    </TableBodyCell>
-                  </TableRow>
-                )}
-                {verified.map((asset: any) => (
-                  <TableRow key={asset.serialNumberStart}>
-                    <TableBodyCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {asset.assetNumber
-                          ? `${asset.assetNumber.slice(0, 4)}...${asset.assetNumber.slice(
-                              asset.assetNumber.length - 5,
-                            )}`
-                          : ''}
-                      </Link>
-                    </TableBodyCell>
-
-                    <TableBodyCell sx={{ color: 'grey.900', borderBottom: 'none' }}>
-                      {asset.locations[0].name}
-                    </TableBodyCell>
-
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Tooltip title="Asset verified" placement="top">
-                        <img src={IconCheck} alt="." />
-                      </Tooltip>
-                    </TableBodyCell>
-
-                    <TableBodyCell>Verra Registry Database</TableBodyCell>
-
-                    <TableBodyCell>
-                      {`${asset.locations[0].contract.slice(0, 6)}...${asset.locations[0].contract.slice(
-                        asset.locations[0].contract.length - 4,
-                      )}`}
-                    </TableBodyCell>
-
-                    <TableBodyCell> - </TableBodyCell>
-
-                    <TableBodyCell> - </TableBodyCell>
-
-                    <TableBodyCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/dataset/${verifiedId}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Verra Carbon Registry
-                      </Link>
-                    </TableBodyCell>
-
-                    <TableBodyCell sx={{ textAlign: 'center' }}>
-                      <Link
-                        component={RouterLink}
-                        to={`/single-asset-with-tabs/${verifiedId}/${asset.assetNumber}`}
-                        sx={{
-                          color: 'primary.600',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Details
-                      </Link>
-                    </TableBodyCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ))}
-      {datasets && (
-        <TableContainer sx={{ mb: '160px' }}>
-          <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
-            <TableHead sx={{ backgroundColor: 'grey.50' }}>
-              <TableRow>
-                <TableHeadCell>Dataset</TableHeadCell>
-                <TableHeadCell>Asset Class</TableHeadCell>
-                <TableHeadCell>Assets issued</TableHeadCell>
-
-                <TableHeadCell>Last verified</TableHeadCell>
-                <TableHeadCell>Publisher</TableHeadCell>
-                <TableHeadCell>Issuer/s</TableHeadCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {datasets.map((dataset: any) => (
-                <TableBodyRow
-                  key={dataset?.id}
-                  onClick={() => {
-                    onClickToDataset(dataset?.id)
-                  }}
-                >
-                  <TableBodyCell>
-                    <Box sx={{ display: 'flex' }}>
-                      <img src={dataset?.metadata?.image} width="40" height="40" alt="." />
-
-                      <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>
-                          {dataset?.metadata?.name}
-                        </Typography>
-                        <Typography variant="caption" color="primary.600" sx={{ lineHeight: 1.5 }}>
-                          {`${dataset?.metadata?.contract?.slice(0, 10)}...${dataset?.metadata?.contract?.slice(-10)}`}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </TableBodyCell>
-
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
-                    {dataset?.metadata?.['asset-class']}
-                  </TableBodyCell>
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>{dataset?.assets.length}</TableBodyCell>
-
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.500' }}>
-                    {formatTimeStamp(dataset?.lastVerified)}
-                  </TableBodyCell>
-
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
-                    {dataset?.metadata?.publisher || '-'}
-                    {dataset?.metadata?.publisher && (
-                      <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
-                    )}{' '}
-                  </TableBodyCell>
-
-                  <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
-                    {dataset?.metadata?.publisher || '-'}
-                    {dataset?.metadata?.publisher && (
-                      <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
-                    )}{' '}
-                  </TableBodyCell>
-                </TableBodyRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                      <TableBodyCell sx={{ fontSize: '14px', color: 'grey.900' }}>
+                        {dataset?.metadata?.publisher || '-'}
+                        {dataset?.metadata?.publisher && (
+                          <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
+                        )}{' '}
+                      </TableBodyCell>
+                    </TableBodyRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Box>
       )}
     </Container>
   )
