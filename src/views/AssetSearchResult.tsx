@@ -8,13 +8,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableCell,
   TableBody,
   Link,
   Tooltip,
   Box,
 } from '@mui/material'
-import { styled } from '@mui/system'
+
+import { TableHeadCell, TableBodyCell, TableBodyRow, CustomLink, ContainerWithoutData } from '../components/TableStyles'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
@@ -33,58 +33,6 @@ const EthLocation = {
 }
 
 const TrustLessIndexingCID = 'bafybeih6h347f6iqvue6lfcxpjw2iqwnyulg2n2wtskyw2ioj4y6olqogu'
-
-const ContainerWithoutData = styled(Container)(({ theme }) => ({
-  [theme.breakpoints.up('xl')]: {
-    maxWidth: '1280px',
-  },
-  paddingTop: '120px',
-  paddingRight: 0,
-  paddingBottom: '120px',
-  paddingLeft: 0,
-}))
-
-const TableHeadCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(3),
-  paddingBottom: theme.spacing(1.5),
-  paddingLeft: theme.spacing(3),
-  lineHeight: 1.43,
-  textAlign: 'left',
-  color: theme.palette.grey['500'],
-  borderBottomWidth: '1px',
-  borderBottomStyle: 'solid',
-  borderBottomColor: 'grey.200',
-}))
-
-const TableBodyCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.8),
-  paddingRight: theme.spacing(3),
-  paddingBottom: theme.spacing(1.8),
-  paddingLeft: theme.spacing(3),
-  lineHeight: 1.43,
-  textAlign: 'left',
-  color: theme.palette.grey['600'],
-  borderBottomWidth: '1px',
-  borderBottomStyle: 'solid',
-  borderBottomColor: 'grey.200',
-}))
-const TableBodyRow = styled(TableRow)(() => ({
-  cursor: 'pointer',
-
-  '&.disabled': {
-    backgroundColor: '#fdfdfd',
-    opacity: 0.75,
-    cursor: 'default !important',
-  },
-}))
-
-const CustomLink = styled(Link)(({ theme }) => ({
-  fontSize: '14px',
-  lineHeight: 1.43,
-  color: theme.palette.primary['600'],
-  textDecoration: 'none',
-})) as typeof Link
 
 // TO BE refactored!!!
 

@@ -2,18 +2,9 @@ import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
-import {
-  Box,
-  Table,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Typography,
-  Skeleton,
-} from '@mui/material'
-import { styled } from '@mui/system'
+import { Box, Table, TableContainer, TableHead, TableRow, TableBody, Typography, Skeleton } from '@mui/material'
+
+import { TableBodyCell, TableHeadCell, TableBodyRow } from './TableStyles'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
@@ -22,42 +13,6 @@ import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import Pagination from './Pagination'
 
 const PageSize = 5
-
-const TableHeadCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(3),
-  paddingBottom: theme.spacing(1.5),
-  paddingLeft: theme.spacing(3),
-  lineHeight: 1.43,
-  textAlign: 'left',
-  color: theme.palette.grey['500'],
-  borderBottomWidth: '1px',
-  borderBottomStyle: 'solid',
-  borderBottomColor: 'grey.200',
-}))
-
-const TableBodyRow = styled(TableRow)(() => ({
-  cursor: 'pointer',
-
-  '&.disabled': {
-    backgroundColor: '#fdfdfd',
-    opacity: 0.75,
-    cursor: 'default !important',
-  },
-}))
-
-const TableBodyCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.8),
-  paddingRight: theme.spacing(3),
-  paddingBottom: theme.spacing(1.8),
-  paddingLeft: theme.spacing(3),
-  lineHeight: 1.43,
-  textAlign: 'left',
-  color: theme.palette.grey['600'],
-  borderBottomWidth: '1px',
-  borderBottomStyle: 'solid',
-  borderBottomColor: 'grey.200',
-}))
 
 const VerificationList = () => {
   const { isLoading, datasetOutputs } = useDataSetAssetsContext()
