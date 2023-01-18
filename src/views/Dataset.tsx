@@ -12,6 +12,8 @@ import TabUnstyled from '@mui/base/TabUnstyled'
 import { ReactComponent as IconHome } from '../assets/images/icon-home.svg'
 import IconAlertCircle from '../assets/images/info-circle.png'
 import IconAlertTriangle from '../assets/images/alert-triangle.png'
+import Cube from '../assets/images/Cube-color.png'
+import Gray from '../assets/images/Collection-gray.png'
 
 import OverviewTab from '../components/OverviewTab'
 import AssetTab from '../components/AssetTab'
@@ -168,6 +170,7 @@ const Dataset = () => {
   const statusOptions = latestVerificationObject?.status ? getStatusMessage(latestVerificationObject?.status) : null
 
   const metaData = selectedDataSet?.metadata
+  const image = metaData?.image === '' ? Cube : metaData?.image
 
   const breadcrumbs = [
     <Typography
@@ -212,7 +215,7 @@ const Dataset = () => {
         </Breadcrumbs>
 
         <Box mt={4} mb={6.25} sx={{ display: 'flex' }}>
-          <img src={selectedDataSet?.metadata?.image} width="64px" height="64px" alt="." />
+          <img src={image} style={{ borderRadius: '8px' }} width="64px" height="64px" alt="." />
 
           <Box ml={2.5}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
