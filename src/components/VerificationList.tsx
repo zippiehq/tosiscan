@@ -20,7 +20,7 @@ import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verifi
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 import Pagination from './Pagination'
-import Cube from '../assets/images/Cube-color.png'
+
 import Gray from '../assets/images/Collection-gray.png'
 
 const PageSize = 5
@@ -140,7 +140,7 @@ const VerificationList = () => {
                 const datasetContract = asset?.metadata?.contract
                 const datasetAssetClass = asset?.metadata?.['asset-class']
                 const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
-                const image = asset.metadata.image === '' ? Cube : asset.metadata.image
+                const image = asset.metadata.image === '' ? Gray : asset.metadata.image
                 return (
                   <TableBodyRow
                     key={asset.id}
