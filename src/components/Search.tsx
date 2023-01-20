@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Box, TextField, InputAdornment } from '@mui/material'
+import { TextField, InputAdornment } from '@mui/material'
 import { styled } from '@mui/system'
 
 import SearchIcon from '@mui/icons-material/Search'

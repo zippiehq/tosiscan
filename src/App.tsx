@@ -30,8 +30,6 @@ const Layout = () => {
       <Footer />
     </DataSetAssetsProvider>
   )
-
-  console.log(pathname)
 }
 
 function App() {
