@@ -48,7 +48,7 @@ const Wrapper = styled(Box)(() => ({
 const Hero = () => (
   <Wrapper>
     <Header />
-    <Container sx={{ maxWidth: { xl: '1280px' }, margin: '0 auto', paddingX: { xs: 0 }, textAlign: 'center' }}>
+    <Container sx={{ maxWidth: { xl: '520px' }, margin: '0 auto', paddingX: { xs: 0 }, textAlign: 'center' }}>
       <Logo style={{ width: '236px', height: '69px', marginTop: '72px' }} />
 
       <Typography variant="body1" color="success.50" m={1} mb={4}>
