@@ -9,8 +9,7 @@ import SearchIcon from '@mui/icons-material/Search'
 const SearchField = styled(TextField)(({ theme }) => ({
   position: 'relative',
   width: '100%',
-  height: '52px',
-  paddingTop: '16px',
+
   '& .MuiInputBase-root input': {
     boxSizing: 'border-box',
     width: '100%',
@@ -40,7 +39,7 @@ const SearchField = styled(TextField)(({ theme }) => ({
 
 const BoxField = styled(Box)(({ theme }) => ({
   position: 'relative',
-  width: '1122px',
+  width: '640px',
   margin: '0 auto',
 }))
 
@@ -61,7 +60,7 @@ const Search = () => {
         style={{
           position: 'absolute',
           zIndex: 10,
-          top: '80%',
+          top: '50%',
           left: '16px',
           transform: 'translateY(-50%)',
           fill: '#667085',

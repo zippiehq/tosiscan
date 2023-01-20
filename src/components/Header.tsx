@@ -15,7 +15,7 @@ const NavLink = styled(Link)(({ theme }) => ({
   fontSize: '14px',
   fontWeight: 500,
   lineHeight: 1.43,
-  color: '#667085',
+  color: '#ffffff',
   textDecoration: 'none',
 })) as typeof Link
 
@@ -59,13 +59,7 @@ const Header = () => (
             <NavLink
               component={RouterLink}
               to="/coming-soon"
-              sx={{
-                paddingY: 1.25,
-                paddingX: 2,
-                border: '1px solid rgba(16, 24, 40, 0.05)',
-                borderRadius: '100px',
-                color: '#344054',
-              }}
+              sx={{ paddingY: 1.25, paddingX: 2, border: '1px solid rgba(236, 253, 243, 0.5)', borderRadius: '100px' }}
             >
               Become a publisher
             </NavLink>

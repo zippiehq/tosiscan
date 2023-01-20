@@ -25,7 +25,7 @@ const Layout = () => {
   const { pathname } = useLocation()
   return (
     <DataSetAssetsProvider>
-      {pathname === '/' ? <SmallHero /> : <Hero />}
+      {pathname === '/' ? <Hero /> : <SmallHero />}
       <Outlet />
       <Footer />
     </DataSetAssetsProvider>
