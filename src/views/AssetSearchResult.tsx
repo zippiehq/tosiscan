@@ -22,6 +22,7 @@ import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
+import Gray from '../assets/images/Collection-gray.png'
 import { formatTimeStamp } from '../utils/timestapFormater'
 import { isValidUrl } from '../utils/helper'
 
@@ -436,7 +437,13 @@ const AssetSearchResult = () => {
                     >
                       <TableBodyCell>
                         <Box sx={{ display: 'flex' }}>
-                          <img src={dataset?.metadata?.image} width="40" height="40" alt="." />
+                          <img
+                            src={dataset.metadata.image === '' ? Gray : dataset.metadata.image}
+                            style={{ borderRadius: '5px' }}
+                            width="40"
+                            height="40"
+                            alt="."
+                          />
 
                           <Box ml={2} sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography variant="subtitle1" color="grey.900" sx={{ fontWeight: 500, lineHeight: 1.5 }}>

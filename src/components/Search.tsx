@@ -38,6 +38,12 @@ const SearchField = styled(TextField)(({ theme }) => ({
   },
 }))
 
+const BoxField = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  width: '1122px',
+  margin: '0 auto',
+}))
+
 const Search = () => {
   const [searchValue, setSearchValue] = useState('')
   const navigate = useNavigate()
@@ -50,7 +56,7 @@ const Search = () => {
   }
 
   return (
-    <Box sx={{ position: 'relative', width: '1122px', margin: '0 auto' }}>
+    <BoxField>
       <SearchIcon
         style={{
           position: 'absolute',
@@ -72,7 +78,7 @@ const Search = () => {
         value={searchValue}
         aria-label="Search"
       />
-    </Box>
+    </BoxField>
   )
 }
 
