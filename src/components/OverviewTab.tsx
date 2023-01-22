@@ -28,6 +28,7 @@ import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verifi
 import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
 import IconAlertCircle from '../assets/images/info-circle.png'
 import IconAlertTriangle from '../assets/images/alert-triangle.png'
+import Gray from '../assets/images/Collection-gray.png'
 import { AssetFile } from './AssetFileComponent'
 
 interface IVerificationsErrors {
@@ -142,7 +143,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                     }}
                   >
                     <img
-                      src={dataset?.metadata?.image}
+                      src={dataset?.metadata?.image === '' ? Gray : dataset?.metadata?.image}
                       width="40px"
                       height="40px"
                       style={{ borderRadius: '5px' }}
