@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import {
   Box,
@@ -9,11 +9,9 @@ import {
   TableCell,
   TableContainer,
   Typography,
-  Link,
   TableHead,
   Stack,
   Button,
-  Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { TableBodyRow } from './TableStyles'
@@ -24,6 +22,7 @@ import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFo
 import { getVerificationComponent } from './Verifications'
 import { getOverviewComponent } from './DatasetOverview'
 import Issuer from './Issuer'
+import Pagination from './Pagination'
 
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
@@ -62,15 +61,32 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
 }
 
 const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
-  const { datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
+  const { isLoading, datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
+  const Datasets = Object.values(datasetOutputs)
+  const DigitalDatasets = Datasets.filter(
+    (object) => object.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset',
+  )
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const PageSize = 4
+
+  const slicedDatasets = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize
+    const lastPageIndex = firstPageIndex + PageSize
+
+    const datasets = Object.keys(DigitalDatasets).map((assetCid: any) => DigitalDatasets[assetCid])
+
+    const sortedByDateDescending = datasets.sort(
+      (previousAsset: any, nextAsset: any) => nextAsset.lastVerified - previousAsset.lastVerified,
+    )
+
+    if (!isLoading) {
+      return sortedByDateDescending.slice(firstPageIndex, lastPageIndex)
+    }
+  }, [isLoading, currentPage])
 
   const navigate = useNavigate()
   const onClickToDataset = (id: string) => navigate(`/dataset/${id}`)
-
-  const datasets = Object.values(datasetOutputs)
-  const DigitalDatasets = datasets.filter(
-    (object) => object.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset',
-  )
 
   return selectedDataSet?.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset' ? (
     <Box>
@@ -108,7 +124,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
             </TableHead>
 
             <TableBody>
-              {DigitalDatasets.map((dataset) => (
+              {slicedDatasets?.map((dataset) => (
                 <TableBodyRow
                   key={dataset.id}
                   onClick={() => {
@@ -204,6 +220,12 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
               ))}
             </TableBody>
           </Table>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={Object.keys(DigitalDatasets).length}
+            pageSize={PageSize}
+            onPageChange={(page: any) => setCurrentPage(page)}
+          />
         </TableContainer>
       </Box>
     </Box>
