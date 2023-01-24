@@ -9,7 +9,7 @@ import IconLocationMark from '../assets/images/icon-location-mark.svg'
 import IconDownload from '../assets/images/icon-download.svg'
 import { formatDate } from '../utils/timestapFormater'
 
-const SectionWrapper = styled(Box)(({ theme }) => ({
+export const SectionWrapper = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
   padding: theme.spacing(3),
   borderWidth: '1px',
@@ -18,7 +18,7 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
   borderRadius: '10px',
 }))
 
-const TableNameCell = styled(TableCell)(({ theme }) => ({
+export const TableNameCell = styled(TableCell)(({ theme }) => ({
   width: '266px',
   paddingTop: theme.spacing(1.5),
   paddingRight: theme.spacing(2),
@@ -32,7 +32,7 @@ const TableNameCell = styled(TableCell)(({ theme }) => ({
   borderBottomLeftRadius: '4px',
 }))
 
-const TableValueCell = styled(TableCell)(({ theme }) => ({
+export const TableValueCell = styled(TableCell)(({ theme }) => ({
   paddingTop: theme.spacing(1.5),
   paddingRight: theme.spacing(2),
   paddingBottom: theme.spacing(1.5),
@@ -44,7 +44,7 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderBottomRightRadius: '4px',
 }))
 
-const CustomLink = styled(Link)(({ theme }) => ({
+export const CustomLink = styled(Link)(({ theme }) => ({
   fontSize: '16px',
   lineHeight: 1.5,
   color: theme.palette.primary['600'],

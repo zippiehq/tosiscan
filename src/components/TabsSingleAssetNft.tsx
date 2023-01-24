@@ -6,9 +6,8 @@ import TabPanelUnstyled from '@mui/base/TabPanelUnstyled'
 import TabUnstyled from '@mui/base/TabUnstyled'
 import { styled } from '@mui/system'
 
-import SingleAssetDetailsTab from './SingleAssetDetailsTab'
-import SingleAssetAttributeTab from './SingleAssetAttributeTab'
-import SingleAssetVerification from './SingleAssetVerification'
+import DetailsTab from './DetailsTab'
+import AttributeTab from './AttributeTab'
 
 const TabsList = styled(TabsListUnstyled)(({ theme }) => ({
   display: 'flex',
@@ -44,31 +43,31 @@ const Tab = styled(TabUnstyled)(({ theme }) => ({
   },
 }))
 
-const TabsSingleAsset = () => (
+const TabsSingleAssetNft = () => (
   <TabsUnstyled defaultValue={0}>
     <TabsList>
       <Tab>Details</Tab>
       <Tab>Attributes</Tab>
-      <Tab>Supporting verification</Tab>
-      {/* <Tab>History</Tab> */}
+      {/* <Tab>Supporting verification</Tab>
+      <Tab>History</Tab> */}
     </TabsList>
 
     <TabPanelUnstyled value={0}>
-      <SingleAssetDetailsTab />
+      <DetailsTab />
     </TabPanelUnstyled>
 
     <TabPanelUnstyled value={1}>
-      <SingleAssetAttributeTab />
+      <AttributeTab />
     </TabPanelUnstyled>
 
-    <TabPanelUnstyled value={2}>
-      <SingleAssetVerification />
+    {/* <TabPanelUnstyled value={3}>
+      3dsfdsf
     </TabPanelUnstyled>
 
-    {/* <TabPanelUnstyled value={4}>
+    <TabPanelUnstyled value={4}>
       4sdfsdf
     </TabPanelUnstyled> */}
   </TabsUnstyled>
 )
 
-export default () => <TabsSingleAsset />
+export default () => <TabsSingleAssetNft />
