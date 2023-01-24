@@ -74,9 +74,9 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
   const slicedDatasets = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
+    const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
 
-    const datasets = Object.keys(DigitalDatasets).map((assetCid: any) => DigitalDatasets[assetCid])
-
+    const datasets = Datasets.filter((o1) => linkedCIDs?.some((o2) => o1.metadata?.contract === o2))
     const sortedByDateDescending = datasets.sort(
       (previousAsset: any, nextAsset: any) => nextAsset.lastVerified - previousAsset.lastVerified,
     )
