@@ -1,37 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Link as RouterLink } from 'react-router-dom'
 import moment from 'moment'
 
-import {
-  Box,
-  Container,
-  Typography,
-  Link,
-  TableContainer,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  Tooltip,
-} from '@mui/material'
+import { Box, Container, Typography, Stack, List } from '@mui/material'
 import { styled } from '@mui/system'
 
 import CircularProgress from '@mui/material/CircularProgress'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+import {
+  LinkDropdown,
+  SectionWrapper,
+  AssetPropertyWrapper,
+  Badge,
+  CustomLink,
+  DatasetItem,
+} from '../components/SingleAssetStyles'
+
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
+import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
+import LogoVerra from '../assets/images/logo-verra-carbon-registry.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
-import { getVerificationComponent } from '../components/Verifications'
 import Issuer from '../components/Issuer'
-
-const EthLocation = {
-  Ethereum: 'https://opensea.io/assets/ethereum',
-  ethereum: 'https://opensea.io/assets/ethereum',
-  'Ethereum Goerli': 'https://testnets.opensea.io/assets/goerli',
-}
+import TabsSingleAsset from '../components/TabsSingleAsset'
 
 const ContentContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.up('xl')]: {
@@ -44,35 +38,10 @@ const ContentContainer = styled(Container)(({ theme }) => ({
   margin: '0 auto',
 }))
 
-const TableNameCell = styled(TableCell)(({ theme }) => ({
-  width: '266px',
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  paddingLeft: theme.spacing(2),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['600'],
-  borderBottom: 'none',
-  borderTopLeftRadius: '4px',
-  borderBottomLeftRadius: '4px',
-}))
-
-const TableValueCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['900'],
-  borderBottom: 'none',
-  borderTopRightRadius: '4px',
-  borderBottomRightRadius: '4px',
-}))
-
 const SingleAsset = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
+  const [currentTab, setCurrentTab] = useState(0)
   const lastVerified = selectedDataSet?.lastVerified
   const metaData = selectedDataSet?.metadata
   const assets = selectedDataSet?.assets || []
@@ -85,15 +54,6 @@ const SingleAsset = () => {
       )
 
   const datasetName = metaData?.name || 'Lohko Gold'
-  const location = asset?.locations[0]
-
-  const tokenId = location?.tokenId
-  const hovermessage = 'Verified successfully'
-
-  // @ts-ignore
-  const openSearUrl = `${EthLocation[location?.name]}/${location?.contract}/${tokenId}`
-  // @ts-ignore
-  const Verification = getVerificationComponent(datasetName)
 
   return !asset ? (
     <ContentContainer sx={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -106,148 +66,145 @@ const SingleAsset = () => {
           Asset details
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography variant="body1" color="grey.500" mr={3}>
             From
             <span style={{ fontWeight: 500, color: '#1d2939' }}>&nbsp;{datasetName}&nbsp;</span>
             dataset
           </Typography>
 
-          <Link
-            component={RouterLink}
-            to={`/dataset/${id}`}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '16px',
-              fontWeight: 500,
-              lineHeight: 1.5,
-              color: 'primary.600',
-              textDecoration: 'none',
-            }}
-          >
+          <LinkDropdown component={RouterLink} to={`/dataset/${id}`}>
             View dataset
             <ArrowForwardIcon style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
-          </Link>
+          </LinkDropdown>
         </Box>
       </Box>
 
+      <SectionWrapper mb={5.25}>
+        <Typography
+          variant="subtitle1"
+          color="grey.900"
+          mb={1.25}
+          sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1.5 }}
+        >
+          Overview
+        </Typography>
+
+        <Box sx={{ display: 'flex' }}>
+          <Box mr={3} sx={{ display: 'flex', width: '657px' }}>
+            <img src={metaData?.image} width="200" height="200" alt="." style={{ borderRadius: '10px' }} />
+
+            <Box ml={3}>
+              <Typography
+                variant="h2"
+                color="grey.900"
+                mb={1.5}
+                sx={{ fontSize: '32px', fontWeight: 600, lineHeight: 1.19 }}
+              >
+                {datasetName}
+              </Typography>
+
+              <Box mb={3} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Badge className="primary">{metaData?.['asset-type']}</Badge>
+                <Typography variant="body2" color="grey.400" ml={1}>
+                  Last verified 20 mins ago
+                </Typography>
+              </Box>
+
+              <Typography variant="body2" color="grey.500" mb={1.5}>
+                By:
+                <span style={{ color: '#1d2939' }}>
+                  &nbsp;
+                  {metaData
+                    ? `${metaData.contract?.slice(0, 6)}...${metaData.contract?.slice(metaData.contract.length - 4)}`
+                    : ''}
+                </span>
+              </Typography>
+
+              <Typography variant="body2" color="grey.500" mb={1.5}>
+                {metaData?.['asset-description']}
+                {metaData?.['asset-description'] && (
+                  <CustomLink component={RouterLink} to="/coming-soon" sx={{ fontWeight: 500 }}>
+                    &nbsp;Read more
+                  </CustomLink>
+                )}
+              </Typography>
+            </Box>
+          </Box>
+
+          <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', width: '520px' }}>
+            <AssetPropertyWrapper>
+              <Typography>Blockhain</Typography>
+              <Typography>Ethereum</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Last verified</Typography>
+              <Typography>An hour ago</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Token Ref.</Typography>
+              <Typography>{}</Typography>
+            </AssetPropertyWrapper>
+
+            <AssetPropertyWrapper>
+              <Typography>Current owner</Typography>
+              <Typography>
+                {metaData?.contract
+                  ? `${metaData?.contract.slice(0, 6)}...${metaData?.contract.slice(
+                      // eslint-disable-next-line no-unsafe-optional-chaining
+                      metaData?.contract.length - 4,
+                    )}`
+                  : '-'}
+              </Typography>
+            </AssetPropertyWrapper>
+          </Stack>
+        </Box>
+      </SectionWrapper>
       <Box sx={{ display: 'flex', marginBottom: '160px' }}>
         <Box mr={3} sx={{ maxWidth: { xl: '820px' } }}>
-          <Box
-            mb={4.25}
-            p={3}
-            sx={{
-              width: '100%',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'grey.200',
-              borderRadius: '10px',
-            }}
-          >
-            <Typography variant="h2" color="grey.900" mb={1.25} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-              Overview
-            </Typography>
-
-            <TableContainer>
-              <Table>
-                <TableBody>
-                  {asset?.assetNumber && (
-                    <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                      <TableNameCell>Serial No.</TableNameCell>
-                      <TableValueCell>{asset?.assetNumber}</TableValueCell>
-                    </TableRow>
-                  )}
-
-                  <TableRow>
-                    <TableNameCell>Asset</TableNameCell>
-                    <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>
-                      <img src={asset?.imageUrl} width="40" height="40" style={{ marginRight: '12px' }} alt="." />
-                      {asset?.assetName}
-                    </TableValueCell>
-                  </TableRow>
-
-                  <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                    <TableNameCell>Last verified</TableNameCell>
-                    <TableValueCell>
-                      {!isLoading && lastVerified
-                        ? moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
-                        : 'loading...'}
-                    </TableValueCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableNameCell>Status</TableNameCell>
-                    <TableValueCell>
-                      <Tooltip title={asset?.status === 'ok' ? hovermessage : asset?.failedReason} placement="top">
-                        <img src={asset?.status === 'ok' ? IconCheck : IconInfo} width="24px" height="24p" alt="." />
-                      </Tooltip>
-                    </TableValueCell>
-                  </TableRow>
-
-                  <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                    <TableNameCell>Blockchain</TableNameCell>
-                    <TableValueCell>{location ? location.name : 'Zippienet'}</TableValueCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableNameCell>Contract</TableNameCell>
-                    <TableValueCell>
-                      {/* @ts-ignore */}
-                      {location && location.contract && EthLocation[location.name] ? (
-                        <Link
-                          href={openSearUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          sx={{ color: 'primary.600', textDecoration: 'none' }}
-                        >
-                          {location.contract}
-                        </Link>
-                      ) : (
-                        <Typography>{location?.contract || '0xa40e46adC47781094892c4d6538D7d6f34e4187f'}</Typography>
-                      )}
-                    </TableValueCell>
-                  </TableRow>
-
-                  <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                    <TableNameCell>Token Ref.</TableNameCell>
-                    <TableValueCell>
-                      {location && location.ownerAccount
-                        ? `${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
-                            location.ownerAccount.length - 4,
-                          )}`
-                        : ''}
-                    </TableValueCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableNameCell>Dataset</TableNameCell>
-                    <TableValueCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/dataset/${id}`}
-                        sx={{ color: 'primary.600', textDecoration: 'none' }}
-                      >
-                        {datasetName}
-                      </Link>
-                    </TableValueCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-
-          <Box sx={{ width: '100%' }}>
-            <Typography variant="h2" color="grey.900" sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-              Supporting verification
-            </Typography>
-
-            <Verification />
-          </Box>
+          <TabsSingleAsset />
         </Box>
 
         <Box sx={{ maxWidth: { xl: '378px' } }}>
           <Issuer />
+
+          <SectionWrapper>
+            <Typography
+              variant="subtitle1"
+              color="grey.900"
+              mb={1.25}
+              sx={{ fontSize: '18px', fontWeight: 600, lineHeight: 1.56 }}
+            >
+              Dataset
+            </Typography>
+
+            <List
+              sx={{
+                padding: 0,
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: 'grey.200',
+                borderRadius: '8px',
+              }}
+            >
+              <DatasetItem disablePadding>
+                <img src={LogoVerra} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
+
+                <Box ml={2}>
+                  <Typography variant="body1" color="grey.900" mb={0.25} sx={{ fontWeight: 500 }}>
+                    Verra Carbon Registry
+                  </Typography>
+
+                  <Typography variant="body1" color="grey.900" sx={{ display: 'flex', alignItems: 'center' }}>
+                    Verra
+                    <IconVerifiedTick style={{ marginLeft: '6px' }} />
+                  </Typography>
+                </Box>
+              </DatasetItem>
+            </List>
+          </SectionWrapper>
         </Box>
       </Box>
     </ContentContainer>
