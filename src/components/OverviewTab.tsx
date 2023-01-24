@@ -64,32 +64,15 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
 const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
   const { isLoading, datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
   const Datasets = Object.values(datasetOutputs)
-  const DigitalDatasets = Datasets.filter(
-    (object) => object.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset',
-  )
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const PageSize = 4
+  const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
 
-  const slicedDatasets = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize
-    const lastPageIndex = firstPageIndex + PageSize
-    const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
-
-    const datasets = Datasets.filter((o1) => linkedCIDs?.some((o2) => o1.metadata?.contract === o2))
-    const sortedByDateDescending = datasets.sort(
-      (previousAsset: any, nextAsset: any) => nextAsset.lastVerified - previousAsset.lastVerified,
-    )
-
-    if (!isLoading) {
-      return sortedByDateDescending.slice(firstPageIndex, lastPageIndex)
-    }
-  }, [isLoading, currentPage])
+  const datasets = Datasets.filter((o1) => linkedCIDs?.some((o2) => o1.metadata?.contract === o2))
 
   const navigate = useNavigate()
   const onClickToDataset = (id: string) => navigate(`/dataset/${id}`)
 
-  return selectedDataSet?.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset' ? (
+  return selectedDataSet?.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset' && datasetId ? (
     <Box>
       <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
         Linked datasets
@@ -125,7 +108,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
             </TableHead>
 
             <TableBody>
-              {slicedDatasets?.map((dataset) => (
+              {datasets?.map((dataset) => (
                 <TableBodyRow
                   key={dataset.id}
                   onClick={() => {
@@ -221,12 +204,6 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
               ))}
             </TableBody>
           </Table>
-          <Pagination
-            currentPage={currentPage}
-            totalCount={Object.keys(DigitalDatasets).length}
-            pageSize={PageSize}
-            onPageChange={(page: any) => setCurrentPage(page)}
-          />
         </TableContainer>
       </Box>
     </Box>
