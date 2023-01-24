@@ -112,7 +112,7 @@ export const fetchDataSet = async (id: string, additionalMetadata: any = {}) => 
       // @ts-ignore
       ...metadata,
       // @ts-ignore
-      image: metadata.image || additionalMetadata.image,
+      image: metadata?.image || additionalMetadata?.image,
     },
     verifications,
     id,
