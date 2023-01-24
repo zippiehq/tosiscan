@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
+import { TableBodyRow } from './TableStyles'
 
 import { useDataSetAssetsContext, StatusType, IVerifications, IFinalAsset } from '../hooks/useDatachainOutput'
 import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
@@ -28,6 +29,7 @@ import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verifi
 import { ReactComponent as IconRight } from '../assets/arrow-right.svg'
 import IconAlertCircle from '../assets/images/info-circle.png'
 import IconAlertTriangle from '../assets/images/alert-triangle.png'
+import Gray from '../assets/images/Collection-gray.png'
 import { AssetFile } from './AssetFileComponent'
 
 interface IVerificationsErrors {
@@ -61,18 +63,19 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
 }
 
 const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
-  const { datasetOutputs } = useDataSetAssetsContext()
+  const { isLoading, datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
+  const Datasets = Object.values(datasetOutputs)
 
-  const dataSetData = datasetOutputs ? datasetOutputs[datasetId] : null
+  const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
+  const datasets = Datasets.filter((o1) => linkedCIDs?.some((o2) => o1.metadata?.contract === o2))
 
-  const assets = dataSetData?.assets || []
-  const lastVerified = dataSetData?.lastVerified || 0
-  const publisher = dataSetData?.metadata?.publisher
+  const navigate = useNavigate()
+  const onClickToDataset = (id: string) => navigate(`/dataset/${id}`)
 
-  return assets.length === 0 ? null : (
+  return selectedDataSet?.metadata?.['asset-class'].toLocaleLowerCase() === 'digital asset' && datasetId ? (
     <Box>
       <Typography variant="h2" color="grey.900" mb={2} sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-        Verified files
+        Linked datasets
       </Typography>
 
       <Box>
@@ -105,8 +108,14 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
             </TableHead>
 
             <TableBody>
-              {assets.map((asset) => (
-                <TableRow sx={{ borderBottom: '1px solid #eaecf0' }} key={asset.assetName}>
+              {datasets.map((dataset) => (
+                <TableBodyRow
+                  sx={{ borderBottom: '1px solid #eaecf0' }}
+                  key={dataset.id}
+                  onClick={() => {
+                    onClickToDataset(dataset.id)
+                  }}
+                >
                   <TableCell
                     sx={{
                       display: 'flex',
@@ -116,32 +125,38 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                       borderBottom: 'none',
                     }}
                   >
-                    <img src={asset?.imageUrl} width="40px" height="40px" alt="." />
+                    <img
+                      src={dataset.metadata?.image === '' ? Gray : dataset.metadata?.image}
+                      width="40px"
+                      height="40px"
+                      style={{ borderRadius: '5px' }}
+                      alt="."
+                    />
 
                     <Stack ml={2}>
                       <Typography
                         variant="h4"
                         sx={{ fontSize: '16px', fontWeight: 500, lineHeight: 1.5, color: '#101828' }}
                       >
-                        {asset.assetName}
+                        {dataset.metadata?.name}
                       </Typography>
 
-                      {asset.locations[0].ownerAccount ? (
+                      {dataset.metadata?.contract ? (
                         <Typography
                           variant="body2"
                           sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
                         >
-                          {`${asset.locations[0].ownerAccount?.substring(
-                            0,
-                            4,
-                          )}...${asset.locations[0].ownerAccount?.substring(10, 30)}`}
+                          {`${dataset.metadata?.contract?.substring(0, 4)}...${dataset.metadata?.contract?.substring(
+                            10,
+                            30,
+                          )}`}
                         </Typography>
                       ) : (
                         <Typography
                           variant="body2"
                           sx={{ fontSize: '12px', fontWeight: 500, lineHeight: 1.5, color: '#07939c' }}
                         >
-                          {`${asset.locations[0].contract?.substring(0, 4)}...${asset.locations[0].contract?.substring(
+                          {`${dataset.metadata?.contract?.substring(0, 4)}...${dataset.metadata?.contract?.substring(
                             10,
                             30,
                           )}`}
@@ -151,7 +166,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                   </TableCell>
 
                   <TableCell sx={{ fontSize: '13px', lineHeight: 1.43, color: '#667085', borderBottom: 'none' }}>
-                    {`${formatDate(lastVerified)} (${formatTimeLeft(lastVerified)})`}
+                    {`${formatDate(dataset.lastVerified)} (${formatTimeLeft(dataset.lastVerified)})`}
                   </TableCell>
 
                   <TableCell sx={{ borderBottom: 'none' }}>
@@ -165,7 +180,7 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         color: '101828',
                       }}
                     >
-                      {publisher}
+                      {dataset.metadata?.publisher}
                       <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
                     </Stack>
                   </TableCell>
@@ -181,18 +196,18 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
                         color: '101828',
                       }}
                     >
-                      {publisher}
+                      {dataset.metadata?.publisher}
                       <IconVerifiedTick style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
                     </Stack>
                   </TableCell>
-                </TableRow>
+                </TableBodyRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
     </Box>
-  )
+  ) : null
 }
 const getStatusIcon = (iconType: StatusType) => {
   switch (iconType) {
