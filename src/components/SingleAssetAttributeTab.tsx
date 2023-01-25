@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer } from '@mui/material'
-import { SectionWrapper, TableNameCell, TableValueCell, CustomLink } from './DetailsTab'
+import { SectionWrapper, CustomLink } from './DetailsTab'
+import { TableNameCell, TableValueCell } from './TableStyles'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
