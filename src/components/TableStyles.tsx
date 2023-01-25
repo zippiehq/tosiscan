@@ -29,6 +29,31 @@ export const TableBodyCell = styled(TableCell)(({ theme }) => ({
   borderBottomColor: 'grey.200',
 }))
 
+export const TableNameCell = styled(TableCell)(({ theme }) => ({
+  width: '266px',
+  paddingTop: theme.spacing(1.5),
+  paddingRight: theme.spacing(2),
+  paddingBottom: theme.spacing(1.5),
+  paddingLeft: theme.spacing(2),
+  fontSize: '16px',
+  lineHeight: 1.5,
+  color: theme.palette.grey['600'],
+  borderBottom: 'none',
+  borderTopLeftRadius: '4px',
+  borderBottomLeftRadius: '4px',
+}))
+
+export const TableValueCell = styled(TableCell)(({ theme }) => ({
+  paddingTop: theme.spacing(1.5),
+  paddingRight: theme.spacing(2),
+  paddingBottom: theme.spacing(1.5),
+  fontSize: '16px',
+  lineHeight: 1.5,
+  color: theme.palette.grey['900'],
+  borderBottom: 'none',
+  borderTopRightRadius: '4px',
+  borderBottomRightRadius: '4px',
+}))
 export const TableBodyRow = styled(TableRow)(() => ({
   cursor: 'pointer',
 
