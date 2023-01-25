@@ -94,8 +94,8 @@ const Tab = styled(TabUnstyled)(({ theme }) => ({
 }))
 
 const getDataSetOptions = (dataset: string) => {
-  switch (dataset) {
-    case 'Satellite image':
+  switch (dataset.toLowerCase()) {
+    case 'file timestamp':
       return {
         tabs: ['Overview', 'Files'],
         routePaths: ['', 'files', 'digital-assets'],
@@ -108,7 +108,7 @@ const getDataSetOptions = (dataset: string) => {
           </Routes>
         ),
       }
-    case 'Carbon Credits':
+    case 'carbon credits':
       return {
         tabs: ['Overview', 'Assets', 'Verified files'],
         routePaths: ['', 'assets', 'verified-files'],
