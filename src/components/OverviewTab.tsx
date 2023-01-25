@@ -461,7 +461,9 @@ const OverviewTab = () => {
           ''
         )}
 
-        {metaData?.['asset-class'] === 'Satellite image' && <LastFiles datasetId={selectedDataSet?.id || ''} />}
+        {metaData?.['asset-class'].toLowerCase() === 'file timestamp' && (
+          <LastFiles datasetId={selectedDataSet?.id || ''} />
+        )}
       </Box>
 
       <Box sx={{ maxWidth: { xl: '378px' } }}>
