@@ -4,17 +4,17 @@ import { useParams } from 'react-router-dom'
 import { SectionWrapper, TableNameCell, TableValueCell, CustomLink } from './DetailsTab'
 import { getOverviewComponent } from './DatasetOverview'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-import { formatTimeStamp } from '../utils/timestapFormater'
+import { formatDate, formatTimeLeft, formatTimeStamp } from '../utils/timestapFormater'
+import IconCheck from '../assets/images/icon-check.svg'
 
 const SingleAssetDetailsTab = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
-  console.log(selectedDataSet)
+
   const metaData = selectedDataSet?.metadata
   const assets = selectedDataSet?.assets
   const lastVerified = selectedDataSet?.lastVerified as number
   const createdDate = selectedDataSet?.creationDate as number
-  console.log(assets)
 
   const asset = assetSerial
     ? assets?.find((asset) => asset.assetNumber === assetSerial)
@@ -28,6 +28,10 @@ const SingleAssetDetailsTab = () => {
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
+
+  const lenthToken = tokenId?.length as number
+
+  const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
   // @ts-ignore
   const Description = getOverviewComponent(metaData?.name)
   return (
@@ -76,12 +80,14 @@ const SingleAssetDetailsTab = () => {
 
               <TableRow>
                 <TableNameCell>Last Verified</TableNameCell>
-                <TableValueCell>{formatTimeStamp(lastVerified)}</TableValueCell>
+                <TableValueCell>{`${formatDate(lastVerified)} (${formatTimeLeft(lastVerified)})`}</TableValueCell>
               </TableRow>
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Status</TableNameCell>
-                <TableValueCell>{asset?.status}</TableValueCell>
+                <TableValueCell>
+                  <img src={IconCheck} width="24px" height="24p" alt="." />
+                </TableValueCell>
               </TableRow>
 
               <TableRow>
@@ -91,7 +97,7 @@ const SingleAssetDetailsTab = () => {
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Token ID</TableNameCell>
-                <TableValueCell>{tokenId}</TableValueCell>
+                <TableValueCell>{tokenRef}</TableValueCell>
               </TableRow>
 
               <TableRow>
@@ -109,7 +115,7 @@ const SingleAssetDetailsTab = () => {
               </TableRow>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Creation Date</TableNameCell>
-                <TableValueCell>{formatTimeStamp(createdDate)}</TableValueCell>
+                <TableValueCell>{`${formatDate(createdDate)} (${formatTimeLeft(createdDate)})`}</TableValueCell>
               </TableRow>
             </TableBody>
           </Table>
