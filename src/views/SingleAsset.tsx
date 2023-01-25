@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link as RouterLink } from 'react-router-dom'
-import moment from 'moment'
 
-import { Box, Container, Typography, Stack, List } from '@mui/material'
-import { styled } from '@mui/system'
+import { Box, Typography, Stack, List } from '@mui/material'
 
 import CircularProgress from '@mui/material/CircularProgress'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -15,6 +13,7 @@ import {
   Badge,
   CustomLink,
   DatasetItem,
+  ContentContainer,
 } from '../components/SingleAssetStyles'
 
 import IconCheck from '../assets/images/icon-check.svg'
@@ -26,23 +25,13 @@ import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 import Issuer from '../components/Issuer'
 import TabsSingleAsset from '../components/TabsSingleAsset'
-
-const ContentContainer = styled(Container)(({ theme }) => ({
-  [theme.breakpoints.up('xl')]: {
-    maxWidth: '1280px',
-  },
-  [theme.breakpoints.up('xs')]: {
-    paddingRight: theme.spacing(2.5),
-    paddingLeft: theme.spacing(2.5),
-  },
-  margin: '0 auto',
-}))
+import { formatTimeLeft } from '../utils/timestapFormater'
 
 const SingleAsset = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
-  const [currentTab, setCurrentTab] = useState(0)
-  const lastVerified = selectedDataSet?.lastVerified
+
+  const lastVerified = selectedDataSet?.lastVerified as number
   const metaData = selectedDataSet?.metadata
   const assets = selectedDataSet?.assets || []
   const asset = assetSerial
@@ -52,6 +41,13 @@ const SingleAsset = () => {
           asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
           asset.locations[0]?.tokenId === assetTokenId,
       )
+
+  const location = asset?.locations[0]
+
+  const tokenId = location?.tokenId
+  const lenthToken = tokenId?.length as number
+
+  const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
 
   const datasetName = metaData?.name || 'Lohko Gold'
 
@@ -107,17 +103,17 @@ const SingleAsset = () => {
               <Box mb={3} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Badge className="primary">{metaData?.['asset-type']}</Badge>
                 <Typography variant="body2" color="grey.400" ml={1}>
-                  Last verified 20 mins ago
+                  Last verified {formatTimeLeft(lastVerified)}
                 </Typography>
               </Box>
 
               <Typography variant="body2" color="grey.500" mb={1.5}>
                 By:
                 <span style={{ color: '#1d2939' }}>
-                  &nbsp;
-                  {metaData
-                    ? `${metaData.contract?.slice(0, 6)}...${metaData.contract?.slice(metaData.contract.length - 4)}`
-                    : ''}
+                  &nbsp; {metaData?.publisher || '-'}
+                  {metaData?.publisher && (
+                    <IconVerifiedTick style={{ marginLeft: '6px', width: '12px', height: '12px' }} />
+                  )}{' '}
                 </span>
               </Typography>
 
@@ -135,26 +131,26 @@ const SingleAsset = () => {
           <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', width: '520px' }}>
             <AssetPropertyWrapper>
               <Typography>Blockhain</Typography>
-              <Typography>Ethereum</Typography>
+              <Typography>{asset.currentLocation}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
               <Typography>Last verified</Typography>
-              <Typography>An hour ago</Typography>
+              <Typography>{formatTimeLeft(lastVerified)}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
-              <Typography>Token Ref.</Typography>
-              <Typography>{}</Typography>
+              <Typography>Token Id.</Typography>
+              <Typography>{tokenRef}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
               <Typography>Current owner</Typography>
               <Typography>
-                {metaData?.contract
-                  ? `${metaData?.contract.slice(0, 6)}...${metaData?.contract.slice(
+                {location?.ownerAccount
+                  ? `${location?.ownerAccount.slice(0, 6)}...${location?.ownerAccount.slice(
                       // eslint-disable-next-line no-unsafe-optional-chaining
-                      metaData?.contract.length - 4,
+                      location?.ownerAccount.length - 4,
                     )}`
                   : '-'}
               </Typography>
@@ -163,7 +159,7 @@ const SingleAsset = () => {
         </Box>
       </SectionWrapper>
       <Box sx={{ display: 'flex', marginBottom: '160px' }}>
-        <Box mr={3} sx={{ maxWidth: { xl: '820px' } }}>
+        <Box mr={4.5} sx={{ width: { xl: '920px' } }}>
           <TabsSingleAsset />
         </Box>
 

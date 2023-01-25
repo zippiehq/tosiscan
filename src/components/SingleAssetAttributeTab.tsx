@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer } from '@mui/material'
 import { SectionWrapper, TableNameCell, TableValueCell, CustomLink } from './DetailsTab'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
@@ -19,21 +19,12 @@ const SingleAssetAttributeTab = () => {
           <TableBody>
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Project name</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>Nguru Mountain Project</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Project type</TableNameCell>
-              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>
-                <img
-                  src={selectedDataSet?.metadata?.image}
-                  width="40"
-                  height="40"
-                  style={{ marginRight: '12px', borderRadius: '4px' }}
-                  alt="."
-                />
-                {}
-              </TableValueCell>
+              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>Reforestation</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
@@ -43,32 +34,32 @@ const SingleAssetAttributeTab = () => {
 
             <TableRow>
               <TableNameCell>Project location</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>Nguru, Tanzania</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification status</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>Certified</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Certification standards</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>Verra Carbon Standard</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification project type</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>Agriculture Forestry and Other Land Use </TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Certification methodology</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>AR-ACM0003</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification crediting period</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>7 Years Twice Renewable</TableValueCell>
             </TableRow>
           </TableBody>
         </Table>
