@@ -70,8 +70,7 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
     ),
   )
   uniqueItems = Array.from(uniqueItems)
-  console.log('unique items', uniqueItems)
-  console.log(assets)
+
   return (
     <TableContainer>
       <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
