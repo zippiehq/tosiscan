@@ -67,7 +67,9 @@ const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
   const Datasets = Object.values(datasetOutputs)
 
   const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
-  const datasets = Datasets.filter((o1) => linkedCIDs?.some((o2) => o1.metadata?.contract === o2))
+  const datasets = Datasets.filter((linkDataset) =>
+    linkedCIDs?.some((linkContract) => linkDataset.metadata?.contract === linkContract),
+  )
 
   const navigate = useNavigate()
   const onClickToDataset = (id: string) => navigate(`/dataset/${id}`)
