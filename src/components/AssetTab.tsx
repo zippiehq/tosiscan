@@ -201,9 +201,6 @@ const IndividualAssetTable = ({
                       <Typography variant="body2" color="grey.900">
                         {assetName}
                       </Typography>
-                      <CustomLink component={RouterLink} to="/coming-soon" sx={{ cursor: 'pointer' }}>
-                        Verra Registry
-                      </CustomLink>
                     </TableCell>
 
                     <TableCell sx={{ paddingY: 1.75, paddingX: 4.5, border: 'none' }}>
