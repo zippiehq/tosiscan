@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom'
 
 import { ThemeProvider } from '@mui/material/styles'
 
@@ -19,14 +19,18 @@ import Footer from './components/Footer'
 import { DataSetAssetsProvider } from './hooks/useDatachainOutput'
 import { DataSetProvider } from './hooks/useDataset'
 import { TrustlessIndexingProvider } from './hooks/useTrustlessIndexing'
+import SmallHero from './components/SmallHero'
 
-const Layout = () => (
-  <DataSetAssetsProvider>
-    <Hero />
-    <Outlet />
-    <Footer />
-  </DataSetAssetsProvider>
-)
+const Layout = () => {
+  const { pathname } = useLocation()
+  return (
+    <DataSetAssetsProvider>
+      {pathname === '/' ? <Hero /> : <SmallHero />}
+      <Outlet />
+      <Footer />
+    </DataSetAssetsProvider>
+  )
+}
 
 function App() {
   const [value, setValue] = useState<any>({ term: '', filter: 'all' })
