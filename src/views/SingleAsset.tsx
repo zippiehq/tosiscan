@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link as RouterLink } from 'react-router-dom'
 
-import { Box, Typography, Stack, List } from '@mui/material'
+import { Box, Typography, Stack, List, Link } from '@mui/material'
 
 import CircularProgress from '@mui/material/CircularProgress'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -62,14 +62,14 @@ const SingleAsset = () => {
           Asset details
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1" color="grey.500" mr={3}>
             From
             <span style={{ fontWeight: 500, color: '#1d2939' }}>&nbsp;{datasetName}&nbsp;</span>
             dataset
           </Typography>
 
-          <LinkDropdown component={RouterLink} to={`/dataset/${id}`}>
+          <LinkDropdown component={RouterLink} to={`/dataset/${id}`} sx={{ ml: 85 }}>
             View dataset
             <ArrowForwardIcon style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
           </LinkDropdown>
@@ -88,7 +88,7 @@ const SingleAsset = () => {
 
         <Box sx={{ display: 'flex' }}>
           <Box mr={3} sx={{ display: 'flex', width: '657px' }}>
-            <img src={metaData?.image} width="200" height="200" alt="." style={{ borderRadius: '10px' }} />
+            <img src={asset?.imageUrl} width="200" height="200" alt="." style={{ borderRadius: '10px' }} />
 
             <Box ml={3}>
               <Typography
@@ -186,15 +186,15 @@ const SingleAsset = () => {
               }}
             >
               <DatasetItem disablePadding>
-                <img src={LogoVerra} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
+                <img src={metaData?.image} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
 
                 <Box ml={2}>
                   <Typography variant="body1" color="grey.900" mb={0.25} sx={{ fontWeight: 500 }}>
-                    Verra Carbon Registry
+                    {metaData?.name}
                   </Typography>
 
                   <Typography variant="body1" color="grey.900" sx={{ display: 'flex', alignItems: 'center' }}>
-                    Verra
+                    {metaData?.publisher}
                     <IconVerifiedTick style={{ marginLeft: '6px' }} />
                   </Typography>
                 </Box>

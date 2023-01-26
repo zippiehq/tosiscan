@@ -56,7 +56,7 @@ const SingleAssetDetailsTab = () => {
           <Table>
             <TableBody>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>#</TableNameCell>
+                <TableNameCell>Serial No.</TableNameCell>
                 <TableValueCell>{asset?.assetNumber}</TableValueCell>
               </TableRow>
 
