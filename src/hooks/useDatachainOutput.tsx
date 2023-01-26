@@ -61,6 +61,7 @@ export interface DatachainOutputContextT {
 export interface IFinalAsset {
   assetNumber?: string
   assetName: string
+  ['asset-type']: string
   imageUrl: string
   currentLocation?: string
   locations: ILocation[]

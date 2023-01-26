@@ -66,7 +66,7 @@ const CustomLink = styled(Link)(({ theme }) => ({
 const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
   let uniqueItems: any = new Set(
     assets.map((asset: IFinalAsset) =>
-      asset.currentLocation === 'Verra Registry Database' ? 'Verra Verified Carbon Units' : asset.assetName,
+      asset.currentLocation === 'Verra Registry Database' ? 'Verra Verified Carbon Units' : asset['asset-type'],
     ),
   )
   uniqueItems = Array.from(uniqueItems)
@@ -88,7 +88,7 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
               <TableBodyCellUnique sx={{ textAlign: 'left', fontSize: '16px', lineHeight: 1.5, color: 'grey.700' }}>
                 {asset}
               </TableBodyCellUnique>
-              <TableBodyCellUnique>{assets?.filter((item) => item.assetName === asset).length}</TableBodyCellUnique>
+              <TableBodyCellUnique>{assets?.filter((item) => item['asset-type'] === asset).length}</TableBodyCellUnique>
               <TableBodyCellUnique>0</TableBodyCellUnique>
             </TableRow>
           ))}
