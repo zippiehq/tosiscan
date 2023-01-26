@@ -64,10 +64,9 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
 
 const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
   const { isLoading, datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
-  const Datasets = Object.values(datasetOutputs)
 
   const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
-  const datasets = Datasets.filter((linkDataset) =>
+  const datasets = Object.values(datasetOutputs).filter((linkDataset) =>
     linkedCIDs?.some((linkContract) => linkDataset.metadata?.contract === linkContract),
   )
 
