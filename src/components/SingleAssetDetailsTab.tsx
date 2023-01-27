@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer, Tooltip, TableCell, Link } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { SectionWrapper, CustomLink } from './DetailsTab'
 import { TableNameCell, TableValueCell } from './TableStyles'
@@ -7,6 +7,7 @@ import { getOverviewComponent } from './DatasetOverview'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { formatDate, formatTimeLeft, formatTimeStamp } from '../utils/timestapFormater'
 import IconCheck from '../assets/images/icon-check.svg'
+import IconInfo from '../assets/images/icon-info.svg'
 
 const SingleAssetDetailsTab = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
@@ -25,7 +26,8 @@ const SingleAssetDetailsTab = () => {
           asset.locations[0]?.tokenId === assetTokenId,
       )
 
-  //     const datasetName = metaData?.name || 'Lohko Gold'
+  const message = asset?.status === 'ok' ? 'Verified successfully' : asset?.failedReason || ''
+
   const location = asset?.locations[0]
 
   const tokenId = location?.tokenId
@@ -87,7 +89,9 @@ const SingleAssetDetailsTab = () => {
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Status</TableNameCell>
                 <TableValueCell>
-                  <img src={IconCheck} width="24px" height="24p" alt="." />
+                  <Tooltip title={message} placement="top">
+                    <img src={asset?.status === 'ok' ? IconCheck : IconInfo} width="24px" height="24p" alt="." />
+                  </Tooltip>
                 </TableValueCell>
               </TableRow>
 
