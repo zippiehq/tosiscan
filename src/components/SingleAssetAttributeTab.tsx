@@ -20,47 +20,47 @@ const SingleAssetAttributeTab = () => {
           <TableBody>
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Project name</TableNameCell>
-              <TableValueCell>Nguru Mountain Project</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Project type</TableNameCell>
-              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>Reforestation</TableValueCell>
+              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>-</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Project description</TableNameCell>
-              <TableValueCell>{}</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Project location</TableNameCell>
-              <TableValueCell>Nguru, Tanzania</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification status</TableNameCell>
-              <TableValueCell>Certified</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Certification standards</TableNameCell>
-              <TableValueCell>Verra Carbon Standard</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification project type</TableNameCell>
-              <TableValueCell>Agriculture Forestry and Other Land Use </TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow>
               <TableNameCell>Certification methodology</TableNameCell>
-              <TableValueCell>AR-ACM0003</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
 
             <TableRow sx={{ backgroundColor: 'grey.50' }}>
               <TableNameCell>Certification crediting period</TableNameCell>
-              <TableValueCell>7 Years Twice Renewable</TableValueCell>
+              <TableValueCell>-</TableValueCell>
             </TableRow>
           </TableBody>
         </Table>

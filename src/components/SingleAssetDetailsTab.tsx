@@ -107,7 +107,7 @@ const SingleAssetDetailsTab = () => {
 
               <TableRow>
                 <TableNameCell>Token Standard</TableNameCell>
-                <TableValueCell>{}</TableValueCell>
+                <TableValueCell>-</TableValueCell>
               </TableRow>
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
@@ -116,7 +116,7 @@ const SingleAssetDetailsTab = () => {
               </TableRow>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Creator</TableNameCell>
-                <TableValueCell>{}</TableValueCell>
+                <TableValueCell>-</TableValueCell>
               </TableRow>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Creation Date</TableNameCell>
