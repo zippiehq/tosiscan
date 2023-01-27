@@ -69,7 +69,7 @@ const SingleAsset = () => {
             dataset
           </Typography>
 
-          <LinkDropdown component={RouterLink} to={`/dataset/${id}`} sx={{ ml: 85 }}>
+          <LinkDropdown component={RouterLink} to={`/dataset/${id}`}>
             View dataset
             <ArrowForwardIcon style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
           </LinkDropdown>
