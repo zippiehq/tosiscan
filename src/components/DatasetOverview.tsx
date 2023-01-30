@@ -63,7 +63,7 @@ export const getOverviewComponent = (name: string, description?: string) => {
   switch (name) {
     case 'Lohko Gold':
       return DatasetOverviewLohko
-    case 'Carbon Credit Futures':
+    case 'Lohko Carbon Credit Futures':
       return DatasetOverviewCarbon
     case 'Nguru Satellite Image':
       return DatasetOverviewNguru
