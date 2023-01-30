@@ -35,8 +35,8 @@ const SingleAssetDetailsTab = () => {
   const lenthToken = tokenId?.length as number
 
   const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
-  // @ts-ignore
-  const Description = getOverviewComponent(metaData?.name)
+
+  const Description = getOverviewComponent(metaData?.name || '')
   return (
     <>
       <SectionWrapper>
