@@ -148,10 +148,7 @@ const SingleAsset = () => {
               <Typography>Current owner</Typography>
               <Typography>
                 {location?.ownerAccount
-                  ? `${location?.ownerAccount.slice(0, 6)}...${location?.ownerAccount.slice(
-                      // eslint-disable-next-line no-unsafe-optional-chaining
-                      location?.ownerAccount.length - 4,
-                    )}`
+                  ? `${location?.ownerAccount.slice(0, 6)}...${location?.ownerAccount.slice(-4)}`
                   : '-'}
               </Typography>
             </AssetPropertyWrapper>
