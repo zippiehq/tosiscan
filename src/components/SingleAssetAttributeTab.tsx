@@ -1,13 +1,26 @@
 import React from 'react'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import { SectionWrapper, CustomLink } from './DetailsTab'
 import { TableNameCell, TableValueCell } from './TableStyles'
+import { StyledTableRow } from './AttributeTab'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 const SingleAssetAttributeTab = () => {
+  const { assetContract, assetTokenId, assetSerial, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
+  const assets = selectedDataSet?.assets
+  const asset = assetSerial
+    ? assets?.find((asset) => asset.assetNumber === assetSerial)
+    : assets?.find(
+        (asset) =>
+          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+          asset.locations[0]?.tokenId === assetTokenId,
+      )
+
+  const attributes = asset?.attributes || []
 
   return (
     <SectionWrapper>
@@ -18,50 +31,12 @@ const SingleAssetAttributeTab = () => {
       <TableContainer>
         <Table>
           <TableBody>
-            <TableRow sx={{ backgroundColor: 'grey.50' }}>
-              <TableNameCell>Project name</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow>
-              <TableNameCell>Project type</TableNameCell>
-              <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>-</TableValueCell>
-            </TableRow>
-
-            <TableRow sx={{ backgroundColor: 'grey.50' }}>
-              <TableNameCell>Project description</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow>
-              <TableNameCell>Project location</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow sx={{ backgroundColor: 'grey.50' }}>
-              <TableNameCell>Certification status</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow>
-              <TableNameCell>Certification standards</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow sx={{ backgroundColor: 'grey.50' }}>
-              <TableNameCell>Certification project type</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow>
-              <TableNameCell>Certification methodology</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
-
-            <TableRow sx={{ backgroundColor: 'grey.50' }}>
-              <TableNameCell>Certification crediting period</TableNameCell>
-              <TableValueCell>-</TableValueCell>
-            </TableRow>
+            {attributes.map((item: any) => (
+              <StyledTableRow key={item}>
+                <TableNameCell>{item.trait_type}</TableNameCell>
+                <TableValueCell>{item.value}</TableValueCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
