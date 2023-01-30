@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link as RouterLink } from 'react-router-dom'
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import { Box, Typography, Stack, List, Link } from '@mui/material'
 
@@ -50,6 +50,10 @@ const SingleAsset = () => {
   const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
 
   const datasetName = metaData?.name || 'Lohko Gold'
+
+  const navigate = useNavigate()
+
+  const OnClickToDataset = (available: boolean, id: string) => (available ? navigate(`/dataset/${id}`) : false)
 
   return !asset ? (
     <ContentContainer sx={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -185,7 +189,14 @@ const SingleAsset = () => {
               <DatasetItem disablePadding>
                 <img src={metaData?.image} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
 
-                <Box ml={2}>
+                <Box
+                  ml={2}
+                  key={id}
+                  onClick={() => {
+                    OnClickToDataset(true, id || '')
+                  }}
+                  sx={{ cursor: 'pointer' }}
+                >
                   <Typography variant="body1" color="grey.900" mb={0.25} sx={{ fontWeight: 500 }}>
                     {metaData?.name}
                   </Typography>

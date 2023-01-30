@@ -43,7 +43,7 @@ const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderBottomRightRadius: '4px',
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   listStyleType: 'none',
   '&:nth-of-type(odd)': {
     backgroundColor: '#f9fafb',
