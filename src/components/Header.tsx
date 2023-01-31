@@ -7,11 +7,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-white.svg'
 import { ReactComponent as LogoColors } from '../assets/images/logo-tosi-scan-colors.svg'
+import { theme } from '../theme'
 
 interface NavLinkProps {
   isDark: boolean
 }
-const NavLink = styled(Link)<NavLinkProps>(({ theme, isDark }) => ({
+const NavLink = styled(Link)<NavLinkProps>(({ theme }) => ({
   paddingTop: theme.spacing(1),
   paddingRight: theme.spacing(1.5),
   paddingBottom: theme.spacing(1),
@@ -19,7 +20,7 @@ const NavLink = styled(Link)<NavLinkProps>(({ theme, isDark }) => ({
   fontSize: '14px',
   fontWeight: 500,
   lineHeight: 1.43,
-  // color: isDark ? '#ffffff' : '#667085',
+
   textDecoration: 'none',
 })) as any
 
@@ -44,19 +45,27 @@ const Header = () => {
 
           <List sx={{ display: 'flex', flexDirection: 'row', minHeight: 'initial', padding: 0 }}>
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink component={RouterLink} to="/" sx={{ color: isDark ? '#ffffff' : '#667085' }}>
+              <NavLink component={RouterLink} to="/" sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}>
                 Home
               </NavLink>
             </ListItem>
 
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink component={RouterLink} to="/coming-soon" sx={{ color: isDark ? '#ffffff' : '#667085' }}>
+              <NavLink
+                component={RouterLink}
+                to="/coming-soon"
+                sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}
+              >
                 Digital Assets
               </NavLink>
             </ListItem>
 
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink component={RouterLink} to="/coming-soon" sx={{ color: isDark ? '#ffffff' : '#667085' }}>
+              <NavLink
+                component={RouterLink}
+                to="/coming-soon"
+                sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}
+              >
                 File Verifications
               </NavLink>
             </ListItem>
@@ -65,7 +74,7 @@ const Header = () => {
               <NavLink
                 component={RouterLink}
                 to="/coming-soon"
-                sx={{ display: 'flex', alignItems: 'center', color: isDark ? '#ffffff' : '#667085' }}
+                sx={{ display: 'flex', alignItems: 'center', color: isDark ? '#ffffff' : theme.palette.grey[500] }}
               >
                 Publishers
                 <KeyboardArrowDownIcon style={{ marginLeft: '8px' }} />
@@ -79,9 +88,9 @@ const Header = () => {
                 sx={{
                   paddingY: 1.25,
                   paddingX: 2,
-                  border: '1px solid rgba(236, 253, 243, 0.5)',
+                  border: isDark ? '1px solid rgba(236, 253, 243, 0.5)' : '1px solid rgba(16, 24, 40, 0.05)',
                   borderRadius: '100px',
-                  color: isDark ? '#ffffff' : '#667085',
+                  color: isDark ? '#ffffff' : theme.palette.grey[800],
                 }}
               >
                 Become a publisher
