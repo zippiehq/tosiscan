@@ -9,10 +9,7 @@ import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-white.sv
 import { ReactComponent as LogoColors } from '../assets/images/logo-tosi-scan-colors.svg'
 import { theme } from '../theme'
 
-interface NavLinkProps {
-  isDark: boolean
-}
-const NavLink = styled(Link)<NavLinkProps>(({ theme }) => ({
+const NavLink = styled(Link)(({ theme }) => ({
   paddingTop: theme.spacing(1),
   paddingRight: theme.spacing(1.5),
   paddingBottom: theme.spacing(1),
@@ -20,9 +17,8 @@ const NavLink = styled(Link)<NavLinkProps>(({ theme }) => ({
   fontSize: '14px',
   fontWeight: 500,
   lineHeight: 1.43,
-
   textDecoration: 'none',
-})) as any
+})) as typeof Link
 
 const Header = () => {
   const { pathname } = useLocation()
