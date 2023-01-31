@@ -41,27 +41,19 @@ const Header = () => {
 
           <List sx={{ display: 'flex', flexDirection: 'row', minHeight: 'initial', padding: 0 }}>
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink component={RouterLink} to="/" sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}>
+              <NavLink component={RouterLink} to="/" sx={{ color: isDark ? 'white' : 'grey.500' }}>
                 Home
               </NavLink>
             </ListItem>
 
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink
-                component={RouterLink}
-                to="/coming-soon"
-                sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}
-              >
+              <NavLink component={RouterLink} to="/coming-soon" sx={{ color: isDark ? 'white' : 'grey.500' }}>
                 Digital Assets
               </NavLink>
             </ListItem>
 
             <ListItem disablePadding sx={{ width: 'auto', marginRight: 1.25 }}>
-              <NavLink
-                component={RouterLink}
-                to="/coming-soon"
-                sx={{ color: isDark ? '#ffffff' : theme.palette.grey[500] }}
-              >
+              <NavLink component={RouterLink} to="/coming-soon" sx={{ color: isDark ? 'white' : 'grey.500' }}>
                 File Verifications
               </NavLink>
             </ListItem>
@@ -70,7 +62,7 @@ const Header = () => {
               <NavLink
                 component={RouterLink}
                 to="/coming-soon"
-                sx={{ display: 'flex', alignItems: 'center', color: isDark ? '#ffffff' : theme.palette.grey[500] }}
+                sx={{ display: 'flex', alignItems: 'center', color: isDark ? 'white' : 'grey.500' }}
               >
                 Publishers
                 <KeyboardArrowDownIcon style={{ marginLeft: '8px' }} />
@@ -86,7 +78,7 @@ const Header = () => {
                   paddingX: 2,
                   border: isDark ? '1px solid rgba(236, 253, 243, 0.5)' : '1px solid rgba(16, 24, 40, 0.05)',
                   borderRadius: '100px',
-                  color: isDark ? '#ffffff' : theme.palette.grey[800],
+                  color: isDark ? 'white' : 'grey.800',
                 }}
               >
                 Become a publisher
