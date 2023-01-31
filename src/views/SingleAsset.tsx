@@ -186,17 +186,17 @@ const SingleAsset = () => {
                 borderRadius: '8px',
               }}
             >
-              <DatasetItem disablePadding>
+              <DatasetItem
+                disablePadding
+                key={id}
+                onClick={() => {
+                  OnClickToDataset(true, id || '')
+                }}
+                sx={{ cursor: 'pointer' }}
+              >
                 <img src={metaData?.image} width="48" height="48" alt="." style={{ borderRadius: '8px' }} />
 
-                <Box
-                  ml={2}
-                  key={id}
-                  onClick={() => {
-                    OnClickToDataset(true, id || '')
-                  }}
-                  sx={{ cursor: 'pointer' }}
-                >
+                <Box ml={2}>
                   <Typography variant="body1" color="grey.900" mb={0.25} sx={{ fontWeight: 500 }}>
                     {metaData?.name}
                   </Typography>
