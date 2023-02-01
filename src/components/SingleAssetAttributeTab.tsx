@@ -2,9 +2,8 @@ import React from 'react'
 
 import { Box, Typography, Table, TableBody, TableRow, TableContainer } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { SectionWrapper, CustomLink } from './DetailsTab'
-import { TableNameCell, TableValueCell } from './TableStyles'
-import { StyledTableRow } from './AttributeTab'
+import { SectionWrapper } from './SingleAssetStyles'
+import { TableNameCell, TableValueCell, StyledTableRow } from './TableStyles'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 

@@ -6,26 +6,8 @@ import { styled } from '@mui/system'
 
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 import { isValidUrl } from '../utils/helper'
-import { TableNameCell, TableValueCell, CustomLink } from './TableStyles'
-
-const SectionWrapper = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-  padding: theme.spacing(3),
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: theme.palette.grey['200'],
-  borderRadius: '10px',
-}))
-
-export const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  listStyleType: 'none',
-  '&:nth-of-type(odd)': {
-    backgroundColor: '#f9fafb',
-  },
-  '&:nth-of-type(even)': {
-    backgroundColor: '#ffffff',
-  },
-}))
+import { TableNameCell, TableValueCell, CustomLink, StyledTableRow } from './TableStyles'
+import { SectionWrapper } from './SingleAssetStyles'
 
 const AttributeTab = () => {
   const { TLIDataSet } = useTrustlessIndexingContext()

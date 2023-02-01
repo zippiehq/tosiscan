@@ -12,22 +12,7 @@ import { ReactComponent as Globe } from '../assets/images/icon-globe.svg'
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import { useDataSetContext } from '../hooks/useDataset'
 import Publishers from '../constants/Publishers.json'
-
-const CustomLink = styled(Link)(({ theme }) => ({
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.primary['600'],
-  textDecoration: 'none',
-}))
-
-const SectionWrapper = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-  padding: theme.spacing(3),
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: theme.palette.grey['200'],
-  borderRadius: '10px',
-}))
+import { SectionWrapper, CustomLink } from './SingleAssetStyles'
 
 const Issuer = () => {
   const { isLoading: fetchingAsset, selectedDataSet } = useDataSetAssetsContext()
@@ -112,6 +97,7 @@ const Issuer = () => {
               target="_blank"
               rel="noreferrer nofollow"
               ml={0.5}
+              style={{ fontSize: '16px' }}
             >
               @{publisher?.twitter}
             </CustomLink>
