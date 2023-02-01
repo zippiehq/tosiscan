@@ -2,8 +2,9 @@ import React from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 import moment from 'moment'
 
-import { Box, Link, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Typography } from '@mui/material'
-import { styled } from '@mui/system'
+import { Box, Link, Table, TableBody, TableContainer, TableRow, Tooltip, Typography } from '@mui/material'
+
+import { TableNameCell, TableValueCell } from './TableStyles'
 
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
@@ -12,32 +13,6 @@ import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 import { getVerificationComponent } from './Verifications'
 import Issuer from './Issuer'
-
-const TableNameCell = styled(TableCell)(({ theme }) => ({
-  width: '266px',
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  paddingLeft: theme.spacing(2),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['600'],
-  borderBottom: 'none',
-  borderTopLeftRadius: '4px',
-  borderBottomLeftRadius: '4px',
-}))
-
-const TableValueCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['900'],
-  borderBottom: 'none',
-  borderTopRightRadius: '4px',
-  borderBottomRightRadius: '4px',
-}))
 
 const OverviewSingleAssetTab = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
@@ -59,8 +34,7 @@ const OverviewSingleAssetTab = () => {
   const tokenId = location?.tokenId
   const hovermessage = 'Verified successfully'
 
-  // @ts-ignore
-  const Verification = getVerificationComponent(datasetName)
+  const Verification = getVerificationComponent(datasetName || '')
 
   return (
     <>

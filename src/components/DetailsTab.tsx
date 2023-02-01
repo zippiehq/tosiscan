@@ -4,27 +4,12 @@ import { useParams } from 'react-router-dom'
 import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
 import { styled } from '@mui/system'
 import moment from 'moment'
-import { TableNameCell, TableValueCell } from './TableStyles'
+import { SectionWrapper } from './SingleAssetStyles'
+import { TableNameCell, TableValueCell, CustomLink } from './TableStyles'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 import IconLocationMark from '../assets/images/icon-location-mark.svg'
 import IconDownload from '../assets/images/icon-download.svg'
 import { formatDate } from '../utils/timestapFormater'
-
-export const SectionWrapper = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-  padding: theme.spacing(3),
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: theme.palette.grey['200'],
-  borderRadius: '10px',
-}))
-
-export const CustomLink = styled(Link)(({ theme }) => ({
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.primary['600'],
-  textDecoration: 'none',
-})) as typeof Link
 
 const DetailsTab = () => {
   const { assetContract, assetTokenId } = useParams()

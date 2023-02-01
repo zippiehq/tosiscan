@@ -74,6 +74,16 @@ export const TableBodyRow = styled(TableRow)(() => ({
   },
 }))
 
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  listStyleType: 'none',
+  '&:nth-of-type(odd)': {
+    backgroundColor: '#f9fafb',
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: '#ffffff',
+  },
+}))
+
 export const CustomLink = styled(Link)(({ theme }) => ({
   fontSize: '14px',
   lineHeight: 1.43,

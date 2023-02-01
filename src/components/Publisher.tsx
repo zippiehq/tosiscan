@@ -11,22 +11,7 @@ import LogoZippie from '../assets/images/logo-zippie.png'
 import { ReactComponent as IconVerifiedTick } from '../assets/images/icon-verified-tick.svg'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-
-const CustomLink = styled(Link)(({ theme }) => ({
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.primary['600'],
-  textDecoration: 'none',
-}))
-
-const SectionWrapper = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-  padding: theme.spacing(3),
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: theme.palette.grey['200'],
-  borderRadius: '10px',
-}))
+import { SectionWrapper, CustomLink } from './SingleAssetStyles'
 
 const Publisher = () => {
   const { isLoading: fetchingAsset, selectedDataSet } = useDataSetAssetsContext()
