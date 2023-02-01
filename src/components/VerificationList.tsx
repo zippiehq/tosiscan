@@ -13,6 +13,7 @@ import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 import Pagination from './Pagination'
 
 import Gray from '../assets/images/Collection-gray.png'
+import { formatTimeLeft } from '../utils/timestapFormater'
 
 const PageSize = 5
 
@@ -94,7 +95,7 @@ const VerificationList = () => {
                 const publisher = asset?.metadata?.publisher
                 const datasetContract = asset?.metadata?.contract
                 const datasetAssetClass = asset?.metadata?.['asset-class']
-                const date = moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
+                const date = formatTimeLeft(lastVerified)
                 const image = asset.metadata.image === '' ? Gray : asset.metadata.image
                 return (
                   <TableBodyRow
