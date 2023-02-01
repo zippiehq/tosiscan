@@ -21,6 +21,7 @@ import IconInfo from '../assets/images/icon-info.svg'
 import GoldBar from '../assets/images/gold-bar.jpg'
 
 import { useDataSetAssetsContext, IFinalAsset } from '../hooks/useDatachainOutput'
+import { TableHeadCell, CustomLink, TableBodyCellUnique } from './TableStyles'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -34,34 +35,6 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
   borderColor: theme.palette.grey['200'],
   borderRadius: '10px',
 }))
-
-const TableHeadCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(2.5),
-  paddingBottom: theme.spacing(2.5),
-  paddingLeft: theme.spacing(1.5),
-  fontSize: '14px',
-  fontWeight: 500,
-  lineHeight: 1.43,
-  color: theme.palette.grey['500'],
-}))
-
-const TableBodyCellUnique = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(2.5),
-  paddingRight: theme.spacing(3),
-  paddingBottom: theme.spacing(2.5),
-  paddingLeft: theme.spacing(3),
-  fontSize: '14px',
-  lineHeight: 1.43,
-  textAlign: 'right',
-  color: theme.palette.grey['500'],
-}))
-
-const CustomLink = styled(Link)(({ theme }) => ({
-  fontSize: '14px',
-  lineHeight: 1.43,
-  color: theme.palette.primary['600'],
-  textDecoration: 'none',
-})) as typeof Link
 
 const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
   let uniqueItems: any = new Set(

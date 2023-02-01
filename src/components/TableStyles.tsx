@@ -54,6 +54,16 @@ export const TableValueCell = styled(TableCell)(({ theme }) => ({
   borderTopRightRadius: '4px',
   borderBottomRightRadius: '4px',
 }))
+export const TableBodyCellUnique = styled(TableCell)(({ theme }) => ({
+  paddingTop: theme.spacing(2.5),
+  paddingRight: theme.spacing(3),
+  paddingBottom: theme.spacing(2.5),
+  paddingLeft: theme.spacing(3),
+  fontSize: '14px',
+  lineHeight: 1.43,
+  textAlign: 'right',
+  color: theme.palette.grey['500'],
+}))
 export const TableBodyRow = styled(TableRow)(() => ({
   cursor: 'pointer',
 

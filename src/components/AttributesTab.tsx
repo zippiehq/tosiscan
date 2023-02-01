@@ -1,36 +1,11 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Box, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
+import { Box, Table, TableBody, TableContainer, TableRow, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 
 import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
-
-const TableNameCell = styled(TableCell)(({ theme }) => ({
-  width: '266px',
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  paddingLeft: theme.spacing(2),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['600'],
-  borderBottom: 'none',
-  borderTopLeftRadius: '4px',
-  borderBottomLeftRadius: '4px',
-}))
-
-const TableValueCell = styled(TableCell)(({ theme }) => ({
-  paddingTop: theme.spacing(1.5),
-  paddingRight: theme.spacing(2),
-  paddingBottom: theme.spacing(1.5),
-  fontSize: '16px',
-  lineHeight: 1.5,
-  color: theme.palette.grey['900'],
-  borderBottom: 'none',
-  borderTopRightRadius: '4px',
-  borderBottomRightRadius: '4px',
-}))
+import { TableNameCell, TableValueCell } from './TableStyles'
 
 const AttributesTab = () => {
   const { assetContract, assetTokenId, assetSerial } = useParams()
