@@ -85,11 +85,6 @@ const DetailsTab = () => {
                 <TableValueCell>Last week</TableValueCell>
               </TableRow>
 
-              <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                <TableNameCell>Creator Earnings</TableNameCell>
-                <TableValueCell>5%</TableValueCell>
-              </TableRow>
-
               <TableRow>
                 <TableNameCell>Minted</TableNameCell>
                 <TableValueCell>{date}</TableValueCell>
