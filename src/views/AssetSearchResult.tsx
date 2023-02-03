@@ -57,7 +57,7 @@ const AssetSearchResult = () => {
 
   // search by url
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
-  if (!datasetOutputs || !TLIDataSet || isLoading) {
+  if (!datasetOutputs || isLoading) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
@@ -66,7 +66,7 @@ const AssetSearchResult = () => {
       </ContainerWithoutData>
     )
   }
-  const lenthToken = TLIDataSet?.token.id.length
+  const lenthToken = TLIDataSet?.token.id.length as number
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
   const datasetId = Object.keys(datasetOutputs).find((id) => {

@@ -327,6 +327,8 @@ const AssetTab = () => {
     return <div style={{ margin: '100px 50px', fontSize: '20px1' }}>Loading...</div>
   }
   const { assets } = selectedDataSet
+  const pagez = rowsPerPage * (page + 1)
+  const rowPagez = pagez <= assets.length ? pagez : assets.length
 
   return (
     <>
@@ -404,7 +406,7 @@ const AssetTab = () => {
             </Typography>
 
             <Typography variant="body2" color="grey.500" mb={3}>
-              Showing {rowsPerPage * page + 1} - {rowsPerPage * (page + 1)} out of {assets.length} individual assets
+              Showing {rowsPerPage * page + 1} - {rowPagez} out of {assets.length} individual assets
             </Typography>
           </Box>
         </Box>
