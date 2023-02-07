@@ -39,7 +39,7 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
   let uniqueItems: any = new Set(
     assets.map((asset: IFinalAsset) =>
-      asset.currentLocation === 'Verra Registry Database' ? 'Verra Verified Carbon Units' : asset['asset-type'],
+      asset['asset-type'] === 'Carbon Credits Batch' ? 'Carbon Credits Batch' : asset['asset-type'],
     ),
   )
   uniqueItems = Array.from(uniqueItems)
