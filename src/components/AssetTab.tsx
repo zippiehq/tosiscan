@@ -113,7 +113,7 @@ const IndividualAssetTable = ({
       ''
     )
 
-  const isVerra = assets.find((asset) => asset.currentLocation === 'Verra Registry Database')
+  const isVerra = assets.find((asset) => asset['asset-type'] === 'Carbon Credits Batch')
 
   return isVerra ? (
     <Box>
