@@ -165,7 +165,7 @@ jobs:
             --include '*.css' \
             --include '*.js' \
             --include '*.json' \
-            --cache-control 'max-age-300, must-revalidate' \
+            --cache-control 'max-age=300, must-revalidate' \
             --copy-props 'metadata-directive' \
             --recursive
       - name: Slack Notification
