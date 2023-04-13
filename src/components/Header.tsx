@@ -76,10 +76,11 @@ const Header = () => {
                 sx={{
                   paddingY: 1.25,
                   paddingX: 2,
-                  border: isDark ? '1px solid rgba(236, 253, 243, 0.5)' : '1px solid rgba(16, 24, 40, 0.05)',
+                  border: '1px solid',
+                  borderColor: isDark ? '#D4EF33 #D4EF33 #00D1FF  #00D1FF  ' : ' rgba(16, 24, 40, 0.05)',
                   borderRadius: '100px',
                   color: isDark ? 'white' : 'grey.800',
-                  backgroundColor: isDark ? 'black' : 'white',
+                  backgroundColor: isDark ? '#081010' : 'white',
                 }}
               >
                 Become a publisher

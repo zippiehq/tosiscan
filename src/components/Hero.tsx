@@ -13,6 +13,8 @@ const Wrapper = styled(Box)(() => ({
   position: 'relative',
   minHeight: '389px',
   backgroundImage: `url(${TosiBackground})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
 }))
 
 const Hero = () => (

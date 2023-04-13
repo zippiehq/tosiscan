@@ -3,7 +3,7 @@ import React from 'react'
 import { Box, Container } from '@mui/material'
 import { styled } from '@mui/system'
 
-import TosiBackground from '../assets/images/tosiscan-background-1x.jpg'
+import TosiBackground from '../assets/images/tosiscan-bg-1440x88-2x-min.jpg'
 
 import Header from './Header'
 import Search from './Search'
@@ -16,6 +16,8 @@ const Wrapper = styled(Box)(() => ({
   justifyContent: 'center',
   minHeight: '88px',
   backgroundImage: `url(${TosiBackground})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
 }))
 
 export default function SmallHero() {
