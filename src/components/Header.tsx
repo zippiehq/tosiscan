@@ -5,7 +5,7 @@ import { AppBar, Container, Toolbar, Link, List, ListItem } from '@mui/material'
 import { styled } from '@mui/system'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-white.svg'
+import { ReactComponent as Logo } from '../assets/images/tosiscan-logo-header.svg'
 import { ReactComponent as LogoColors } from '../assets/images/logo-tosi-scan-colors.svg'
 import { theme } from '../theme'
 
@@ -79,6 +79,7 @@ const Header = () => {
                   border: isDark ? '1px solid rgba(236, 253, 243, 0.5)' : '1px solid rgba(16, 24, 40, 0.05)',
                   borderRadius: '100px',
                   color: isDark ? 'white' : 'grey.800',
+                  backgroundColor: isDark ? 'black' : 'white',
                 }}
               >
                 Become a publisher
