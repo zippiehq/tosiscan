@@ -8,7 +8,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-colors.svg'
+import { ReactComponent as Logo } from '../assets/images/tosiscan-logo-light.svg'
 
 import Footer from '../components/Footer'
 
@@ -31,7 +31,7 @@ const ComingSoon = () => {
         justifyContent="center"
         width="100%"
       >
-        <Logo style={{ width: '96px', height: '28px' }} />
+        <Logo style={{ width: '96px', height: '30px' }} />
 
         <Typography variant="h1" mt={3} mb={3} sx={{ fontWeight: '600', lineHeight: 1.25, color: 'grey.900' }}>
           Coming soon
