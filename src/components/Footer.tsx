@@ -7,7 +7,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 
-import { ReactComponent as Logo } from '../assets/images/logo-tosi-scan-white.svg'
+import { ReactComponent as Logo } from '../assets/images/tosiscan-logo-header.svg'
 
 const Footer = () => {
   const onExternalLinkClick = (url: string) => {

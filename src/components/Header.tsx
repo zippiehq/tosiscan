@@ -6,7 +6,7 @@ import { styled } from '@mui/system'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import { ReactComponent as Logo } from '../assets/images/tosiscan-logo-header.svg'
-import { ReactComponent as LogoColors } from '../assets/images/logo-tosi-scan-colors.svg'
+import { ReactComponent as LogoColors } from '../assets/images/tosiscan-logo-light.svg'
 import { theme } from '../theme'
 
 const NavLink = styled(Link)(({ theme }) => ({
