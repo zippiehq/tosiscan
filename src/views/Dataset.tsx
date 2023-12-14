@@ -21,6 +21,7 @@ import VerifiedFiles from './VerifiedFiles'
 
 import { useDataSetAssetsContext, StatusType } from '../hooks/useDatachainOutput'
 import { customTheme } from '../theme'
+import { formatTimeLeft } from '../utils/timestapFormater'
 
 const ContentContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.up('xl')]: {
@@ -258,10 +259,7 @@ const Dataset = () => {
                 ml={1.25}
                 sx={{ fontSize: '14px', fontStyle: 'italic', color: 'grey.400' }}
               >
-                Last verified{' '}
-                {isLoading || !lastVerified
-                  ? 'loading...'
-                  : moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()}
+                Last verified {isLoading || !lastVerified ? 'loading...' : formatTimeLeft(lastVerified)}
               </Typography>
             </Box>
           </Box>

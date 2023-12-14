@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
-import moment from 'moment'
 
 import { Box, Link, Table, TableBody, TableContainer, TableRow, Tooltip, Typography } from '@mui/material'
 
@@ -13,6 +12,7 @@ import { useDataSetAssetsContext } from '../hooks/useDatachainOutput'
 
 import { getVerificationComponent } from './Verifications'
 import Issuer from './Issuer'
+import { formatTimeLeft } from '../utils/timestapFormater'
 
 const OverviewSingleAssetTab = () => {
   const { assetContract, assetTokenId, assetSerial, id } = useParams()
@@ -73,9 +73,7 @@ const OverviewSingleAssetTab = () => {
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Last verified</TableNameCell>
                 <TableValueCell>
-                  {!isLoading && lastVerified
-                    ? moment(moment.unix(lastVerified).utc().format('DD MMM YYYY HH:mm:ss [UTC]')).fromNow()
-                    : 'loading...'}
+                  {!isLoading && lastVerified ? formatTimeLeft(lastVerified) : 'loading...'}
                 </TableValueCell>
               </TableRow>
 
