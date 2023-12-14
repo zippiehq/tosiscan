@@ -8,7 +8,6 @@ import { styled } from '@mui/system'
 
 import SingleAssetDetailsTab from './SingleAssetDetailsTab'
 import SingleAssetAttributeTab from './SingleAssetAttributeTab'
-import SingleAssetVerificationTab from './SingleAssetVerificationTab'
 
 const TabsList = styled(TabsListUnstyled)(({ theme }) => ({
   display: 'flex',
@@ -49,7 +48,7 @@ const TabsSingleAsset = () => (
     <TabsList>
       <Tab>Details</Tab>
       <Tab>Attributes</Tab>
-      <Tab>Supporting verification</Tab>
+
       {/* <Tab>History</Tab> */}
     </TabsList>
 
@@ -59,10 +58,6 @@ const TabsSingleAsset = () => (
 
     <TabPanelUnstyled value={1}>
       <SingleAssetAttributeTab />
-    </TabPanelUnstyled>
-
-    <TabPanelUnstyled value={2}>
-      <SingleAssetVerificationTab />
     </TabPanelUnstyled>
 
     {/* <TabPanelUnstyled value={4}>
