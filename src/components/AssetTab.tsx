@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   Box,
@@ -12,7 +12,6 @@ import {
   TablePagination,
   Typography,
   Tooltip,
-  Link,
 } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -355,44 +354,6 @@ const AssetTab = () => {
               >
                 {assets.length}
               </Typography>
-            </SectionWrapper>
-
-            <SectionWrapper>
-              <Typography variant="body2" color="grey.600" mb={1}>
-                Total change
-              </Typography>
-              <Typography
-                variant="body1"
-                color="grey.900"
-                mr={0.75}
-                sx={{ fontSize: '30px', fontWeight: 600, lineHeight: 1.27 }}
-              >
-                0
-              </Typography>
-            </SectionWrapper>
-
-            <SectionWrapper>
-              <Typography variant="body2" color="grey.600" mb={1}>
-                Publisher staking
-              </Typography>
-
-              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                <Typography
-                  variant="body1"
-                  color="grey.900"
-                  mr={0.75}
-                  sx={{ fontSize: '30px', fontWeight: 600, lineHeight: 1.27 }}
-                >
-                  100,000
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="grey.900"
-                  sx={{ fontSize: '20px', fontWeight: 500, lineHeight: 1.5 }}
-                >
-                  TOSI
-                </Typography>
-              </Box>
             </SectionWrapper>
           </Box>
         </Box>

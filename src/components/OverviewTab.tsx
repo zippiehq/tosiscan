@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import {
@@ -9,19 +9,16 @@ import {
   TableCell,
   TableContainer,
   Typography,
-  Link,
   TableHead,
   Stack,
   Button,
-  Tooltip,
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { TableBodyRow } from './TableStyles'
 
-import { useDataSetAssetsContext, StatusType, IVerifications, IFinalAsset } from '../hooks/useDatachainOutput'
-import { formatTimeStamp, formatDate, formatTimeLeft } from '../utils/timestapFormater'
+import { useDataSetAssetsContext, StatusType, IVerifications } from '../hooks/useDatachainOutput'
+import { formatDate, formatTimeLeft } from '../utils/timestapFormater'
 
-import { getVerificationComponent } from './Verifications'
 import { getOverviewComponent } from './DatasetOverview'
 import Issuer from './Issuer'
 
@@ -63,7 +60,7 @@ const LastFiles = ({ datasetId }: { datasetId: string }) => {
 }
 
 const LinkedVerifiedFiles = ({ datasetId }: { datasetId: string }) => {
-  const { isLoading, datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
+  const { datasetOutputs, selectedDataSet } = useDataSetAssetsContext()
 
   const linkedCIDs = selectedDataSet?.metadata?.datasetLinked
   const datasets = Object.values(datasetOutputs).filter((linkDataset) =>
@@ -330,8 +327,6 @@ const OverviewTab = () => {
   const description = metaData ? metaData['asset-description'] : ''
 
   // @ts-ignore
-  const Verification = getVerificationComponent(datasetName)
-  // @ts-ignore
   const Header = getOverviewComponent(datasetName, description)
   return (
     <Box sx={{ display: 'flex', marginBottom: '160px' }}>
@@ -462,14 +457,6 @@ const OverviewTab = () => {
             </Table>
           </TableContainer>
         </SectionWrapper>
-
-        <Box mt={6} sx={{ width: '100%' }}>
-          <Typography variant="h2" color="grey.900" sx={{ fontSize: '20px', lineHeight: 1.5 }}>
-            Supporting verification
-          </Typography>
-
-          <Verification />
-        </Box>
 
         {selectedDataSet?.metadata?.datasetLinked ? (
           <LinkedVerifiedFiles datasetId={selectedDataSet?.metadata?.datasetLinked[0]} />

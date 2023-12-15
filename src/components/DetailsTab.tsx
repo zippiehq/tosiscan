@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Table, TableBody, TableRow, TableContainer, TableCell, Link } from '@mui/material'
-import { styled } from '@mui/system'
-import moment from 'moment'
+import { Box, Typography, Table, TableBody, TableRow, TableContainer } from '@mui/material'
+
 import { SectionWrapper } from './SingleAssetStyles'
 import { TableNameCell, TableValueCell, CustomLink } from './TableStyles'
 import { useTrustlessIndexingContext } from '../hooks/useTrustlessIndexing'
 import IconLocationMark from '../assets/images/icon-location-mark.svg'
-import IconDownload from '../assets/images/icon-download.svg'
+
 import { formatDate } from '../utils/timestapFormater'
 
 const DetailsTab = () => {
   const { assetContract, assetTokenId } = useParams()
-  const { isTLILoading, TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
+  const { TLIDataSet, setTLIQuery } = useTrustlessIndexingContext()
 
   useEffect(() => setTLIQuery({ assetContract, assetTokenId }), [assetContract, assetTokenId, setTLIQuery])
   const token = TLIDataSet ? TLIDataSet.token : undefined
