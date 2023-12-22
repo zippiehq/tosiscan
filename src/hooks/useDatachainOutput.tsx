@@ -36,6 +36,11 @@ interface IMetadata {
   ['supported-locations']: string[]
   datasetLinked?: string[]
   publisher: string
+  chain: string
+  class: string
+  token: string
+  type: string
+  vcu: string
 }
 
 export interface IDatasetDynamic {
@@ -71,6 +76,10 @@ export interface IFinalAsset {
   timestamp: number
   serialNumberStart?: string
   serialNumberEnd?: string
+  batchId: number
+  tokenId: number
+  owner: string
+  metadata: IMetadata
 }
 interface IDataSetOutputs {
   [key: string]: DatachainOutputContextT
@@ -128,7 +137,7 @@ function useDataSetAssets() {
   const [selectedDataSet, setSelectedDataSet] = useState<DatachainOutputContextT>()
   const { id } = useParams()
   const { datasets } = useDataSetContext()
-
+  console.log(datasetOutputs, 'datasetOutputs')
   const fetchAssets = async () => {
     setLoading(true)
     const assets = await Promise.all(

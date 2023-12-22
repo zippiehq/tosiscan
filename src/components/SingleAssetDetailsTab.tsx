@@ -10,7 +10,7 @@ import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 
 const SingleAssetDetailsTab = () => {
-  const { assetContract, assetTokenId, assetSerial, id } = useParams()
+  const { assetContract, assetBatchId, assetTokenId, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
 
   const metaData = selectedDataSet?.metadata
@@ -18,25 +18,11 @@ const SingleAssetDetailsTab = () => {
   const lastVerified = selectedDataSet?.lastVerified as number
   const createdDate = selectedDataSet?.creationDate as number
 
-  const asset = assetSerial
-    ? assets?.find((asset) => asset.assetNumber === assetSerial)
-    : assets?.find(
-        (asset) =>
-          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-          asset.locations[0]?.tokenId === assetTokenId,
-      )
+  const assetTokenIdNumber = assetTokenId !== undefined ? parseInt(assetTokenId, 10) : null
+  const asset = assets?.find((asset) => asset.tokenId === assetTokenIdNumber)
 
   const message = asset?.status === 'ok' ? 'Verified successfully' : asset?.failedReason || ''
 
-  const location = asset?.locations[0]
-
-  const tokenId = location?.tokenId
-
-  const lenthToken = tokenId?.length as number
-
-  const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
-
-  const Description = getOverviewComponent(metaData?.name || '')
   return (
     <>
       <SectionWrapper>
@@ -44,9 +30,7 @@ const SingleAssetDetailsTab = () => {
           Description
         </Typography>
 
-        <Typography>
-          <Description />
-        </Typography>
+        <Typography>{metaData?.['asset-description']}</Typography>
       </SectionWrapper>
 
       <SectionWrapper>
@@ -66,13 +50,13 @@ const SingleAssetDetailsTab = () => {
                 <TableNameCell>Asset name</TableNameCell>
                 <TableValueCell sx={{ display: 'flex', alignItems: 'center' }}>
                   <img
-                    src={asset?.imageUrl}
+                    src={asset?.metadata.image}
                     width="40"
                     height="40"
                     style={{ marginRight: '12px', borderRadius: '4px' }}
                     alt="."
                   />
-                  {asset?.assetName}
+                  {asset?.metadata.name}
                 </TableValueCell>
               </TableRow>
 
@@ -90,19 +74,24 @@ const SingleAssetDetailsTab = () => {
                 <TableNameCell>Status</TableNameCell>
                 <TableValueCell>
                   <Tooltip title={message} placement="top">
-                    <img src={asset?.status === 'ok' ? IconCheck : IconInfo} width="24px" height="24p" alt="." />
+                    <img
+                      src={selectedDataSet?.verifications[2].status === 'success' ? IconCheck : IconInfo}
+                      width="24px"
+                      height="24p"
+                      alt="."
+                    />
                   </Tooltip>
                 </TableValueCell>
               </TableRow>
 
               <TableRow>
                 <TableNameCell>BlockChain</TableNameCell>
-                <TableValueCell>{asset?.currentLocation}</TableValueCell>
+                <TableValueCell>{asset?.metadata.chain}</TableValueCell>
               </TableRow>
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Token ID</TableNameCell>
-                <TableValueCell>{tokenRef}</TableValueCell>
+                <TableValueCell>{asset?.tokenId}</TableValueCell>
               </TableRow>
 
               <TableRow>
@@ -112,7 +101,7 @@ const SingleAssetDetailsTab = () => {
 
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Owner Address</TableNameCell>
-                <TableValueCell>{location?.ownerAccount}</TableValueCell>
+                <TableValueCell>{asset?.owner}</TableValueCell>
               </TableRow>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableNameCell>Creator</TableNameCell>

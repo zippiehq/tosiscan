@@ -28,28 +28,17 @@ import TabsSingleAsset from '../components/TabsSingleAsset'
 import { formatTimeLeft } from '../utils/timestapFormater'
 
 const SingleAsset = () => {
-  const { assetContract, assetTokenId, assetSerial, id } = useParams()
+  const { assetContract, assetBatchId, assetTokenId, id } = useParams()
   const { selectedDataSet, isLoading } = useDataSetAssetsContext()
 
   const lastVerified = selectedDataSet?.lastVerified as number
   const metaData = selectedDataSet?.metadata
   const assets = selectedDataSet?.assets || []
-  const asset = assetSerial
-    ? assets.find((asset) => asset.assetNumber === assetSerial)
-    : assets.find(
-        (asset) =>
-          asset.locations[0]?.contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-          asset.locations[0]?.tokenId === assetTokenId,
-      )
 
-  const location = asset?.locations[0]
+  const assetTokenIdNumber = assetTokenId !== undefined ? parseInt(assetTokenId, 10) : null
+  const asset = assets.find((asset) => asset.tokenId === assetTokenIdNumber)
 
-  const tokenId = location?.tokenId
-  const lenthToken = tokenId?.length as number
-
-  const tokenRef = lenthToken > 12 ? `${tokenId?.slice(0, 6)}...${tokenId?.slice(-4)}` : tokenId
-
-  const datasetName = metaData?.name || 'Lohko Gold'
+  const datasetName = metaData?.name
 
   const navigate = useNavigate()
 
@@ -92,7 +81,7 @@ const SingleAsset = () => {
 
         <Box sx={{ display: 'flex' }}>
           <Box mr={3} sx={{ display: 'flex', width: '657px' }}>
-            <img src={asset?.imageUrl} width="200" height="200" alt="." style={{ borderRadius: '10px' }} />
+            <img src={asset?.metadata.image} width="200" height="200" alt="." style={{ borderRadius: '10px' }} />
 
             <Box ml={3}>
               <Typography
@@ -101,7 +90,7 @@ const SingleAsset = () => {
                 mb={1.5}
                 sx={{ fontSize: '32px', fontWeight: 600, lineHeight: 1.19 }}
               >
-                {datasetName}
+                {asset.metadata.name}
               </Typography>
 
               <Box mb={3} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -135,7 +124,7 @@ const SingleAsset = () => {
           <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', width: '520px' }}>
             <AssetPropertyWrapper>
               <Typography>Blockhain</Typography>
-              <Typography>{asset.currentLocation}</Typography>
+              <Typography>{asset.metadata.chain}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
@@ -145,16 +134,12 @@ const SingleAsset = () => {
 
             <AssetPropertyWrapper>
               <Typography>Token Id.</Typography>
-              <Typography>{tokenRef}</Typography>
+              <Typography>{asset.tokenId}</Typography>
             </AssetPropertyWrapper>
 
             <AssetPropertyWrapper>
               <Typography>Current owner</Typography>
-              <Typography>
-                {location?.ownerAccount
-                  ? `${location?.ownerAccount.slice(0, 6)}...${location?.ownerAccount.slice(-4)}`
-                  : '-'}
-              </Typography>
+              <Typography>{asset.owner ? `${asset.owner}` : '-'}</Typography>
             </AssetPropertyWrapper>
           </Stack>
         </Box>
