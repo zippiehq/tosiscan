@@ -69,16 +69,16 @@ const AssetSearchResult = () => {
   const lenthToken = TLIDataSet?.token.id.length as number
   const tokenRef =
     lenthToken > 12 ? `${TLIDataSet?.token.id.slice(0, 6)}...${TLIDataSet?.token.id.slice(-4)}` : TLIDataSet?.token.id
-  const datasetId = Object.keys(datasetOutputs).find((id) => {
-    const { assets } = datasetOutputs[id]
-    return assets.some(
-      ({ locations }) =>
-        locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-        locations[0].tokenId === assetTokenId,
-    )
-  })
+  // const datasetId = Object.keys(datasetOutputs).find((id) => {
+  //   const { assets } = datasetOutputs[id]
+  //   return assets.some(
+  //     ({ locations }) =>
+  //       locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+  //       locations[0].tokenId === assetTokenId,
+  //   )
+  // })
 
-  if ((!assetContract || !assetTokenId || !datasetId) && !TLIDataSet && !datasets.length) {
+  if (!datasets.length) {
     return (
       <ContainerWithoutData>
         <Typography variant="body2" sx={{ fontSize: '20px' }}>
@@ -88,14 +88,14 @@ const AssetSearchResult = () => {
     )
   }
 
-  const assets = datasetId ? datasetOutputs[datasetId].assets : []
-  const filtered = assets
-    ? assets.filter(
-        ({ locations }) =>
-          locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
-          locations[0].tokenId === assetTokenId,
-      )
-    : []
+  // const assets = datasetId ? datasetOutputs[datasetId].assets : []
+  // const filtered = assets
+  //   ? assets.filter(
+  //       ({ locations }) =>
+  //         locations[0].contract?.toLocaleLowerCase() === assetContract?.toLocaleLowerCase() &&
+  //         locations[0].tokenId === assetTokenId,
+  //     )
+  //   : []
 
   const verifiedId = Object.keys(datasetOutputs).find((id) => {
     const { assets } = datasetOutputs[id]
@@ -126,7 +126,7 @@ const AssetSearchResult = () => {
 
   const hovermessage = 'Verified successfully'
 
-  return filtered.length === 0 && !TLIDataSet && !datasets ? (
+  return Datasets.length === 0 && !datasets ? (
     <ContainerWithoutData>
       <Typography variant="body2" sx={{ fontSize: '20px' }}>
         No data
@@ -150,7 +150,7 @@ const AssetSearchResult = () => {
       {isValidUrl(searchValue) === true ? (
         <Box>
           {' '}
-          {(filtered.length > 0 || TLIDataSet) && (
+          {/* {(filtered.length > 0 || TLIDataSet) && (
             <TableContainer sx={{ mb: '160px' }}>
               <Table sx={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}>
                 <TableHead sx={{ backgroundColor: 'grey.50' }}>
@@ -406,7 +406,7 @@ const AssetSearchResult = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
+          )} */}
         </Box>
       ) : (
         <Box>

@@ -14,7 +14,7 @@ const Footer = () => {
   }
 
   return (
-    <Box sx={{ paddingTop: '64px', backgroundColor: 'grey.900' }}>
+    <Box sx={{ paddingTop: '64px', backgroundColor: 'grey.900', position: 'fixed', bottom: '0px', width: '100%' }}>
       <Container sx={{ maxWidth: { xl: '1280px' }, margin: '0 auto', paddingX: { xs: 0, xl: 4 } }}>
         <Box sx={{ paddingBottom: '64px' }}>
           <Logo style={{ width: '112px', height: '32px' }} />

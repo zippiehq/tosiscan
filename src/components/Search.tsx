@@ -41,7 +41,7 @@ const Search = () => {
         width: '100%',
       }}
       type="text"
-      placeholder="Token URL or name"
+      placeholder="Search dataset by name"
       onKeyDown={handleKeyDown}
       onChange={(ev) => {
         setSearchValue(ev.target.value)

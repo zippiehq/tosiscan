@@ -137,7 +137,7 @@ function useDataSetAssets() {
   const [selectedDataSet, setSelectedDataSet] = useState<DatachainOutputContextT>()
   const { id } = useParams()
   const { datasets } = useDataSetContext()
-  console.log(datasetOutputs, 'datasetOutputs')
+
   const fetchAssets = async () => {
     setLoading(true)
     const assets = await Promise.all(
