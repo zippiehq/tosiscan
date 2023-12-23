@@ -1,6 +1,7 @@
 import Axios, { ResponseType } from 'axios'
 
-const baseURL = process.env.REACT_APP_DATACHAIN_BASE_URL || ('https://tosiscan-testnet-one.zippie.com' as string)
+// const baseURL = process.env.REACT_APP_DATACHAIN_BASE_URL || ('https://tosiscan-testnet-one.zippie.com' as string)
+const baseURL = 'https://lambada.tspre.org'
 
 function returnAxiosInstance(responseType: ResponseType = 'json') {
   return Axios.create({
