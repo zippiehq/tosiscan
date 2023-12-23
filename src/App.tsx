@@ -46,8 +46,8 @@ function App() {
                 <Route path="/dataset/:id/*" element={<Dataset />} />
                 <Route path="/search-asset/:encoded" element={<AssetSearchResult />} />
                 <Route path="/single-asset/:id">
-                  <Route path=":assetContract/:assetTokenId" element={<SingleAsset />} />
-                  <Route path=":assetSerial" element={<SingleAsset />} />
+                  <Route path=":assetTokenId/:assetBatchId" element={<SingleAsset />} />
+                  <Route path=":assetTokenId" element={<SingleAsset />} />
                 </Route>
                 <Route path="/single-asset-with-tabs/:id/:assetSerial/*" element={<SingleAssetWithTabs />} />
                 <Route path="/single-asset-nft/:id">

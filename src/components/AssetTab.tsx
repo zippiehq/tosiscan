@@ -18,8 +18,9 @@ import { styled } from '@mui/system'
 import IconCheck from '../assets/images/icon-check.svg'
 import IconInfo from '../assets/images/icon-info.svg'
 import GoldBar from '../assets/images/gold-bar.jpg'
+import Gray from '../assets/images/gold-bar.jpg'
 
-import { useDataSetAssetsContext, IFinalAsset } from '../hooks/useDatachainOutput'
+import { useDataSetAssetsContext, IFinalAsset, DatachainOutputContextT } from '../hooks/useDatachainOutput'
 import { TableHeadCell, CustomLink, TableBodyCellUnique } from './TableStyles'
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
@@ -36,12 +37,7 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 }))
 
 const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
-  let uniqueItems: any = new Set(
-    assets.map((asset: IFinalAsset) =>
-      asset['asset-type'] === 'Carbon Credits Batch' ? 'Carbon Credits Batch' : asset['asset-type'],
-    ),
-  )
-  uniqueItems = Array.from(uniqueItems)
+  const uniqueItems = Array.from(new Set(assets.map((asset) => asset.metadata.type)))
 
   return (
     <TableContainer>
@@ -60,7 +56,7 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
               <TableBodyCellUnique sx={{ textAlign: 'left', fontSize: '16px', lineHeight: 1.5, color: 'grey.700' }}>
                 {asset}
               </TableBodyCellUnique>
-              <TableBodyCellUnique>{assets?.filter((item) => item['asset-type'] === asset).length}</TableBodyCellUnique>
+              <TableBodyCellUnique>{assets?.filter((item) => item.metadata.type === asset).length}</TableBodyCellUnique>
               <TableBodyCellUnique>0</TableBodyCellUnique>
             </TableRow>
           ))}
@@ -71,12 +67,14 @@ const AssetsDetails = ({ assets }: { assets: IFinalAsset[] }) => {
 }
 
 const IndividualAssetTable = ({
+  selectedDataSet,
   assets,
   page,
   setPage,
   rowsPerPage,
   setRowsPerPage,
 }: {
+  selectedDataSet: DatachainOutputContextT
   assets: IFinalAsset[]
   page: number
   setPage: any
@@ -223,11 +221,12 @@ const IndividualAssetTable = ({
               <TableRow
                 sx={{ backgroundColor: 'grey.50', borderWidth: '1px', borderStyle: 'solid', borderColor: 'grey.200' }}
               >
-                <TableHeadCell sx={{ width: '125px', paddingY: 1.5, paddingX: 3 }}>Serial No.</TableHeadCell>
+                <TableHeadCell sx={{ width: '125px', paddingY: 1.5, paddingX: 3 }}>Token Id.</TableHeadCell>
                 <TableHeadCell sx={{ width: '367px', paddingY: 1.5, paddingX: 3 }}>Asset</TableHeadCell>
                 <TableHeadCell sx={{ width: '92px', paddingY: 1.5, paddingX: 3 }}>Status</TableHeadCell>
                 <TableHeadCell sx={{ width: '120px', paddingY: 1.5, paddingX: 3 }}>Blockchain</TableHeadCell>
                 <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Token Ref.</TableHeadCell>
+                <TableHeadCell sx={{ width: '199px', paddingY: 1.5, paddingX: 3 }}>Batch Id</TableHeadCell>
                 <TableHeadCell sx={{ width: '196px', paddingY: 1.5, paddingX: 3 }}>Owner Address</TableHeadCell>
                 <TableHeadCell sx={{ width: '146px' }}> </TableHeadCell>
               </TableRow>
@@ -235,20 +234,21 @@ const IndividualAssetTable = ({
 
             <TableBody>
               {assets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: IFinalAsset) => {
-                const location = row.locations[0]
-                const assetContract = location?.contract
-                const assetTokenId = location?.tokenId
-                const assetSerial = row.assetNumber
+                const { metadata } = row
+
+                const assetBatchId = row.batchId
+                const assetTokenId = row.tokenId
 
                 const onAssetClick = () => {
-                  if (assetContract && assetTokenId) {
-                    navigate(`/single-asset/${id}/${assetContract}/${assetTokenId}`)
+                  if (assetTokenId) {
+                    navigate(`/single-asset/${id}/${assetTokenId}/${assetBatchId}`)
                   } else {
-                    navigate(`/single-asset/${id}/${assetSerial}`)
+                    navigate(`/single-asset/${id}/${assetTokenId}`)
                   }
                 }
 
-                const message = row.status === 'ok' ? hovermessage : row.failedReason
+                const message =
+                  selectedDataSet.verifications[2].status === 'success' ? hovermessage : 'failed verification'
 
                 return (
                   <TableRow
@@ -257,44 +257,34 @@ const IndividualAssetTable = ({
                   >
                     <TableCell sx={{ paddingY: 1.75, paddingX: 3, border: 'none' }}>
                       <CustomLink onClick={onAssetClick} sx={{ cursor: 'pointer' }}>
-                        {assetSerial}
+                        {assetTokenId}
                       </CustomLink>
                     </TableCell>
 
                     <TableCell sx={{ display: 'flex', alignItems: 'center', paddingX: 3, border: 'none' }}>
-                      <img
-                        src={row.assetName.indexOf('TEST') > -1 ? GoldBar : row.imageUrl}
-                        width="36"
-                        height="36"
-                        alt="."
-                      />
+                      <img src={metadata.image || selectedDataSet?.metadata?.image} width="36" height="36" alt="." />
                       <Typography variant="body2" color="grey.900" ml={1.5}>
-                        {row.assetName}
+                        {metadata.name}
                       </Typography>
                     </TableCell>
 
                     <TableCell sx={{ paddingY: 1.75, paddingX: 4.5, border: 'none' }}>
                       <Tooltip title={message} placement="top">
-                        <img src={row.status === 'ok' ? IconCheck : IconInfo} alt="." />
+                        <img
+                          src={selectedDataSet.verifications[2].status === 'success' ? IconCheck : IconInfo}
+                          alt="."
+                        />
                       </Tooltip>
                     </TableCell>
 
                     <TableCell sx={{ paddingX: 3, color: 'grey.600', border: 'none' }}>
-                      {location ? location.name : 'Zippienet'}
-                    </TableCell>
-                    <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                      {location && location.contract
-                        ? `${location.contract.slice(0, 6)}...${location.contract.slice(location.contract.length - 4)}`
-                        : `${location.tokenId.slice(0, 6)}...${location.tokenId.slice(location.tokenId.length - 4)}`}
+                      {metadata ? metadata.chain : 'Zippienet'}
                     </TableCell>
 
-                    <TableCell sx={{ paddingX: 3, border: 'none' }}>
-                      {location?.ownerAccount
-                        ? `${location.ownerAccount.slice(0, 6)}...${location.ownerAccount.slice(
-                            location.ownerAccount.length - 4,
-                          )}`
-                        : ''}
-                    </TableCell>
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>{assetTokenId}</TableCell>
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>{assetBatchId}</TableCell>
+
+                    <TableCell sx={{ paddingX: 3, border: 'none' }}>{row.owner}</TableCell>
 
                     <TableCell sx={{ paddingX: 3, textAlign: 'right', border: 'none' }}>
                       <CustomLink onClick={onAssetClick} sx={{ fontWeight: 500, cursor: 'pointer' }}>
@@ -378,6 +368,7 @@ const AssetTab = () => {
           setPage={setPage}
           page={page}
           assets={assets}
+          selectedDataSet={selectedDataSet}
         />
       </Box>
     </>

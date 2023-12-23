@@ -47,7 +47,7 @@ const TabsSingleAsset = () => (
   <TabsUnstyled defaultValue={0}>
     <TabsList>
       <Tab>Details</Tab>
-      <Tab>Attributes</Tab>
+      {/* <Tab>Attributes</Tab> */}
 
       {/* <Tab>History</Tab> */}
     </TabsList>
@@ -56,9 +56,9 @@ const TabsSingleAsset = () => (
       <SingleAssetDetailsTab />
     </TabPanelUnstyled>
 
-    <TabPanelUnstyled value={1}>
+    {/* <TabPanelUnstyled value={1}>
       <SingleAssetAttributeTab />
-    </TabPanelUnstyled>
+    </TabPanelUnstyled> */}
 
     {/* <TabPanelUnstyled value={4}>
       4sdfsdf
