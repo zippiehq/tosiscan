@@ -98,36 +98,43 @@ interface IAdditionalData {
   image: string
   publisher: string
 }
-export const fetchDataSet = async (id: string, additionalMetadata: any = {}) => {
-  const sealResponse = await get(`/tosi/api/v1/query-seal/${id}`, 'json')
-  const path = sealResponse.data.status
-  const [output] = await Promise.all([
-    get(`/tosi/api/v0/ipfs/get/${path}/output.zip`, 'blob'),
-    // get(`/tosi/api/v1/query-claims/${id}`, 'json'),
-  ])
-  const [assets, metadata, verifications] = await Promise.all([
-    unzip(output.data, 'assets.json'),
-    unzip(output.data, 'metadata.json'),
-    unzip(output.data, 'verifications.json'),
-  ])
-  // @ts-ignore
-  const timestamps = verifications.map((item: any) => item.timestamp / 1000)
-  const creationDate = Math.min(...timestamps)
-  const lastVerified = Math.max(...timestamps)
-  const formattedAssets = assets ? Array.from(assets) : []
-  return {
-    assets: formattedAssets,
-    metadata: {
-      ...additionalMetadata,
-      // @ts-ignore
-      ...metadata,
-      // @ts-ignore
-      image: metadata?.image || additionalMetadata?.image,
-    },
-    verifications,
-    id,
-    creationDate,
-    lastVerified,
+
+const fetchDataSet = async (id: string, additionalMetadata: any = {}) => {
+  try {
+    const latestStateResponse = await get(`/latest/${id}`, 'json')
+    const latestStateCid = latestStateResponse.data.state_cid
+
+    const [dataset, nonces, owners, metadata, batches, assets, balances, events, verifications] = await Promise.all([
+      await get(`/ipfs/${latestStateCid}/dataset.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/nonces.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/owners.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/metadata.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/batches.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/assets.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/balances.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/events.json`, 'json'),
+      await get(`/ipfs/${latestStateCid}/verifications.json`, 'json'),
+    ])
+    const timestamps = verifications.data.map((item: any) => item.timestamp / 1000)
+    const creationDate = Math.min(...timestamps)
+    const lastVerified = Math.max(...timestamps)
+    return {
+      assets: assets.data,
+      metadata: { ...additionalMetadata, ...metadata.data },
+      id,
+      creationDate,
+      lastVerified,
+      verifications: verifications.data,
+      events: events.data,
+      batch: batches.data,
+      balances: balances.data,
+      dataset: dataset.data,
+      nonces: nonces.data,
+      owners: owners.data,
+    }
+  } catch (error) {
+    console.error('Error fetching dataset:', error)
+    return null
   }
 }
 
@@ -138,20 +145,28 @@ function useDataSetAssets() {
   const { id } = useParams()
   const { datasets } = useDataSetContext()
 
-  const fetchAssets = async () => {
-    setLoading(true)
-    const assets = await Promise.all(
-      datasets.filter((dataset) => dataset.available).map((dataset) => fetchDataSet(dataset.id, dataset)),
-    )
-    const dynamic = await fetchDataDynamic()
-    const assetsDynamic = await Promise.all(dynamic.map((dataset: any) => fetchDataSet(dataset.cid, dataset.metadata)))
-    const finalAssets = assets.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
-    const finalAssetsDyanmic = assetsDynamic.reduce((prev, dataSet) => ({ ...prev, [dataSet.id]: dataSet }), {})
-    setDataSetOutputs({ ...finalAssets, ...finalAssetsDyanmic })
-    setLoading(false)
-  }
-
   useEffect(() => {
+    const fetchAssets = async () => {
+      setLoading(true)
+      try {
+        const dynamicDatasets = await fetchDataDynamic()
+        const fetchedDynamicDatasets = await Promise.all(
+          dynamicDatasets.map((dataset: { cid: string; metadata: any }) => fetchDataSet(dataset.cid, dataset.metadata)),
+        )
+
+        const combinedDatasets = [...fetchedDynamicDatasets].reduce((acc, dataset) => {
+          if (dataset) acc[dataset.id] = dataset
+          return acc
+        }, {})
+
+        setDataSetOutputs(combinedDatasets)
+      } catch (error) {
+        console.error('Error fetching datasets:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     if (datasets.length) {
       fetchAssets()
     }
